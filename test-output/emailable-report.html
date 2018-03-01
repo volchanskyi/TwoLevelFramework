@@ -1,0 +1,271 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+<title>TestNG Report</title>
+<style type="text/css">table {margin-bottom:10px;border-collapse:collapse;empty-cells:show}th,td {border:1px solid #009;padding:.25em .5em}th {vertical-align:bottom}td {vertical-align:top}table a {font-weight:bold}.stripe td {background-color: #E6EBF9}.num {text-align:right}.passedodd td {background-color: #3F3}.passedeven td {background-color: #0A0}.skippedodd td {background-color: #DDD}.skippedeven td {background-color: #CCC}.failedodd td,.attn {background-color: #F33}.failedeven td,.stripe .attn {background-color: #D00}.stacktrace {white-space:pre;font-family:monospace}.totop {font-size:85%;text-align:center;border-bottom:2px solid #000}.invisible {display:none}</style>
+</head>
+<body>
+<table>
+<tr><th>Test</th><th># Passed</th><th># Skipped</th><th># Failed</th><th>Time (ms)</th><th>Included Groups</th><th>Excluded Groups</th></tr>
+<tr><th colspan="7">Default suite</th></tr>
+<tr><td><a href="#t0">Default test</a></td><td class="num">0</td><td class="num attn">1</td><td class="num">0</td><td class="num">33</td><td></td><td></td></tr>
+</table>
+<table id='summary'><thead><tr><th>Class</th><th>Method</th><th>Start</th><th>Time (ms)</th></tr></thead><tbody><tr><th colspan="4">Default suite</th></tr></tbody><tbody id="t0"><tr><th colspan="4">Default test &#8212; failed (configuration methods)</th></tr><tr class="failedeven"><td rowspan="2">io.mantishub.ivan.tests.LoginTests</td><td><a href="#m0">setUp</a></td><td rowspan="1">1519889783894</td><td rowspan="1">49277</td></tr><tr class="failedeven"><td><a href="#m1">tearDown</a></td><td rowspan="1">1519889833336</td><td rowspan="1">0</td></tr><tr><th colspan="4">Default test &#8212; skipped</th></tr><tr class="skippedeven"><td rowspan="1">io.mantishub.ivan.tests.LoginTests</td><td><a href="#m2">testLogin</a></td><td rowspan="1">1519889833214</td><td rowspan="1">0</td></tr></tbody>
+</table>
+<h2>Default test</h2><h3 id="m0">io.mantishub.ivan.tests.LoginTests#setUp</h3><table class="result"><tr><th>Exception</th></tr><tr><td><div class="stacktrace">org.openqa.selenium.WebDriverException: Failed to connect to binary FirefoxBinary(C:\Program Files (x86)\Mozilla Firefox\firefox.exe) on port 7055; process output follows: 
+anager
+1519889788191	addons.manager	DEBUG	Provider finished startup: LightweightThemeManager
+1519889788192	addons.manager	DEBUG	Starting provider: GMPProvider
+1519889788202	addons.manager	DEBUG	Registering shutdown blocker for GMPProvider
+1519889788202	addons.manager	DEBUG	Provider finished startup: GMPProvider
+1519889788202	addons.manager	DEBUG	Starting provider: PluginProvider
+1519889788203	addons.manager	DEBUG	Registering shutdown blocker for PluginProvider
+1519889788203	addons.manager	DEBUG	Provider finished startup: PluginProvider
+1519889788204	addons.manager	DEBUG	Completed startup sequence
+1519889789759	addons.repository	DEBUG	No addons.json found.
+1519889789784	addons.manager	DEBUG	Starting provider: PreviousExperimentProvider
+1519889789784	addons.manager	DEBUG	Registering shutdown blocker for PreviousExperimentProvider
+1519889789784	addons.manager	DEBUG	Provider finished startup: PreviousExperimentProvider
+1519889789823	addons.xpi-utils	DEBUG	XPI Database saved, setting schema version preference to 23
+1519889790148	addons.xpi	INFO	Mapping fxdriver@googlecode.com to C:\Users\Ivan\AppData\Local\Temp\anonymous3307198936182699906webdriver-profile\extensions\fxdriver@googlecode.com
+1519889790149	addons.xpi	DEBUG	Ignoring file entry whose name is not a valid add-on ID: C:\Users\Ivan\AppData\Local\Temp\anonymous3307198936182699906webdriver-profile\extensions\webdriver-staging
+1519889790149	addons.xpi	DEBUG	Existing add-on fxdriver@googlecode.com in app-profile
+1519889790150	addons.xpi	INFO	Mapping activity-stream@mozilla.org to C:\Program Files (x86)\Mozilla Firefox\browser\features\activity-stream@mozilla.org.xpi
+1519889790150	addons.xpi	INFO	Mapping aushelper@mozilla.org to C:\Program Files (x86)\Mozilla Firefox\browser\features\aushelper@mozilla.org.xpi
+1519889790151	addons.xpi	INFO	Mapping firefox@getpocket.com to C:\Program Files (x86)\Mozilla Firefox\browser\features\firefox@getpocket.com.xpi
+1519889790151	addons.xpi	INFO	Mapping followonsearch@mozilla.com to C:\Program Files (x86)\Mozilla Firefox\browser\features\followonsearch@mozilla.com.xpi
+1519889790151	addons.xpi	INFO	Mapping formautofill@mozilla.org to C:\Program Files (x86)\Mozilla Firefox\browser\features\formautofill@mozilla.org.xpi
+1519889790151	addons.xpi	INFO	Mapping onboarding@mozilla.org to C:\Program Files (x86)\Mozilla Firefox\browser\features\onboarding@mozilla.org.xpi
+1519889790152	addons.xpi	INFO	Mapping screenshots@mozilla.org to C:\Program Files (x86)\Mozilla Firefox\browser\features\screenshots@mozilla.org.xpi
+1519889790152	addons.xpi	INFO	Mapping shield-recipe-client@mozilla.org to C:\Program Files (x86)\Mozilla Firefox\browser\features\shield-recipe-client@mozilla.org.xpi
+1519889790152	addons.xpi	INFO	Mapping webcompat@mozilla.org to C:\Program Files (x86)\Mozilla Firefox\browser\features\webcompat@mozilla.org.xpi
+1519889790154	addons.xpi	DEBUG	Existing add-on activity-stream@mozilla.org in app-system-defaults
+1519889790155	addons.xpi	DEBUG	Existing add-on aushelper@mozilla.org in app-system-defaults
+1519889790156	addons.xpi	DEBUG	Existing add-on firefox@getpocket.com in app-system-defaults
+1519889790156	addons.xpi	DEBUG	Existing add-on followonsearch@mozilla.com in app-system-defaults
+1519889790157	addons.xpi	DEBUG	Existing add-on formautofill@mozilla.org in app-system-defaults
+1519889790158	addons.xpi	DEBUG	Existing add-on onboarding@mozilla.org in app-system-defaults
+1519889790158	addons.xpi	DEBUG	Existing add-on screenshots@mozilla.org in app-system-defaults
+1519889790159	addons.xpi	DEBUG	Existing add-on shield-recipe-client@mozilla.org in app-system-defaults
+1519889790159	addons.xpi	DEBUG	Existing add-on webcompat@mozilla.org in app-system-defaults
+1519889790162	addons.xpi	INFO	Mapping {972ce4c6-7e08-4474-a285-3208198ce6fd} to C:\Program Files (x86)\Mozilla Firefox\browser\extensions\{972ce4c6-7e08-4474-a285-3208198ce6fd}.xpi
+1519889790162	addons.xpi	DEBUG	Existing add-on {972ce4c6-7e08-4474-a285-3208198ce6fd} in app-global
+1519889790163	addons.xpi	DEBUG	getInstallState changed: false, state: {}
+
+Build info: version: &apos;2.53.1&apos;, revision: &apos;a36b8b1cd5757287168e54b817830adce9b0158d&apos;, time: &apos;2016-06-30 19:26:09&apos;
+System info: host: &apos;Latitude&apos;, ip: &apos;192.168.56.1&apos;, os.name: &apos;Windows 7&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;6.1&apos;, java.version: &apos;1.8.0_162&apos;
+Driver info: driver.version: FirefoxDriver
+	at org.openqa.selenium.firefox.internal.NewProfileExtensionConnection.start(NewProfileExtensionConnection.java:125)
+	at org.openqa.selenium.firefox.FirefoxDriver.startClient(FirefoxDriver.java:271)
+	at org.openqa.selenium.remote.RemoteWebDriver.&lt;init&gt;(RemoteWebDriver.java:119)
+	at org.openqa.selenium.firefox.FirefoxDriver.&lt;init&gt;(FirefoxDriver.java:216)
+	at org.openqa.selenium.firefox.FirefoxDriver.&lt;init&gt;(FirefoxDriver.java:211)
+	at org.openqa.selenium.firefox.FirefoxDriver.&lt;init&gt;(FirefoxDriver.java:207)
+	at org.openqa.selenium.firefox.FirefoxDriver.&lt;init&gt;(FirefoxDriver.java:120)
+	at io.mantishub.ivan.appmanager.ApplicationManager.init(ApplicationManager.java:33)
+	at io.mantishub.ivan.tests.TestBase.setUp(TestBase.java:16)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:124)
+	at org.testng.internal.MethodInvocationHelper.invokeMethodConsideringTimeout(MethodInvocationHelper.java:59)
+	at org.testng.internal.Invoker.invokeConfigurationMethod(Invoker.java:455)
+	at org.testng.internal.Invoker.invokeConfigurations(Invoker.java:222)
+	at org.testng.internal.Invoker.invokeConfigurations(Invoker.java:142)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:401)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:364)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:84)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1208)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1137)
+	at org.testng.TestNG.runSuites(TestNG.java:1049)
+	at org.testng.TestNG.run(TestNG.java:1017)
+	at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:114)
+	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:251)
+	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:77)
+Caused by: org.openqa.selenium.firefox.NotConnectedException: Unable to connect to host 127.0.0.1 on port 7055 after 45000 ms. Firefox console output:
+anager
+1519889788191	addons.manager	DEBUG	Provider finished startup: LightweightThemeManager
+1519889788192	addons.manager	DEBUG	Starting provider: GMPProvider
+1519889788202	addons.manager	DEBUG	Registering shutdown blocker for GMPProvider
+1519889788202	addons.manager	DEBUG	Provider finished startup: GMPProvider
+1519889788202	addons.manager	DEBUG	Starting provider: PluginProvider
+1519889788203	addons.manager	DEBUG	Registering shutdown blocker for PluginProvider
+1519889788203	addons.manager	DEBUG	Provider finished startup: PluginProvider
+1519889788204	addons.manager	DEBUG	Completed startup sequence
+1519889789759	addons.repository	DEBUG	No addons.json found.
+1519889789784	addons.manager	DEBUG	Starting provider: PreviousExperimentProvider
+1519889789784	addons.manager	DEBUG	Registering shutdown blocker for PreviousExperimentProvider
+1519889789784	addons.manager	DEBUG	Provider finished startup: PreviousExperimentProvider
+1519889789823	addons.xpi-utils	DEBUG	XPI Database saved, setting schema version preference to 23
+1519889790148	addons.xpi	INFO	Mapping fxdriver@googlecode.com to C:\Users\Ivan\AppData\Local\Temp\anonymous3307198936182699906webdriver-profile\extensions\fxdriver@googlecode.com
+1519889790149	addons.xpi	DEBUG	Ignoring file entry whose name is not a valid add-on ID: C:\Users\Ivan\AppData\Local\Temp\anonymous3307198936182699906webdriver-profile\extensions\webdriver-staging
+1519889790149	addons.xpi	DEBUG	Existing add-on fxdriver@googlecode.com in app-profile
+1519889790150	addons.xpi	INFO	Mapping activity-stream@mozilla.org to C:\Program Files (x86)\Mozilla Firefox\browser\features\activity-stream@mozilla.org.xpi
+1519889790150	addons.xpi	INFO	Mapping aushelper@mozilla.org to C:\Program Files (x86)\Mozilla Firefox\browser\features\aushelper@mozilla.org.xpi
+1519889790151	addons.xpi	INFO	Mapping firefox@getpocket.com to C:\Program Files (x86)\Mozilla Firefox\browser\features\firefox@getpocket.com.xpi
+1519889790151	addons.xpi	INFO	Mapping followonsearch@mozilla.com to C:\Program Files (x86)\Mozilla Firefox\browser\features\followonsearch@mozilla.com.xpi
+1519889790151	addons.xpi	INFO	Mapping formautofill@mozilla.org to C:\Program Files (x86)\Mozilla Firefox\browser\features\formautofill@mozilla.org.xpi
+1519889790151	addons.xpi	INFO	Mapping onboarding@mozilla.org to C:\Program Files (x86)\Mozilla Firefox\browser\features\onboarding@mozilla.org.xpi
+1519889790152	addons.xpi	INFO	Mapping screenshots@mozilla.org to C:\Program Files (x86)\Mozilla Firefox\browser\features\screenshots@mozilla.org.xpi
+1519889790152	addons.xpi	INFO	Mapping shield-recipe-client@mozilla.org to C:\Program Files (x86)\Mozilla Firefox\browser\features\shield-recipe-client@mozilla.org.xpi
+1519889790152	addons.xpi	INFO	Mapping webcompat@mozilla.org to C:\Program Files (x86)\Mozilla Firefox\browser\features\webcompat@mozilla.org.xpi
+1519889790154	addons.xpi	DEBUG	Existing add-on activity-stream@mozilla.org in app-system-defaults
+1519889790155	addons.xpi	DEBUG	Existing add-on aushelper@mozilla.org in app-system-defaults
+1519889790156	addons.xpi	DEBUG	Existing add-on firefox@getpocket.com in app-system-defaults
+1519889790156	addons.xpi	DEBUG	Existing add-on followonsearch@mozilla.com in app-system-defaults
+1519889790157	addons.xpi	DEBUG	Existing add-on formautofill@mozilla.org in app-system-defaults
+1519889790158	addons.xpi	DEBUG	Existing add-on onboarding@mozilla.org in app-system-defaults
+1519889790158	addons.xpi	DEBUG	Existing add-on screenshots@mozilla.org in app-system-defaults
+1519889790159	addons.xpi	DEBUG	Existing add-on shield-recipe-client@mozilla.org in app-system-defaults
+1519889790159	addons.xpi	DEBUG	Existing add-on webcompat@mozilla.org in app-system-defaults
+1519889790162	addons.xpi	INFO	Mapping {972ce4c6-7e08-4474-a285-3208198ce6fd} to C:\Program Files (x86)\Mozilla Firefox\browser\extensions\{972ce4c6-7e08-4474-a285-3208198ce6fd}.xpi
+1519889790162	addons.xpi	DEBUG	Existing add-on {972ce4c6-7e08-4474-a285-3208198ce6fd} in app-global
+1519889790163	addons.xpi	DEBUG	getInstallState changed: false, state: {}
+
+	at org.openqa.selenium.firefox.internal.NewProfileExtensionConnection.start(NewProfileExtensionConnection.java:113)
+	... 28 more
+</div></td></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
+<h3 id="m1">io.mantishub.ivan.tests.LoginTests#tearDown</h3><table class="result"><tr><th>Exception</th></tr><tr><td><div class="stacktrace">java.lang.NullPointerException
+	at io.mantishub.ivan.appmanager.ApplicationManager.stop(ApplicationManager.java:44)
+	at io.mantishub.ivan.tests.TestBase.tearDown(TestBase.java:21)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:124)
+	at org.testng.internal.MethodInvocationHelper.invokeMethodConsideringTimeout(MethodInvocationHelper.java:59)
+	at org.testng.internal.Invoker.invokeConfigurationMethod(Invoker.java:455)
+	at org.testng.internal.Invoker.invokeConfigurations(Invoker.java:222)
+	at org.testng.internal.Invoker.invokeConfigurations(Invoker.java:142)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:425)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:364)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:84)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1208)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1137)
+	at org.testng.TestNG.runSuites(TestNG.java:1049)
+	at org.testng.TestNG.run(TestNG.java:1017)
+	at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:114)
+	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:251)
+	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:77)
+</div></td></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
+<h3 id="m2">io.mantishub.ivan.tests.LoginTests#testLogin</h3><table class="result"><tr><th>Exception</th></tr><tr><td><div class="stacktrace">org.openqa.selenium.WebDriverException: Failed to connect to binary FirefoxBinary(C:\Program Files (x86)\Mozilla Firefox\firefox.exe) on port 7055; process output follows: 
+anager
+1519889788191	addons.manager	DEBUG	Provider finished startup: LightweightThemeManager
+1519889788192	addons.manager	DEBUG	Starting provider: GMPProvider
+1519889788202	addons.manager	DEBUG	Registering shutdown blocker for GMPProvider
+1519889788202	addons.manager	DEBUG	Provider finished startup: GMPProvider
+1519889788202	addons.manager	DEBUG	Starting provider: PluginProvider
+1519889788203	addons.manager	DEBUG	Registering shutdown blocker for PluginProvider
+1519889788203	addons.manager	DEBUG	Provider finished startup: PluginProvider
+1519889788204	addons.manager	DEBUG	Completed startup sequence
+1519889789759	addons.repository	DEBUG	No addons.json found.
+1519889789784	addons.manager	DEBUG	Starting provider: PreviousExperimentProvider
+1519889789784	addons.manager	DEBUG	Registering shutdown blocker for PreviousExperimentProvider
+1519889789784	addons.manager	DEBUG	Provider finished startup: PreviousExperimentProvider
+1519889789823	addons.xpi-utils	DEBUG	XPI Database saved, setting schema version preference to 23
+1519889790148	addons.xpi	INFO	Mapping fxdriver@googlecode.com to C:\Users\Ivan\AppData\Local\Temp\anonymous3307198936182699906webdriver-profile\extensions\fxdriver@googlecode.com
+1519889790149	addons.xpi	DEBUG	Ignoring file entry whose name is not a valid add-on ID: C:\Users\Ivan\AppData\Local\Temp\anonymous3307198936182699906webdriver-profile\extensions\webdriver-staging
+1519889790149	addons.xpi	DEBUG	Existing add-on fxdriver@googlecode.com in app-profile
+1519889790150	addons.xpi	INFO	Mapping activity-stream@mozilla.org to C:\Program Files (x86)\Mozilla Firefox\browser\features\activity-stream@mozilla.org.xpi
+1519889790150	addons.xpi	INFO	Mapping aushelper@mozilla.org to C:\Program Files (x86)\Mozilla Firefox\browser\features\aushelper@mozilla.org.xpi
+1519889790151	addons.xpi	INFO	Mapping firefox@getpocket.com to C:\Program Files (x86)\Mozilla Firefox\browser\features\firefox@getpocket.com.xpi
+1519889790151	addons.xpi	INFO	Mapping followonsearch@mozilla.com to C:\Program Files (x86)\Mozilla Firefox\browser\features\followonsearch@mozilla.com.xpi
+1519889790151	addons.xpi	INFO	Mapping formautofill@mozilla.org to C:\Program Files (x86)\Mozilla Firefox\browser\features\formautofill@mozilla.org.xpi
+1519889790151	addons.xpi	INFO	Mapping onboarding@mozilla.org to C:\Program Files (x86)\Mozilla Firefox\browser\features\onboarding@mozilla.org.xpi
+1519889790152	addons.xpi	INFO	Mapping screenshots@mozilla.org to C:\Program Files (x86)\Mozilla Firefox\browser\features\screenshots@mozilla.org.xpi
+1519889790152	addons.xpi	INFO	Mapping shield-recipe-client@mozilla.org to C:\Program Files (x86)\Mozilla Firefox\browser\features\shield-recipe-client@mozilla.org.xpi
+1519889790152	addons.xpi	INFO	Mapping webcompat@mozilla.org to C:\Program Files (x86)\Mozilla Firefox\browser\features\webcompat@mozilla.org.xpi
+1519889790154	addons.xpi	DEBUG	Existing add-on activity-stream@mozilla.org in app-system-defaults
+1519889790155	addons.xpi	DEBUG	Existing add-on aushelper@mozilla.org in app-system-defaults
+1519889790156	addons.xpi	DEBUG	Existing add-on firefox@getpocket.com in app-system-defaults
+1519889790156	addons.xpi	DEBUG	Existing add-on followonsearch@mozilla.com in app-system-defaults
+1519889790157	addons.xpi	DEBUG	Existing add-on formautofill@mozilla.org in app-system-defaults
+1519889790158	addons.xpi	DEBUG	Existing add-on onboarding@mozilla.org in app-system-defaults
+1519889790158	addons.xpi	DEBUG	Existing add-on screenshots@mozilla.org in app-system-defaults
+1519889790159	addons.xpi	DEBUG	Existing add-on shield-recipe-client@mozilla.org in app-system-defaults
+1519889790159	addons.xpi	DEBUG	Existing add-on webcompat@mozilla.org in app-system-defaults
+1519889790162	addons.xpi	INFO	Mapping {972ce4c6-7e08-4474-a285-3208198ce6fd} to C:\Program Files (x86)\Mozilla Firefox\browser\extensions\{972ce4c6-7e08-4474-a285-3208198ce6fd}.xpi
+1519889790162	addons.xpi	DEBUG	Existing add-on {972ce4c6-7e08-4474-a285-3208198ce6fd} in app-global
+1519889790163	addons.xpi	DEBUG	getInstallState changed: false, state: {}
+
+Build info: version: &apos;2.53.1&apos;, revision: &apos;a36b8b1cd5757287168e54b817830adce9b0158d&apos;, time: &apos;2016-06-30 19:26:09&apos;
+System info: host: &apos;Latitude&apos;, ip: &apos;192.168.56.1&apos;, os.name: &apos;Windows 7&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;6.1&apos;, java.version: &apos;1.8.0_162&apos;
+Driver info: driver.version: FirefoxDriver
+	at org.openqa.selenium.firefox.internal.NewProfileExtensionConnection.start(NewProfileExtensionConnection.java:125)
+	at org.openqa.selenium.firefox.FirefoxDriver.startClient(FirefoxDriver.java:271)
+	at org.openqa.selenium.remote.RemoteWebDriver.&lt;init&gt;(RemoteWebDriver.java:119)
+	at org.openqa.selenium.firefox.FirefoxDriver.&lt;init&gt;(FirefoxDriver.java:216)
+	at org.openqa.selenium.firefox.FirefoxDriver.&lt;init&gt;(FirefoxDriver.java:211)
+	at org.openqa.selenium.firefox.FirefoxDriver.&lt;init&gt;(FirefoxDriver.java:207)
+	at org.openqa.selenium.firefox.FirefoxDriver.&lt;init&gt;(FirefoxDriver.java:120)
+	at io.mantishub.ivan.appmanager.ApplicationManager.init(ApplicationManager.java:33)
+	at io.mantishub.ivan.tests.TestBase.setUp(TestBase.java:16)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:124)
+	at org.testng.internal.MethodInvocationHelper.invokeMethodConsideringTimeout(MethodInvocationHelper.java:59)
+	at org.testng.internal.Invoker.invokeConfigurationMethod(Invoker.java:455)
+	at org.testng.internal.Invoker.invokeConfigurations(Invoker.java:222)
+	at org.testng.internal.Invoker.invokeConfigurations(Invoker.java:142)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:401)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:364)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:84)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1208)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1137)
+	at org.testng.TestNG.runSuites(TestNG.java:1049)
+	at org.testng.TestNG.run(TestNG.java:1017)
+	at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:114)
+	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:251)
+	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:77)
+Caused by: org.openqa.selenium.firefox.NotConnectedException: Unable to connect to host 127.0.0.1 on port 7055 after 45000 ms. Firefox console output:
+anager
+1519889788191	addons.manager	DEBUG	Provider finished startup: LightweightThemeManager
+1519889788192	addons.manager	DEBUG	Starting provider: GMPProvider
+1519889788202	addons.manager	DEBUG	Registering shutdown blocker for GMPProvider
+1519889788202	addons.manager	DEBUG	Provider finished startup: GMPProvider
+1519889788202	addons.manager	DEBUG	Starting provider: PluginProvider
+1519889788203	addons.manager	DEBUG	Registering shutdown blocker for PluginProvider
+1519889788203	addons.manager	DEBUG	Provider finished startup: PluginProvider
+1519889788204	addons.manager	DEBUG	Completed startup sequence
+1519889789759	addons.repository	DEBUG	No addons.json found.
+1519889789784	addons.manager	DEBUG	Starting provider: PreviousExperimentProvider
+1519889789784	addons.manager	DEBUG	Registering shutdown blocker for PreviousExperimentProvider
+1519889789784	addons.manager	DEBUG	Provider finished startup: PreviousExperimentProvider
+1519889789823	addons.xpi-utils	DEBUG	XPI Database saved, setting schema version preference to 23
+1519889790148	addons.xpi	INFO	Mapping fxdriver@googlecode.com to C:\Users\Ivan\AppData\Local\Temp\anonymous3307198936182699906webdriver-profile\extensions\fxdriver@googlecode.com
+1519889790149	addons.xpi	DEBUG	Ignoring file entry whose name is not a valid add-on ID: C:\Users\Ivan\AppData\Local\Temp\anonymous3307198936182699906webdriver-profile\extensions\webdriver-staging
+1519889790149	addons.xpi	DEBUG	Existing add-on fxdriver@googlecode.com in app-profile
+1519889790150	addons.xpi	INFO	Mapping activity-stream@mozilla.org to C:\Program Files (x86)\Mozilla Firefox\browser\features\activity-stream@mozilla.org.xpi
+1519889790150	addons.xpi	INFO	Mapping aushelper@mozilla.org to C:\Program Files (x86)\Mozilla Firefox\browser\features\aushelper@mozilla.org.xpi
+1519889790151	addons.xpi	INFO	Mapping firefox@getpocket.com to C:\Program Files (x86)\Mozilla Firefox\browser\features\firefox@getpocket.com.xpi
+1519889790151	addons.xpi	INFO	Mapping followonsearch@mozilla.com to C:\Program Files (x86)\Mozilla Firefox\browser\features\followonsearch@mozilla.com.xpi
+1519889790151	addons.xpi	INFO	Mapping formautofill@mozilla.org to C:\Program Files (x86)\Mozilla Firefox\browser\features\formautofill@mozilla.org.xpi
+1519889790151	addons.xpi	INFO	Mapping onboarding@mozilla.org to C:\Program Files (x86)\Mozilla Firefox\browser\features\onboarding@mozilla.org.xpi
+1519889790152	addons.xpi	INFO	Mapping screenshots@mozilla.org to C:\Program Files (x86)\Mozilla Firefox\browser\features\screenshots@mozilla.org.xpi
+1519889790152	addons.xpi	INFO	Mapping shield-recipe-client@mozilla.org to C:\Program Files (x86)\Mozilla Firefox\browser\features\shield-recipe-client@mozilla.org.xpi
+1519889790152	addons.xpi	INFO	Mapping webcompat@mozilla.org to C:\Program Files (x86)\Mozilla Firefox\browser\features\webcompat@mozilla.org.xpi
+1519889790154	addons.xpi	DEBUG	Existing add-on activity-stream@mozilla.org in app-system-defaults
+1519889790155	addons.xpi	DEBUG	Existing add-on aushelper@mozilla.org in app-system-defaults
+1519889790156	addons.xpi	DEBUG	Existing add-on firefox@getpocket.com in app-system-defaults
+1519889790156	addons.xpi	DEBUG	Existing add-on followonsearch@mozilla.com in app-system-defaults
+1519889790157	addons.xpi	DEBUG	Existing add-on formautofill@mozilla.org in app-system-defaults
+1519889790158	addons.xpi	DEBUG	Existing add-on onboarding@mozilla.org in app-system-defaults
+1519889790158	addons.xpi	DEBUG	Existing add-on screenshots@mozilla.org in app-system-defaults
+1519889790159	addons.xpi	DEBUG	Existing add-on shield-recipe-client@mozilla.org in app-system-defaults
+1519889790159	addons.xpi	DEBUG	Existing add-on webcompat@mozilla.org in app-system-defaults
+1519889790162	addons.xpi	INFO	Mapping {972ce4c6-7e08-4474-a285-3208198ce6fd} to C:\Program Files (x86)\Mozilla Firefox\browser\extensions\{972ce4c6-7e08-4474-a285-3208198ce6fd}.xpi
+1519889790162	addons.xpi	DEBUG	Existing add-on {972ce4c6-7e08-4474-a285-3208198ce6fd} in app-global
+1519889790163	addons.xpi	DEBUG	getInstallState changed: false, state: {}
+
+	at org.openqa.selenium.firefox.internal.NewProfileExtensionConnection.start(NewProfileExtensionConnection.java:113)
+	... 28 more
+</div></td></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
+</body>
+</html>
