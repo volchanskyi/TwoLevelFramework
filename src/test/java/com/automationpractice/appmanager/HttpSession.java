@@ -1,4 +1,4 @@
-package io.mantishub.ivan.appmanager;
+package com.automationpractice.appmanager;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -24,17 +24,19 @@ public class HttpSession {
 	httpClient = HttpClients.custom().setRedirectStrategy(new LaxRedirectStrategy()).build();
     }
 
-    public boolean login(String username, String password) throws IOException {
-	HttpPost post = new HttpPost(app.getProperty("web.baseUrl") + "/login.php");
+    public boolean login(String email, String password, String title) throws IOException {
+	HttpPost post = new HttpPost(
+		app.getProperty("web.baseUrl") + "index.php?controller=authentication");
 	List<NameValuePair> params = new ArrayList<>();
-	params.add(new BasicNameValuePair("username", username));
-	params.add(new BasicNameValuePair("password", password));
-	params.add(new BasicNameValuePair("secureSession", "on"));
-	params.add(new BasicNameValuePair("return", "index.php"));
+	params.add(new BasicNameValuePair("email", email));
+	params.add(new BasicNameValuePair("passwd", password));
+	params.add(new BasicNameValuePair("back", "my-account"));
+	params.add(new BasicNameValuePair("SubmitLogin", ""));
 	post.setEntity(new UrlEncodedFormEntity(params));
 	CloseableHttpResponse response = httpClient.execute(post);
 	String body = getTextFrom(response);
-	return body.contains(String.format("<span class=\"italic\">%s</span>", username));
+//	return body.contains(String.format("<span class=\"italic\">%s</span>", username));
+	return body.contains(String.format("<title>%s</title>", title));	
     }
 
     private String getTextFrom(CloseableHttpResponse response) throws IOException {
@@ -46,10 +48,11 @@ public class HttpSession {
     }
 
     public boolean isLoggedInAs(String username) throws IOException {
-	HttpGet get = new HttpGet(app.getProperty("web.baseUrl") + "/index.php");
+	HttpGet get = new HttpGet(
+		app.getProperty("web.baseUrl") + "/index.php?controller=my-account");
 	CloseableHttpResponse response = httpClient.execute(get);
 	String body = getTextFrom(response);
-	return body.contains(String.format("<span class=\"italic\">%s</span>", username));
+	return body.contains(String.format("<span>%s</span>", username));
     }
 
 }

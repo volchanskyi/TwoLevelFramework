@@ -3,13 +3,13 @@
 <suite guice-stage="DEVELOPMENT" name="Failed suite [Default suite]">
   <test thread-count="5" name="Default test(failed)">
     <classes>
-      <class name="io.mantishub.ivan.tests.LoginTests">
+      <class name="com.automationpractice.tests.LoginTests">
         <methods>
-          <include name="testLogin"/>
           <include name="setUp"/>
           <include name="tearDown"/>
+          <include name="testLogin"/>
         </methods>
-      </class> <!-- io.mantishub.ivan.tests.LoginTests -->
+      </class> <!-- com.automationpractice.tests.LoginTests -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->

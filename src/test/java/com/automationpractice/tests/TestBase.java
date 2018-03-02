@@ -1,10 +1,10 @@
-package io.mantishub.ivan.tests;
+package com.automationpractice.tests;
 
 import org.openqa.selenium.remote.BrowserType;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 
-import io.mantishub.ivan.appmanager.ApplicationManager;
+import com.automationpractice.appmanager.ApplicationManager;
 
 public class TestBase {
 
