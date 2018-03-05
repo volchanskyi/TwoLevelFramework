@@ -18,6 +18,7 @@ public class ApplicationManager {
 
     private String browser;
     private RegistrationHelper registrationHelper;
+    private MailHelper mailHelper;
 
     public ApplicationManager(String browser) {
 	this.browser = browser;
@@ -33,6 +34,7 @@ public class ApplicationManager {
     }
 
     public void stop() {
+	//Lazy init
 	if (wd !=null) {
 	    wd.quit();
 	}
@@ -49,6 +51,7 @@ public class ApplicationManager {
     }
 
     public RegistrationHelper registration() {
+	//Lazy init
 	if (registrationHelper == null) {
 	registrationHelper =  new RegistrationHelper(this);
     }
@@ -56,6 +59,7 @@ public class ApplicationManager {
     }
 
     public WebDriver getDriver() {
+	//Lazy init
 	if (wd == null) {
 	    if (browser.equals(BrowserType.FIREFOX)) {
 		    wd = new FirefoxDriver();
@@ -68,5 +72,14 @@ public class ApplicationManager {
 		wd.get(properties.getProperty("web.baseUrl"));
 	}
 	return wd;
+    }
+    
+    
+    public MailHelper mail() {
+	//Lazy init
+	if (mailHelper == null) {
+	    mailHelper = new MailHelper(this);
+	}
+	return mailHelper;
     }
 }

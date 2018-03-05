@@ -2,24 +2,56 @@
 <testng-results skipped="0" failed="0" ignored="0" total="1" passed="1">
   <reporter-output>
   </reporter-output>
-  <suite name="Default suite" duration-ms="2261" started-at="2018-03-02T06:48:48Z" finished-at="2018-03-02T06:48:50Z">
+  <suite name="Default suite" duration-ms="2484" started-at="2018-03-05T07:47:39Z" finished-at="2018-03-05T07:47:42Z">
     <groups>
     </groups>
-    <test name="Default test" duration-ms="2261" started-at="2018-03-02T06:48:48Z" finished-at="2018-03-02T06:48:50Z">
-      <class name="com.automationpractice.tests.LoginTests">
-        <test-method status="PASS" signature="setUp()[pri:0, instance:com.automationpractice.tests.LoginTests@4923ab24]" name="setUp" is-config="true" duration-ms="13" started-at="2018-03-02T06:48:48Z" finished-at="2018-03-02T06:48:48Z">
+    <test name="Default test" duration-ms="2484" started-at="2018-03-05T07:47:39Z" finished-at="2018-03-05T07:47:42Z">
+      <class name="com.automationpractice.tests.RegistrationTests">
+        <test-method status="PASS" signature="setUp()[pri:0, instance:com.automationpractice.tests.RegistrationTests@12028586]" name="setUp" is-config="true" duration-ms="13" started-at="2018-03-05T07:47:39Z" finished-at="2018-03-05T07:47:39Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- setUp -->
-        <test-method status="PASS" signature="testLogin()[pri:0, instance:com.automationpractice.tests.LoginTests@4923ab24]" name="testLogin" duration-ms="2242" started-at="2018-03-02T06:48:48Z" finished-at="2018-03-02T06:48:50Z">
+        <test-method status="PASS" signature="beforeMethod(java.lang.reflect.Method, [Ljava.lang.Object;)[pri:0, instance:com.automationpractice.tests.RegistrationTests@12028586]" name="beforeMethod" is-config="true" duration-ms="5" started-at="2018-03-05T07:47:39Z" finished-at="2018-03-05T07:47:39Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[public void com.automationpractice.tests.RegistrationTests.testRegistration() throws javax.mail.MessagingException,java.io.IOException]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[[Ljava.lang.Object;@378542de]]>
+              </value>
+            </param>
+          </params>
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- testLogin -->
-        <test-method status="PASS" signature="tearDown()[pri:0, instance:com.automationpractice.tests.LoginTests@4923ab24]" name="tearDown" is-config="true" duration-ms="0" started-at="2018-03-02T06:48:50Z" finished-at="2018-03-02T06:48:50Z">
+        </test-method> <!-- beforeMethod -->
+        <test-method status="PASS" signature="testRegistration()[pri:0, instance:com.automationpractice.tests.RegistrationTests@12028586]" name="testRegistration" duration-ms="2458" started-at="2018-03-05T07:47:39Z" finished-at="2018-03-05T07:47:42Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testRegistration -->
+        <test-method status="PASS" signature="logTestStop(java.lang.reflect.Method, [Ljava.lang.Object;)[pri:0, instance:com.automationpractice.tests.RegistrationTests@12028586]" name="logTestStop" is-config="true" duration-ms="0" started-at="2018-03-05T07:47:42Z" finished-at="2018-03-05T07:47:42Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[public void com.automationpractice.tests.RegistrationTests.testRegistration() throws javax.mail.MessagingException,java.io.IOException]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[[Ljava.lang.Object;@378542de]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- logTestStop -->
+        <test-method status="PASS" signature="tearDown()[pri:0, instance:com.automationpractice.tests.RegistrationTests@12028586]" name="tearDown" is-config="true" duration-ms="1" started-at="2018-03-05T07:47:42Z" finished-at="2018-03-05T07:47:42Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- tearDown -->
-      </class> <!-- com.automationpractice.tests.LoginTests -->
+      </class> <!-- com.automationpractice.tests.RegistrationTests -->
     </test> <!-- Default test -->
   </suite> <!-- Default suite -->
 </testng-results>

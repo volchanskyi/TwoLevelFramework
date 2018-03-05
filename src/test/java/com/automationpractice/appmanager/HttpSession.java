@@ -25,8 +25,7 @@ public class HttpSession {
     }
 
     public boolean login(String email, String password, String title) throws IOException {
-	HttpPost post = new HttpPost(
-		app.getProperty("web.baseUrl") + "index.php?controller=authentication");
+	HttpPost post = new HttpPost(app.getProperty("web.baseUrl") + "index.php?controller=authentication");
 	List<NameValuePair> params = new ArrayList<>();
 	params.add(new BasicNameValuePair("email", email));
 	params.add(new BasicNameValuePair("passwd", password));
@@ -35,8 +34,56 @@ public class HttpSession {
 	post.setEntity(new UrlEncodedFormEntity(params));
 	CloseableHttpResponse response = httpClient.execute(post);
 	String body = getTextFrom(response);
-//	return body.contains(String.format("<span class=\"italic\">%s</span>", username));
-	return body.contains(String.format("<title>%s</title>", title));	
+	return body.contains(String.format("<title>%s</title>", title));
+    }
+
+    public boolean signUp(String email) throws IOException {
+	HttpPost post = new HttpPost(app.getProperty("web.baseUrl") + "index.php");
+	List<NameValuePair> params = new ArrayList<>();
+	params.add(new BasicNameValuePair("controller", "authentication"));
+	params.add(new BasicNameValuePair("SubmitCreate", "1"));
+	params.add(new BasicNameValuePair("ajax", "true"));
+	params.add(new BasicNameValuePair("email_create", email));
+	params.add(new BasicNameValuePair("back", "my-account"));
+	params.add(new BasicNameValuePair("token", "ce65cefcbafad255f0866d3b32d32058"));
+	post.setEntity(new UrlEncodedFormEntity(params));
+	CloseableHttpResponse response = httpClient.execute(post);
+	String body = getTextFrom(response);
+	return body.contains(String.format("<h1 class=\\\"page-heading\\\">%s<\\/h1>", "Create an account"));
+    }
+
+    public boolean register(String email, String title, String fName, String lName, String password, String address,
+	    String city, String postcode, String state, String phone) throws IOException {
+	HttpPost post = new HttpPost(app.getProperty("web.baseUrl")
+		+ "index.php?controller=authentication&back=my-account#account-creation");
+	List<NameValuePair> params = new ArrayList<>();
+	params.add(new BasicNameValuePair("customer_firstname", fName));
+	params.add(new BasicNameValuePair("customer_lastname", lName));
+	params.add(new BasicNameValuePair("email", email));
+	params.add(new BasicNameValuePair("passwd", password));
+	params.add(new BasicNameValuePair("days", ""));
+	params.add(new BasicNameValuePair("months", ""));
+	params.add(new BasicNameValuePair("years", ""));
+	params.add(new BasicNameValuePair("firstname", fName));
+	params.add(new BasicNameValuePair("lastname", lName));
+	params.add(new BasicNameValuePair("company", ""));
+	params.add(new BasicNameValuePair("address1", address));
+	params.add(new BasicNameValuePair("address2", ""));
+	params.add(new BasicNameValuePair("city", city));
+	params.add(new BasicNameValuePair("id_state", state));
+	params.add(new BasicNameValuePair("postcode", postcode));
+	params.add(new BasicNameValuePair("id_country", "21"));
+	params.add(new BasicNameValuePair("phone_mobile", phone));
+	params.add(new BasicNameValuePair("alias", "My address"));
+	params.add(new BasicNameValuePair("back", "my-account"));
+	params.add(new BasicNameValuePair("dni", ""));
+	params.add(new BasicNameValuePair("email_create", "1"));
+	params.add(new BasicNameValuePair("is_new_customer", "1"));
+	params.add(new BasicNameValuePair("submitAccount", ""));
+	post.setEntity(new UrlEncodedFormEntity(params));
+	CloseableHttpResponse response = httpClient.execute(post);
+	String body = getTextFrom(response);
+	return body.contains(String.format("<title>%s</title>", title));
     }
 
     private String getTextFrom(CloseableHttpResponse response) throws IOException {
@@ -48,8 +95,7 @@ public class HttpSession {
     }
 
     public boolean isLoggedInAs(String username) throws IOException {
-	HttpGet get = new HttpGet(
-		app.getProperty("web.baseUrl") + "/index.php?controller=my-account");
+	HttpGet get = new HttpGet(app.getProperty("web.baseUrl") + "/index.php?controller=my-account");
 	CloseableHttpResponse response = httpClient.execute(get);
 	String body = getTextFrom(response);
 	return body.contains(String.format("<span>%s</span>", username));
