@@ -85,6 +85,17 @@ public class HttpSession {
 	String body = getTextFrom(response);
 	return body.contains(String.format("<title>%s</title>", title));
     }
+    
+    public boolean createEmail(String email) throws IOException {
+   	HttpGet get = new HttpGet(app.getProperty("web.mailinator") + "v2/inbox.jsp?zone=public&query=" + email);
+   	get.setHeader("authority", "www.mailinator.com");
+   	get.setHeader("method", "GET");
+   	get.setHeader("scheme", "https");
+   	get.setHeader("path", "/v2/inbox.jsp?zone=public&query=" + email);
+   	CloseableHttpResponse response = httpClient.execute(get);
+   	String body = getTextFrom(response);
+   	return body.contains(String.format("<div>%s</div>", email));
+       }
 
     private String getTextFrom(CloseableHttpResponse response) throws IOException {
 	try {
@@ -100,5 +111,6 @@ public class HttpSession {
 	String body = getTextFrom(response);
 	return body.contains(String.format("<span>%s</span>", username));
     }
+   
 
 }

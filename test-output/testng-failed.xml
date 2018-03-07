@@ -8,6 +8,8 @@
           <include name="setUp"/>
           <include name="tearDown"/>
           <include name="testRegistration"/>
+          <include name="logTestStop"/>
+          <include name="beforeMethod"/>
         </methods>
       </class> <!-- com.automationpractice.tests.RegistrationTests -->
     </classes>
