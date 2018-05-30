@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testng-results skipped="0" failed="1" ignored="0" total="1" passed="0">
+<testng-results skipped="0" failed="0" ignored="0" total="1" passed="1">
   <reporter-output>
   </reporter-output>
-  <suite name="Default suite" duration-ms="4321" started-at="2018-03-07T09:07:21Z" finished-at="2018-03-07T09:07:25Z">
+  <suite name="Default suite" duration-ms="3220" started-at="2018-05-30T06:25:12Z" finished-at="2018-05-30T06:25:15Z">
     <groups>
     </groups>
-    <test name="Default test" duration-ms="4321" started-at="2018-03-07T09:07:21Z" finished-at="2018-03-07T09:07:25Z">
+    <test name="Default test" duration-ms="3220" started-at="2018-05-30T06:25:12Z" finished-at="2018-05-30T06:25:15Z">
       <class name="com.automationpractice.tests.RegistrationTests">
-        <test-method status="PASS" signature="setUp()[pri:0, instance:com.automationpractice.tests.RegistrationTests@290dbf45]" name="setUp" is-config="true" duration-ms="11" started-at="2018-03-07T09:07:21Z" finished-at="2018-03-07T09:07:21Z">
+        <test-method status="PASS" signature="setUp()[pri:0, instance:com.automationpractice.tests.RegistrationTests@799d4f69]" name="setUp" is-config="true" duration-ms="14" started-at="2018-05-30T06:25:12Z" finished-at="2018-05-30T06:25:12Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- setUp -->
-        <test-method status="PASS" signature="beforeMethod(java.lang.reflect.Method, [Ljava.lang.Object;)[pri:0, instance:com.automationpractice.tests.RegistrationTests@290dbf45]" name="beforeMethod" is-config="true" duration-ms="2" started-at="2018-03-07T09:07:21Z" finished-at="2018-03-07T09:07:21Z">
+        <test-method status="PASS" signature="beforeMethod(java.lang.reflect.Method, [Ljava.lang.Object;)[pri:0, instance:com.automationpractice.tests.RegistrationTests@799d4f69]" name="beforeMethod" is-config="true" duration-ms="3" started-at="2018-05-30T06:25:12Z" finished-at="2018-05-30T06:25:12Z">
           <params>
             <param index="0">
               <value>
@@ -20,57 +20,18 @@
             </param>
             <param index="1">
               <value>
-                <![CDATA[[Ljava.lang.Object;@5a59ca5e]]>
+                <![CDATA[[Ljava.lang.Object;@536f2a7e]]>
               </value>
             </param>
           </params>
           <reporter-output>
           </reporter-output>
         </test-method> <!-- beforeMethod -->
-        <test-method status="FAIL" signature="testRegistration()[pri:0, instance:com.automationpractice.tests.RegistrationTests@290dbf45]" name="testRegistration" duration-ms="4297" started-at="2018-03-07T09:07:21Z" finished-at="2018-03-07T09:07:25Z">
-          <exception class="java.lang.AssertionError">
-            <message>
-              <![CDATA[expected [true] but found [false]]]>
-            </message>
-            <full-stacktrace>
-              <![CDATA[java.lang.AssertionError: expected [true] but found [false]
-at org.testng.Assert.fail(Assert.java:96)
-at org.testng.Assert.failNotEquals(Assert.java:776)
-at org.testng.Assert.assertTrue(Assert.java:44)
-at org.testng.Assert.assertTrue(Assert.java:54)
-at com.automationpractice.tests.RegistrationTests.testRegistration(RegistrationTests.java:37)
-at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
-at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
-at java.lang.reflect.Method.invoke(Unknown Source)
-at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:124)
-at org.testng.internal.Invoker.invokeMethod(Invoker.java:580)
-at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:716)
-at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:988)
-at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
-at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:109)
-at org.testng.TestRunner.privateRun(TestRunner.java:648)
-at org.testng.TestRunner.run(TestRunner.java:505)
-at org.testng.SuiteRunner.runTest(SuiteRunner.java:455)
-at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:450)
-at org.testng.SuiteRunner.privateRun(SuiteRunner.java:415)
-at org.testng.SuiteRunner.run(SuiteRunner.java:364)
-at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
-at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:84)
-at org.testng.TestNG.runSuitesSequentially(TestNG.java:1208)
-at org.testng.TestNG.runSuitesLocally(TestNG.java:1137)
-at org.testng.TestNG.runSuites(TestNG.java:1049)
-at org.testng.TestNG.run(TestNG.java:1017)
-at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:114)
-at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:251)
-at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:77)
-]]>
-            </full-stacktrace>
-          </exception> <!-- java.lang.AssertionError -->
+        <test-method status="PASS" signature="testRegistration()[pri:0, instance:com.automationpractice.tests.RegistrationTests@799d4f69]" name="testRegistration" duration-ms="3192" started-at="2018-05-30T06:25:12Z" finished-at="2018-05-30T06:25:15Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- testRegistration -->
-        <test-method status="PASS" signature="logTestStop(java.lang.reflect.Method, [Ljava.lang.Object;)[pri:0, instance:com.automationpractice.tests.RegistrationTests@290dbf45]" name="logTestStop" is-config="true" duration-ms="0" started-at="2018-03-07T09:07:25Z" finished-at="2018-03-07T09:07:25Z">
+        <test-method status="PASS" signature="logTestStop(java.lang.reflect.Method, [Ljava.lang.Object;)[pri:0, instance:com.automationpractice.tests.RegistrationTests@799d4f69]" name="logTestStop" is-config="true" duration-ms="0" started-at="2018-05-30T06:25:15Z" finished-at="2018-05-30T06:25:15Z">
           <params>
             <param index="0">
               <value>
@@ -79,14 +40,14 @@ at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:77)
             </param>
             <param index="1">
               <value>
-                <![CDATA[[Ljava.lang.Object;@5a59ca5e]]>
+                <![CDATA[[Ljava.lang.Object;@536f2a7e]]>
               </value>
             </param>
           </params>
           <reporter-output>
           </reporter-output>
         </test-method> <!-- logTestStop -->
-        <test-method status="PASS" signature="tearDown()[pri:0, instance:com.automationpractice.tests.RegistrationTests@290dbf45]" name="tearDown" is-config="true" duration-ms="0" started-at="2018-03-07T09:07:25Z" finished-at="2018-03-07T09:07:25Z">
+        <test-method status="PASS" signature="tearDown()[pri:0, instance:com.automationpractice.tests.RegistrationTests@799d4f69]" name="tearDown" is-config="true" duration-ms="0" started-at="2018-05-30T06:25:15Z" finished-at="2018-05-30T06:25:15Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- tearDown -->

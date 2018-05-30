@@ -33,7 +33,6 @@ public class RegistrationHelper extends HelperBase {
 	type(By.name("password"), password);
 	type(By.name("password_confirm"), password);
 	click(By.xpath("//*[@id='SubmitCreate']/span"));
-
     }
 
 }

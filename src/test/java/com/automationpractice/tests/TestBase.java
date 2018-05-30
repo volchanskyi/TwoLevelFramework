@@ -1,8 +1,5 @@
 package com.automationpractice.tests;
 
-import java.lang.reflect.Method;
-import java.util.Arrays;
-
 import org.openqa.selenium.remote.BrowserType;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;

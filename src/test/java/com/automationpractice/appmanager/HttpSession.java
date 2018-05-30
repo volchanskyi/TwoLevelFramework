@@ -86,15 +86,16 @@ public class HttpSession {
 	return body.contains(String.format("<title>%s</title>", title));
     }
     
-    public boolean createEmail(String email) throws IOException {
+    public boolean createEmail(String email) throws IOException, InterruptedException {
    	HttpGet get = new HttpGet(app.getProperty("web.mailinator") + "v2/inbox.jsp?zone=public&query=" + email);
-   	get.setHeader("authority", "www.mailinator.com");
-   	get.setHeader("method", "GET");
-   	get.setHeader("scheme", "https");
-   	get.setHeader("path", "/v2/inbox.jsp?zone=public&query=" + email);
+   	get.setHeader(":authority", "www.mailinator.com");
+   	get.setHeader(":method", "GET");
+   	get.setHeader(":scheme", "https");
+   	get.setHeader(":path", "/v2/inbox.jsp?zone=public&query=" + email);
    	CloseableHttpResponse response = httpClient.execute(get);
    	String body = getTextFrom(response);
-   	return body.contains(String.format("<div>%s</div>", email));
+   	String inboxMsg = "[ This Inbox channel is currently Empty ]";
+   	return body.contains(String.format("%s", inboxMsg));
        }
 
     private String getTextFrom(CloseableHttpResponse response) throws IOException {
@@ -110,6 +111,12 @@ public class HttpSession {
 	CloseableHttpResponse response = httpClient.execute(get);
 	String body = getTextFrom(response);
 	return body.contains(String.format("<span>%s</span>", username));
+    }
+    
+    //TODO implement link verification
+    public boolean verifyActivationLink(String link) throws IOException {
+	
+	return false;
     }
    
 

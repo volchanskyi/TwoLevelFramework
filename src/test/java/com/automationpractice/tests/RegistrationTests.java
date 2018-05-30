@@ -31,12 +31,12 @@ public class RegistrationTests extends TestBase {
 	long now = System.currentTimeMillis();
 	String email = "automationpractice_" + now;
 	String password = "testPWD001";
-	String link = "";
+	String link = "https://blablabla";
 	HttpSession session = APP.newSession();
-	assertTrue(session.signUp(email + "@mailinator.com"));
 	assertTrue(session.createEmail(email));
-//	assertTrue(session.verifyLink(link));
-	assertTrue(session.register(email + "@mailinator.com", "My account - My Store", "Ivan", "Test", password, "178 Meadowbrook Dr.",
+	assertTrue(session.signUp(email + "@mailinator.com"));
+//	assertTrue(session.verifyActivationLink(link));
+	assertTrue(session.register(email + "@mailinator.com", "My account - My Store", "Ivan", "lastName", password, "178 Somewhere Dr.",
 		"San Francisco", "94132", "5", "4158962578"));
     }
     
