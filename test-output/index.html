@@ -49,7 +49,7 @@
               <ul>
                 <li>
                   <a href="#" class="navigator-link " panel-name="test-xml-Default_suite">
-                    <span>C:\Users\Ivan\AppData\Local\Temp\testng-eclipse-3907028\testng-customsuite.xml</span>
+                    <span>C:\Users\Ivan\AppData\Local\Temp\testng-eclipse--1601307482\testng-customsuite.xml</span>
                   </a> <!-- navigator-link  -->
                 </li>
                 <li>
@@ -91,7 +91,7 @@
               <div class="suite-section-content">
                 <ul>
                   <li>
-                    <span class="method-stats">1 method,   1 passed</span>
+                    <span class="method-stats">3 methods,   3 passed</span>
                   </li>
                   <li>
                     <span class="method-list-title passed">Passed methods</span>
@@ -103,6 +103,16 @@
                       <span>
                         <img width="3%" src="passed.png"/>
                         <a href="#" class="method navigator-link" panel-name="suite-Default_suite" title="com.automationpractice.tests.RegistrationTests" hash-for-method="testRegistration">testRegistration</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img width="3%" src="passed.png"/>
+                        <a href="#" class="method navigator-link" panel-name="suite-Default_suite" title="com.automationpractice.tests.RegistrationTests" hash-for-method="testRegistrationWithExistedCredsAPI">testRegistrationWithExistedCredsAPI</a> <!-- method navigator-link -->
+                      </span>
+                      <br/>
+                      <span>
+                        <img width="3%" src="passed.png"/>
+                        <a href="#" class="method navigator-link" panel-name="suite-Default_suite" title="com.automationpractice.tests.RegistrationTests" hash-for-method="testRegistrationWithNotExistedCredsAPI">testRegistrationWithNotExistedCredsAPI</a> <!-- method navigator-link -->
                       </span>
                       <br/>
                     </div> <!-- method-list-content passed suite-Default_suite -->
@@ -130,12 +140,26 @@
                   <span class="method-name">testRegistration</span>
                 </div> <!-- method-content -->
               </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
+                  <a name="testRegistrationWithExistedCredsAPI">
+                  </a> <!-- testRegistrationWithExistedCredsAPI -->
+                  <span class="method-name">testRegistrationWithExistedCredsAPI</span>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
+              <div class="method">
+                <div class="method-content">
+                  <a name="testRegistrationWithNotExistedCredsAPI">
+                  </a> <!-- testRegistrationWithNotExistedCredsAPI -->
+                  <span class="method-name">testRegistrationWithNotExistedCredsAPI</span>
+                </div> <!-- method-content -->
+              </div> <!-- method -->
             </div> <!-- main-panel-content rounded-window-bottom -->
           </div> <!-- suite-Default_suite-class-passed -->
         </div> <!-- panel Default_suite -->
         <div panel-name="test-xml-Default_suite" class="panel">
           <div class="main-panel-header rounded-window-top">
-            <span class="header-content">C:\Users\Ivan\AppData\Local\Temp\testng-eclipse-3907028\testng-customsuite.xml</span>
+            <span class="header-content">C:\Users\Ivan\AppData\Local\Temp\testng-eclipse--1601307482\testng-customsuite.xml</span>
           </div> <!-- main-panel-header rounded-window-top -->
           <div class="main-panel-content rounded-window-bottom">
             <pre>
@@ -184,11 +208,19 @@ data.addColumn('number', 'Number');
 data.addColumn('string', 'Method');
 data.addColumn('string', 'Class');
 data.addColumn('number', 'Time (ms)');
-data.addRows(1);
+data.addRows(3);
 data.setCell(0, 0, 0)
 data.setCell(0, 1, 'testRegistration')
 data.setCell(0, 2, 'com.automationpractice.tests.RegistrationTests')
-data.setCell(0, 3, 3192);
+data.setCell(0, 3, 2940);
+data.setCell(1, 0, 1)
+data.setCell(1, 1, 'testRegistrationWithExistedCredsAPI')
+data.setCell(1, 2, 'com.automationpractice.tests.RegistrationTests')
+data.setCell(1, 3, 531);
+data.setCell(2, 0, 2)
+data.setCell(2, 1, 'testRegistrationWithNotExistedCredsAPI')
+data.setCell(2, 2, 'com.automationpractice.tests.RegistrationTests')
+data.setCell(2, 3, 446);
 window.suiteTableData['Default_suite']= { tableData: data, tableDiv: 'times-div-Default_suite'}
 return data;
 }
@@ -226,7 +258,7 @@ return data;
               </div> <!-- configuration-suite before -->
               <div class="configuration-method before">
                 <span class="method-name">beforeMethod(public void com.automationpractice.tests.RegistrationTests.testRegistration() throws javax.mail.Mess...)</span>
-                <span class="method-start">35 ms</span>
+                <span class="method-start">36 ms</span>
               </div> <!-- configuration-method before -->
               <div class="test-method">
                 <span class="method-name">testRegistration</span>
@@ -234,11 +266,35 @@ return data;
               </div> <!-- test-method -->
               <div class="configuration-method after">
                 <span class="method-name">logTestStop(public void com.automationpractice.tests.RegistrationTests.testRegistration() throws javax.mail.Mess...)</span>
-                <span class="method-start">3233 ms</span>
+                <span class="method-start">2981 ms</span>
+              </div> <!-- configuration-method after -->
+              <div class="configuration-method before">
+                <span class="method-name">beforeMethod(public void com.automationpractice.tests.RegistrationTests.testRegistrationWithExistedCredsAPI() thr...)</span>
+                <span class="method-start">2982 ms</span>
+              </div> <!-- configuration-method before -->
+              <div class="test-method">
+                <span class="method-name">testRegistrationWithExistedCredsAPI</span>
+                <span class="method-start">2982 ms</span>
+              </div> <!-- test-method -->
+              <div class="configuration-method after">
+                <span class="method-name">logTestStop(public void com.automationpractice.tests.RegistrationTests.testRegistrationWithExistedCredsAPI() thr...)</span>
+                <span class="method-start">3517 ms</span>
+              </div> <!-- configuration-method after -->
+              <div class="configuration-method before">
+                <span class="method-name">beforeMethod(public void com.automationpractice.tests.RegistrationTests.testRegistrationWithNotExistedCredsAPI() ...)</span>
+                <span class="method-start">3517 ms</span>
+              </div> <!-- configuration-method before -->
+              <div class="test-method">
+                <span class="method-name">testRegistrationWithNotExistedCredsAPI</span>
+                <span class="method-start">3520 ms</span>
+              </div> <!-- test-method -->
+              <div class="configuration-method after">
+                <span class="method-name">logTestStop(public void com.automationpractice.tests.RegistrationTests.testRegistrationWithNotExistedCredsAPI() ...)</span>
+                <span class="method-start">3968 ms</span>
               </div> <!-- configuration-method after -->
               <div class="configuration-suite after">
                 <span class="method-name">tearDown</span>
-                <span class="method-start">3265 ms</span>
+                <span class="method-start">3999 ms</span>
               </div> <!-- configuration-suite after -->
           </div> <!-- main-panel-content rounded-window-bottom -->
         </div> <!-- panel -->

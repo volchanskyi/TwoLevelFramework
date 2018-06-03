@@ -39,6 +39,9 @@ dependencies {
     compile 'ru.lanwen.verbalregex:java-verbal-expressions:1.5'
     compile 'ch.qos.logback:logback-classic:1.2.3'
     compile 'com.googlecode.json-simple:json-simple:1.1.1'
+    compile 'com.google.code.gson:gson:2.8.2'
+    compile 'org.apache.httpcomponents:httpclient:4.5.3'
+    compile 'org.apache.httpcomponents:fluent-hc:4.5.3'
     
     
 }

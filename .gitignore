@@ -26,3 +26,5 @@ target/
 *.ear
 *.sar
 *.class
+/.gradle/
+/bin/
