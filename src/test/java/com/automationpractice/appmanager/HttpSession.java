@@ -1,15 +1,14 @@
 package com.automationpractice.appmanager;
 
 import java.io.IOException;
-import java.net.URI;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
+import org.apache.http.Header;
 import org.apache.http.NameValuePair;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.fluent.Executor;
 import org.apache.http.client.fluent.Form;
@@ -17,7 +16,7 @@ import org.apache.http.client.fluent.Request;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.ContentType;
+import org.apache.http.cookie.Cookie;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.client.LaxRedirectStrategy;
@@ -26,7 +25,9 @@ import org.apache.http.util.EntityUtils;
 
 import com.automationpractice.model.Products;
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 
@@ -36,6 +37,7 @@ public class HttpSession {
     protected static final Products PRODUCTS = new Products();
     private Timestamp timeStamp = new Timestamp(System.currentTimeMillis());
     private int rand = new Random().nextInt(99999998) + 1;
+    private String webCookie = "PrestaShop-a30a9934ef476d11b6cc3c983616e364=ETZ4rE2I8tHyDOLSyZS1u5Tf6VIAVCSZv2WXlrri9liuVGa61504FBDvu5sOuHUrR5abV557UJtKmxYSKb%2BWPnAgTKkTiPuNLlAOqMGyvs2bhkq8F%2BuAZAzEU0Lipuwia9q3hs6Xy36EbeL2OOMrX8WpQc4ghLx0CvNScHyyrE0pQAL2Y%2FWIT4cQ0BN58a9HtY46pAqGPexGDw4hnEi%2Fp%2Funbrof486R41S8MTkW83Nhsdy%2Bnet8jiIGBs3J8Km3000189";
 
     public HttpSession(ApplicationManager app) {
 	this.app = app;
@@ -43,7 +45,7 @@ public class HttpSession {
 	httpClient = HttpClients.custom().setRedirectStrategy(new LaxRedirectStrategy()).build();
     }
 
-    public boolean loginWithHTTP(String email, String password, String title) throws IOException {
+    public boolean loginWith(String email, String password, String title) throws IOException {
 	HttpPost post = new HttpPost(app.getProperty("web.baseUrl") + "index.php?controller=authentication");
 	List<NameValuePair> params = new ArrayList<>();
 	params.add(new BasicNameValuePair("email", email));
@@ -52,8 +54,17 @@ public class HttpSession {
 	params.add(new BasicNameValuePair("SubmitLogin", ""));
 	post.setEntity(new UrlEncodedFormEntity(params));
 	CloseableHttpResponse response = httpClient.execute(post);
+	// this.webCookie = response.getFirstHeader("Set-Cookie").getValue();
 	String body = getTextFrom(response);
 	return body.contains(String.format("<title>%s</title>", title));
+    }
+
+    public boolean loginWithErrorHandling(String email, String password, String errorMsg) throws IOException {
+	String content = Request
+		.Post(app.getProperty("web.baseUrl") + "index.php?controller=authentication").bodyForm(Form.form()
+			.add("email", email).add("passwd", password).add("back", "").add("SubmitLogin", "").build())
+		.execute().returnContent().asString();
+	return content.contains(errorMsg);
     }
 
     public boolean signUp(String email) throws IOException {
@@ -99,6 +110,8 @@ public class HttpSession {
 	params.add(new BasicNameValuePair("email_create", "1"));
 	params.add(new BasicNameValuePair("is_new_customer", "1"));
 	params.add(new BasicNameValuePair("submitAccount", ""));
+	post.setHeader("Accept", "application/json, text/javascript");
+	post.setHeader("Content-Type", "application/x-www-form-urlencoded");
 	post.setEntity(new UrlEncodedFormEntity(params));
 	CloseableHttpResponse response = httpClient.execute(post);
 	String body = getTextFrom(response);
@@ -126,7 +139,8 @@ public class HttpSession {
 	String inboxMsg = "[ This Inbox channel is currently Empty ]";
 	return body.contains(String.format("%s", inboxMsg));
     }
-    public Set<Products> addCartItemsWithAPI(String quantity, String id)  throws IOException {
+
+    public Set<Products> addCartItemsWithIdAndQuantity(String id, String quantity, String token) throws IOException {
 	HttpPost post = new HttpPost(app.getProperty("web.baseUrl") + "index.php?rand=" + this.rand);
 	List<NameValuePair> params = new ArrayList<>();
 	params.add(new BasicNameValuePair("controller", "cart"));
@@ -134,45 +148,61 @@ public class HttpSession {
 	params.add(new BasicNameValuePair("ajax", "true"));
 	params.add(new BasicNameValuePair("qty", quantity));
 	params.add(new BasicNameValuePair("id_product", id));
+	// params.add(new BasicNameValuePair("token", token));
+	post.setHeader("Accept", "application/json, text/javascript, */*; q=0.01");
+	post.setHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
+	post.setHeader("X-Requested-With", "XMLHttpRequest");
+	post.setHeader("Cookie", this.webCookie);
 	post.setEntity(new UrlEncodedFormEntity(params));
 	CloseableHttpResponse response = httpClient.execute(post);
-	String body = getTextFrom(response);
-	return null;
-//	return body.contains(String.format("<title>%s</title>", quantity));
+	String json = getTextFrom(response);
+	JsonElement parsed = new JsonParser().parse(json);
+	JsonElement key = parsed.getAsJsonObject().get("products");
+	return new Gson().fromJson(key, new TypeToken<Set<Products>>() {
+	}.getType());
     }
-//    public Set<Products> addCartItemsWithAPI(String quantity, String id) throws IOException {
-//	// Use fluent API and save result to json
-//	String json = Request.Post(app.getProperty("web.baseUrl") + "index.php?rand=" + this.rand)
-//		.bodyForm(Form.form().add("controller", "cart").add("add", "1").add("ajax", "true").add("qty", quantity)
-//			.add("id_product", id).build())
-//		.addHeader("Accept", "application/json, text/javascript")
-//		.addHeader("Content-Type", "multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW")
-//		.addHeader("X-Requested-With", "XMLHttpRequest").addHeader("cache-control", "no-cache")
-//		.addHeader("Connection", "keep-alive").execute().returnContent().asString();
-//
-//	JsonElement parsed = new JsonParser().parse(json);
-//	JsonElement key = parsed.getAsJsonObject().get("products");
-//	return new Gson().fromJson(key, new TypeToken<Set<Products>>() {
-//	}.getType());
-//    }
-//
-//    public int createProduct(Products newProduct) throws ClientProtocolException, IOException {
-//	String json = Request.Post(app.getProperty("web.baseUrl") + "index.php?rand=" + this.rand)
-//		.bodyForm(Form.form().add("controller", "cart").add("add", "1").add("ajax", "true")
-//			.add("qty", String.valueOf(newProduct.getQuantity())).add("id_product", String.valueOf(newProduct.getId()))
-//			.build())
-//		.execute().returnContent().asString();
-//	JsonElement parsed = new JsonParser().parse(json);
-//
-//	return parsed.getAsJsonObject().getAsJsonArray("products").get(0)
-//		.getAsJsonObject().get("id").getAsInt();
-//    }
+
+    public Set<Products> getCartItemsWithIdAndQuantity(String token) throws IOException {
+	HttpPost post = new HttpPost(app.getProperty("web.baseUrl") + "index.php?rand=" + this.rand);
+	List<NameValuePair> params = new ArrayList<>();
+	params.add(new BasicNameValuePair("controller", "cart"));
+	params.add(new BasicNameValuePair("ajax", "true"));
+	params.add(new BasicNameValuePair("token", token));
+	post.setHeader("Accept", "application/json, text/javascript, */*; q=0.01");
+	post.setHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
+	post.setHeader("X-Requested-With", "XMLHttpRequest");
+	post.setHeader("Cookie", this.webCookie);
+	post.setEntity(new UrlEncodedFormEntity(params));
+	CloseableHttpResponse response = httpClient.execute(post);
+	String json = getTextFrom(response);
+	JsonElement parsed = new JsonParser().parse(json);
+	JsonElement key = parsed.getAsJsonObject().get("products");
+	return new Gson().fromJson(key, new TypeToken<Set<Products>>() {
+	}.getType());
+    }
+
+    public int addCartItemsWithIdAndQuantity(Products newProduct) throws IOException {
+	String json = Request.Post(app.getProperty("web.baseUrl") + "index.php?rand=" + this.rand)
+		.addHeader("Accept", "application/json, text/javascript, */*; q=0.01")
+		.addHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8")
+		.addHeader("Cookie", this.webCookie)
+		.bodyForm(Form.form().add("controller", "cart").add("add", "1").add("ajax", "true")
+			.add("qty", String.valueOf(newProduct.getQuantity()))
+			.add("id_product", String.valueOf(newProduct.getId())).build())
+		.execute().returnContent().asString();
+	JsonElement parsed = new JsonParser().parse(json);
+	JsonArray jsonArray = parsed.getAsJsonObject().getAsJsonArray("products");
+	for (JsonElement jSo : jsonArray) {
+	    if (jSo.getAsJsonObject().get("id").getAsInt() == newProduct.getId()) {
+		return jSo.getAsJsonObject().get("id").getAsInt();
+	    }
+	}
+	return 0;
+    }
 
     private Executor getExecutor() {
 	return Executor.newInstance(httpClient);
     }
-
- 
 
     public boolean searchForProduct(Products product) throws IOException {
 	// Use fluent API

@@ -31,12 +31,14 @@ public class CartTests extends TestBase {
     @Test
     public void testAddProductToCart() throws IOException {
 	HttpSession session = APP.newSession();
-	Set<Products> oldCart = session.addCartItemsWithAPI("2", "3");
-//	Products newProduct = new Products().withId(2).withQuantity(2);
-//	int productId = session.createProduct(newProduct);
-//	Set<Products> newCart = session.addCartItemsWithAPI("2", "2");
-//	oldCart.add(newProduct.withId(productId));	
-//	assertEquals(newCart, oldCart);
+	String token = "75bcfffc7e0bb8dec3cd64163aeff58c";
+	session.addCartItemsWithIdAndQuantity("3", "1", token);
+	Set<Products> oldCart = session.getCartItemsWithIdAndQuantity(token);
+	Products newProduct = new Products().withId(7).withQuantity(1);
+	int productId = session.addCartItemsWithIdAndQuantity(newProduct);
+	Set<Products> newCart = session.getCartItemsWithIdAndQuantity(token);
+	oldCart.add(newProduct.withId(productId));	
+	assertEquals(newCart, oldCart);
     }
     
     
