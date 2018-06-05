@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
-import org.apache.http.Header;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.fluent.Executor;
@@ -16,7 +15,6 @@ import org.apache.http.client.fluent.Request;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.cookie.Cookie;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.client.LaxRedirectStrategy;
@@ -27,7 +25,6 @@ import com.automationpractice.model.Products;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 
@@ -181,11 +178,11 @@ public class HttpSession {
 	}.getType());
     }
 
-    public int addCartItemsWithIdAndQuantity(Products newProduct) throws IOException {
+    public Products addCartItemsWithIdAndQuantity(Products newProduct) throws IOException {
 	String json = Request.Post(app.getProperty("web.baseUrl") + "index.php?rand=" + this.rand)
 		.addHeader("Accept", "application/json, text/javascript, */*; q=0.01")
 		.addHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8")
-		.addHeader("Cookie", this.webCookie)
+		.addHeader("X-Requested-With", "XMLHttpRequest").addHeader("Cookie", this.webCookie)
 		.bodyForm(Form.form().add("controller", "cart").add("add", "1").add("ajax", "true")
 			.add("qty", String.valueOf(newProduct.getQuantity()))
 			.add("id_product", String.valueOf(newProduct.getId())).build())
@@ -194,10 +191,12 @@ public class HttpSession {
 	JsonArray jsonArray = parsed.getAsJsonObject().getAsJsonArray("products");
 	for (JsonElement jSo : jsonArray) {
 	    if (jSo.getAsJsonObject().get("id").getAsInt() == newProduct.getId()) {
-		return jSo.getAsJsonObject().get("id").getAsInt();
+		return new Gson().fromJson(jSo.getAsJsonObject(), new TypeToken<Products>() {
+		}.getType());
 	    }
 	}
-	return 0;
+	return null;
+
     }
 
     private Executor getExecutor() {

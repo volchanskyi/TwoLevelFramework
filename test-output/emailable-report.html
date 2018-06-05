@@ -9,39 +9,10 @@
 <table>
 <tr><th>Test</th><th># Passed</th><th># Skipped</th><th># Failed</th><th>Time (ms)</th><th>Included Groups</th><th>Excluded Groups</th></tr>
 <tr><th colspan="7">Default suite</th></tr>
-<tr><td><a href="#t0">Default test</a></td><td class="num">0</td><td class="num">0</td><td class="num attn">1</td><td class="num">28,913</td><td></td><td></td></tr>
+<tr><td><a href="#t0">Default test</a></td><td class="num">1</td><td class="num">0</td><td class="num">0</td><td class="num">65,111</td><td></td><td></td></tr>
 </table>
-<table id='summary'><thead><tr><th>Class</th><th>Method</th><th>Start</th><th>Time (ms)</th></tr></thead><tbody><tr><th colspan="4">Default suite</th></tr></tbody><tbody id="t0"><tr><th colspan="4">Default test &#8212; failed</th></tr><tr class="failedeven"><td rowspan="1">com.automationpractice.tests.CartTests</td><td><a href="#m0">testAddProductToCart</a></td><td rowspan="1">1528076839100</td><td rowspan="1">28858</td></tr></tbody>
+<table id='summary'><thead><tr><th>Class</th><th>Method</th><th>Start</th><th>Time (ms)</th></tr></thead><tbody><tr><th colspan="4">Default suite</th></tr></tbody><tbody id="t0"><tr><th colspan="4">Default test &#8212; passed</th></tr><tr class="passedeven"><td rowspan="1">com.automationpractice.tests.CartTests</td><td><a href="#m0">testAddProductToCart</a></td><td rowspan="1">1528172044680</td><td rowspan="1">65078</td></tr></tbody>
 </table>
-<h2>Default test</h2><h3 id="m0">com.automationpractice.tests.CartTests#testAddProductToCart</h3><table class="result"><tr><th>Exception</th></tr><tr><td><div class="stacktrace">java.lang.IllegalStateException: Not a JSON Object: [{&quot;id&quot;:1,&quot;link&quot;:&quot;http://automationpractice.com/index.php?id_product=1&amp;controller=product#/size-s/color-orange&quot;,&quot;quantity&quot;:1,&quot;image&quot;:&quot;http://automationpractice.com/img/p/1/1-home_default.jpg&quot;,&quot;image_cart&quot;:&quot;http://automationpractice.com/img/p/1/1-cart_default.jpg&quot;,&quot;priceByLine&quot;:&quot;$16.51&quot;,&quot;name&quot;:&quot;Faded Short Sleeve T-shirts&quot;,&quot;price&quot;:&quot;$16.51&quot;,&quot;price_float&quot;:16.51,&quot;idCombination&quot;:1,&quot;idAddressDelivery&quot;:69151,&quot;is_gift&quot;:false,&quot;hasAttributes&quot;:true,&quot;attributes&quot;:&quot;Orange, S&quot;,&quot;hasCustomizedDatas&quot;:false,&quot;customizedDatas&quot;:[]},{&quot;id&quot;:3,&quot;link&quot;:&quot;http://automationpractice.com/index.php?id_product=3&amp;controller=product#/size-s/color-orange&quot;,&quot;quantity&quot;:6,&quot;image&quot;:&quot;http://automationpractice.com/img/p/8/8-home_default.jpg&quot;,&quot;image_cart&quot;:&quot;http://automationpractice.com/img/p/8/8-cart_default.jpg&quot;,&quot;priceByLine&quot;:&quot;$156.00&quot;,&quot;name&quot;:&quot;Printed Dress&quot;,&quot;price&quot;:&quot;$156.00&quot;,&quot;price_float&quot;:156,&quot;idCombination&quot;:13,&quot;idAddressDelivery&quot;:0,&quot;is_gift&quot;:false,&quot;hasAttributes&quot;:true,&quot;attributes&quot;:&quot;Orange, S&quot;,&quot;hasCustomizedDatas&quot;:false,&quot;customizedDatas&quot;:[]},{&quot;id&quot;:7,&quot;link&quot;:&quot;http://automationpractice.com/index.php?id_product=7&amp;controller=product#/size-s/color-yellow&quot;,&quot;quantity&quot;:4,&quot;image&quot;:&quot;http://automationpractice.com/img/p/2/0/20-home_default.jpg&quot;,&quot;image_cart&quot;:&quot;http://automationpractice.com/img/p/2/0/20-cart_default.jpg&quot;,&quot;priceByLine&quot;:&quot;$65.60&quot;,&quot;name&quot;:&quot;Printed Chiffon Dress&quot;,&quot;price&quot;:&quot;$65.60&quot;,&quot;price_float&quot;:65.6,&quot;idCombination&quot;:34,&quot;idAddressDelivery&quot;:0,&quot;is_gift&quot;:false,&quot;hasAttributes&quot;:true,&quot;attributes&quot;:&quot;Yellow, S&quot;,&quot;hasCustomizedDatas&quot;:false,&quot;customizedDatas&quot;:[]}]
-	at com.google.gson.JsonElement.getAsJsonObject(JsonElement.java:91)
-	at com.automationpractice.appmanager.HttpSession.addCartItemsWithIdAndQuantity(HttpSession.java:196)
-	at com.automationpractice.tests.CartTests.testAddProductToCart(CartTests.java:38)
-	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
-	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
-	at java.lang.reflect.Method.invoke(Unknown Source)
-	at org.testng.internal.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:124)
-	at org.testng.internal.Invoker.invokeMethod(Invoker.java:580)
-	at org.testng.internal.Invoker.invokeTestMethod(Invoker.java:716)
-	at org.testng.internal.Invoker.invokeTestMethods(Invoker.java:988)
-	at org.testng.internal.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:125)
-	at org.testng.internal.TestMethodWorker.run(TestMethodWorker.java:109)
-	at org.testng.TestRunner.privateRun(TestRunner.java:648)
-	at org.testng.TestRunner.run(TestRunner.java:505)
-	at org.testng.SuiteRunner.runTest(SuiteRunner.java:455)
-	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:450)
-	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:415)
-	at org.testng.SuiteRunner.run(SuiteRunner.java:364)
-	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
-	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:84)
-	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1208)
-	at org.testng.TestNG.runSuitesLocally(TestNG.java:1137)
-	at org.testng.TestNG.runSuites(TestNG.java:1049)
-	at org.testng.TestNG.run(TestNG.java:1017)
-	at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:114)
-	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:251)
-	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:77)
-</div></td></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
+<h2>Default test</h2><h3 id="m0">com.automationpractice.tests.CartTests#testAddProductToCart</h3><table class="result"><tr><th class="invisible"/></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
 </body>
 </html>
