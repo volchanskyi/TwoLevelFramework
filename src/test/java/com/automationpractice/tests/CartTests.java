@@ -31,6 +31,8 @@ public class CartTests extends TestBase {
 	HttpSession session = APP.newSession();
 	// generate token
 	String token = "75bcfffc7e0bb8dec3cd64163aeff58c";
+	// clean up cart before test
+	session.cleanUpCart(token);
 	// add item to the cart
 	session.addCartItemsWithIdAndQuantity("3", "1", token);
 	// get items from the cart and save them to the init value
@@ -44,6 +46,8 @@ public class CartTests extends TestBase {
 	// use model object (new product item with real ID)
 	// and add it to the the init value of the cart
 	oldCart.add(newAddedProduct);
+	// clean up cart after test
+	session.cleanUpCart(token);
 	// verify the init and new cart values are equal
 	assertEquals(newCart, oldCart);
     }

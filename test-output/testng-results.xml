@@ -2,16 +2,16 @@
 <testng-results skipped="0" failed="0" ignored="0" total="1" passed="1">
   <reporter-output>
   </reporter-output>
-  <suite name="Default suite" duration-ms="65111" started-at="2018-06-05T04:14:04Z" finished-at="2018-06-05T04:15:09Z">
+  <suite name="Default suite" duration-ms="5092" started-at="2018-06-06T04:31:42Z" finished-at="2018-06-06T04:31:47Z">
     <groups>
     </groups>
-    <test name="Default test" duration-ms="65111" started-at="2018-06-05T04:14:04Z" finished-at="2018-06-05T04:15:09Z">
+    <test name="Default test" duration-ms="5092" started-at="2018-06-06T04:31:42Z" finished-at="2018-06-06T04:31:47Z">
       <class name="com.automationpractice.tests.CartTests">
-        <test-method status="PASS" signature="setUp()[pri:0, instance:com.automationpractice.tests.CartTests@d9345cd]" name="setUp" is-config="true" duration-ms="16" started-at="2018-06-05T04:14:04Z" finished-at="2018-06-05T04:14:04Z">
+        <test-method status="PASS" signature="setUp()[pri:0, instance:com.automationpractice.tests.CartTests@32cf48b7]" name="setUp" is-config="true" duration-ms="11" started-at="2018-06-06T04:31:42Z" finished-at="2018-06-06T04:31:42Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- setUp -->
-        <test-method status="PASS" signature="beforeMethod(java.lang.reflect.Method, [Ljava.lang.Object;)[pri:0, instance:com.automationpractice.tests.CartTests@d9345cd]" name="beforeMethod" is-config="true" duration-ms="3" started-at="2018-06-05T04:14:04Z" finished-at="2018-06-05T04:14:04Z">
+        <test-method status="PASS" signature="beforeMethod(java.lang.reflect.Method, [Ljava.lang.Object;)[pri:0, instance:com.automationpractice.tests.CartTests@32cf48b7]" name="beforeMethod" is-config="true" duration-ms="2" started-at="2018-06-06T04:31:42Z" finished-at="2018-06-06T04:31:42Z">
           <params>
             <param index="0">
               <value>
@@ -20,18 +20,18 @@
             </param>
             <param index="1">
               <value>
-                <![CDATA[[Ljava.lang.Object;@773cbf4f]]>
+                <![CDATA[[Ljava.lang.Object;@485966cc]]>
               </value>
             </param>
           </params>
           <reporter-output>
           </reporter-output>
         </test-method> <!-- beforeMethod -->
-        <test-method status="PASS" signature="testAddProductToCart()[pri:0, instance:com.automationpractice.tests.CartTests@d9345cd]" name="testAddProductToCart" duration-ms="65078" started-at="2018-06-05T04:14:04Z" finished-at="2018-06-05T04:15:09Z">
+        <test-method status="PASS" signature="testAddProductToCart()[pri:0, instance:com.automationpractice.tests.CartTests@32cf48b7]" name="testAddProductToCart" duration-ms="5069" started-at="2018-06-06T04:31:42Z" finished-at="2018-06-06T04:31:47Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- testAddProductToCart -->
-        <test-method status="PASS" signature="logTestStop(java.lang.reflect.Method, [Ljava.lang.Object;)[pri:0, instance:com.automationpractice.tests.CartTests@d9345cd]" name="logTestStop" is-config="true" duration-ms="1" started-at="2018-06-05T04:15:09Z" finished-at="2018-06-05T04:15:09Z">
+        <test-method status="PASS" signature="logTestStop(java.lang.reflect.Method, [Ljava.lang.Object;)[pri:0, instance:com.automationpractice.tests.CartTests@32cf48b7]" name="logTestStop" is-config="true" duration-ms="0" started-at="2018-06-06T04:31:47Z" finished-at="2018-06-06T04:31:47Z">
           <params>
             <param index="0">
               <value>
@@ -40,14 +40,14 @@
             </param>
             <param index="1">
               <value>
-                <![CDATA[[Ljava.lang.Object;@773cbf4f]]>
+                <![CDATA[[Ljava.lang.Object;@485966cc]]>
               </value>
             </param>
           </params>
           <reporter-output>
           </reporter-output>
         </test-method> <!-- logTestStop -->
-        <test-method status="PASS" signature="tearDown()[pri:0, instance:com.automationpractice.tests.CartTests@d9345cd]" name="tearDown" is-config="true" duration-ms="1" started-at="2018-06-05T04:15:09Z" finished-at="2018-06-05T04:15:09Z">
+        <test-method status="PASS" signature="tearDown()[pri:0, instance:com.automationpractice.tests.CartTests@32cf48b7]" name="tearDown" is-config="true" duration-ms="1" started-at="2018-06-06T04:31:47Z" finished-at="2018-06-06T04:31:47Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- tearDown -->

@@ -199,6 +199,32 @@ public class HttpSession {
 
     }
 
+    public void cleanUpCart(String token) throws IOException {
+	String json = Request.Post(app.getProperty("web.baseUrl") + "index.php?rand=" + this.rand)
+		.addHeader("Accept", "application/json, text/javascript, */*; q=0.01")
+		.addHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8")
+		.addHeader("X-Requested-With", "XMLHttpRequest").addHeader("Cookie", this.webCookie)
+		.bodyForm(Form.form().add("controller", "cart").add("ajax", "true").add("token", token).build())
+		.execute().returnContent().asString();
+	JsonElement parsed = new JsonParser().parse(json);
+	JsonElement key = parsed.getAsJsonObject().get("nbTotalProducts");
+	if (!key.isJsonNull() && key.isJsonPrimitive() && key.getAsInt() > 0) {
+	    JsonArray jsonArray = parsed.getAsJsonObject().getAsJsonArray("products");
+	    for (JsonElement jSo : jsonArray) {
+		String id = jSo.getAsJsonObject().get("id").getAsString();
+		String ipa = jSo.getAsJsonObject().get("idCombination").getAsString();
+		Request.Post(app.getProperty("web.baseUrl") + "index.php?rand=" + this.rand)
+			.addHeader("Accept", "application/json, text/javascript, */*; q=0.01")
+			.addHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8")
+			.addHeader("X-Requested-With", "XMLHttpRequest").addHeader("Cookie", this.webCookie)
+			.bodyForm(Form.form().add("controller", "cart").add("delete", "1").add("id_product", id)
+				.add("ipa", ipa).add("token", token).add("ajax", "true").build())
+			.execute().returnContent().asString();
+
+	    }
+	}
+    }
+
     private Executor getExecutor() {
 	return Executor.newInstance(httpClient);
     }
