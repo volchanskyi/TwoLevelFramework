@@ -34,8 +34,8 @@ public class HttpSession {
     protected static final Products PRODUCTS = new Products();
     private Timestamp timeStamp = new Timestamp(System.currentTimeMillis());
     private int rand = new Random().nextInt(99999998) + 1;
-    private String webCookie = "PrestaShop-a30a9934ef476d11b6cc3c983616e364=ETZ4rE2I8tHyDOLSyZS1u5Tf6VIAVCSZv2WXlrri9liuVGa61504FBDvu5sOuHUrR5abV557UJtKmxYSKb%2BWPnAgTKkTiPuNLlAOqMGyvs2bhkq8F%2BuAZAzEU0Lipuwia9q3hs6Xy36EbeL2OOMrX8WpQc4ghLx0CvNScHyyrE0pQAL2Y%2FWIT4cQ0BN58a9HtY46pAqGPexGDw4hnEi%2Fp%2Funbrof486R41S8MTkW83Nhsdy%2Bnet8jiIGBs3J8Km3000189";
-
+    private String webCookie;
+    
     public HttpSession(ApplicationManager app) {
 	this.app = app;
 	// Enable following REDIRECTIONS on POST
@@ -137,7 +137,7 @@ public class HttpSession {
 	return body.contains(String.format("%s", inboxMsg));
     }
 
-    public Set<Products> addCartItemsWithIdAndQuantity(String id, String quantity, String token) throws IOException {
+    public Set<Products> addProductToCart(String id, String quantity, String token) throws IOException {
 	HttpPost post = new HttpPost(app.getProperty("web.baseUrl") + "index.php?rand=" + this.rand);
 	List<NameValuePair> params = new ArrayList<>();
 	params.add(new BasicNameValuePair("controller", "cart"));
@@ -159,7 +159,7 @@ public class HttpSession {
 	}.getType());
     }
 
-    public Set<Products> getCartItemsWithIdAndQuantity(String token) throws IOException {
+    public Set<Products> getProductsFromCart(String token) throws IOException {
 	HttpPost post = new HttpPost(app.getProperty("web.baseUrl") + "index.php?rand=" + this.rand);
 	List<NameValuePair> params = new ArrayList<>();
 	params.add(new BasicNameValuePair("controller", "cart"));
@@ -178,7 +178,7 @@ public class HttpSession {
 	}.getType());
     }
 
-    public Products addCartItemsWithIdAndQuantity(Products newProduct) throws IOException {
+    public Products addProductToCart(Products newProduct) throws IOException {
 	String json = Request.Post(app.getProperty("web.baseUrl") + "index.php?rand=" + this.rand)
 		.addHeader("Accept", "application/json, text/javascript, */*; q=0.01")
 		.addHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8")
@@ -257,6 +257,10 @@ public class HttpSession {
     public boolean verifyActivationLink(String link) throws IOException {
 
 	return false;
+    }
+    
+    public void insertCookie(String cookie) {
+	this.webCookie = cookie;
     }
 
 }
