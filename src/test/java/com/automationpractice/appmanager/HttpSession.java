@@ -168,33 +168,6 @@ public class HttpSession {
 	}.getType());
     }
 
-    public Set<Products> test(String id, String quantity, String token) throws IOException {
-	HttpPost post = new HttpPost(app.getProperty("web.baseUrl") + "index.php?rand=" + this.rand);
-	List<NameValuePair> params = new ArrayList<>();
-	params.add(new BasicNameValuePair("controller", "cart"));
-	params.add(new BasicNameValuePair("add", "1"));
-	params.add(new BasicNameValuePair("ajax", "true"));
-	params.add(new BasicNameValuePair("qty", quantity));
-	params.add(new BasicNameValuePair("id_product", id));
-	params.add(new BasicNameValuePair("token", token));
-	post.setHeader("Accept", "application/json, text/javascript, */*; q=0.01");
-	post.setHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
-	post.setHeader("X-Requested-With", "XMLHttpRequest");
-	post.setHeader("cache-control", "no-cache");
-	post.setHeader("Connection", "keep-alive");
-	post.setHeader("Host", "automationpractice.com");
-	post.setHeader("Origin", "http://automationpractice.com");
-	post.setHeader("Referer", "http://automationpractice.com/index.php");
-	post.setHeader("Cookie", getCookieValue(cookieStore, this.webCookie));
-	post.setEntity(new UrlEncodedFormEntity(params));
-	CloseableHttpResponse response = httpClient.execute(post, context);
-	String json = getTextFrom(response);
-	JsonElement parsed = new JsonParser().parse(json);
-	JsonElement key = parsed.getAsJsonObject().get("products");
-	return new Gson().fromJson(key, new TypeToken<Set<Products>>() {
-	}.getType());
-    }
-
     public Set<Products> getProductsFromCart(String token) throws IOException {
 	HttpPost post = new HttpPost(app.getProperty("web.baseUrl") + "index.php?rand=" + this.rand);
 	List<NameValuePair> params = new ArrayList<>();
