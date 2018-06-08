@@ -8,6 +8,7 @@ import java.util.Random;
 import java.util.Set;
 
 import org.apache.http.NameValuePair;
+import org.apache.http.client.CookieStore;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.fluent.Executor;
 import org.apache.http.client.fluent.Form;
@@ -15,6 +16,9 @@ import org.apache.http.client.fluent.Request;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.protocol.HttpClientContext;
+import org.apache.http.cookie.Cookie;
+import org.apache.http.impl.client.BasicCookieStore;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.client.LaxRedirectStrategy;
@@ -30,14 +34,19 @@ import com.google.gson.reflect.TypeToken;
 
 public class HttpSession {
     private CloseableHttpClient httpClient;
+    HttpClientContext context = HttpClientContext.create();
+    CookieStore cookieStore = new BasicCookieStore();
     private ApplicationManager app;
     protected static final Products PRODUCTS = new Products();
     private Timestamp timeStamp = new Timestamp(System.currentTimeMillis());
     private int rand = new Random().nextInt(99999998) + 1;
     private String webCookie;
-    
+
     public HttpSession(ApplicationManager app) {
 	this.app = app;
+
+	this.context.setCookieStore(cookieStore);
+
 	// Enable following REDIRECTIONS on POST
 	httpClient = HttpClients.custom().setRedirectStrategy(new LaxRedirectStrategy()).build();
     }
@@ -145,13 +154,40 @@ public class HttpSession {
 	params.add(new BasicNameValuePair("ajax", "true"));
 	params.add(new BasicNameValuePair("qty", quantity));
 	params.add(new BasicNameValuePair("id_product", id));
-	// params.add(new BasicNameValuePair("token", token));
+	params.add(new BasicNameValuePair("token", token));
 	post.setHeader("Accept", "application/json, text/javascript, */*; q=0.01");
 	post.setHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
 	post.setHeader("X-Requested-With", "XMLHttpRequest");
-	post.setHeader("Cookie", this.webCookie);
+	post.setHeader("Cookie", getCookieValue(cookieStore, this.webCookie));
 	post.setEntity(new UrlEncodedFormEntity(params));
-	CloseableHttpResponse response = httpClient.execute(post);
+	CloseableHttpResponse response = httpClient.execute(post, this.context);
+	String json = getTextFrom(response);
+	JsonElement parsed = new JsonParser().parse(json);
+	JsonElement key = parsed.getAsJsonObject().get("products");
+	return new Gson().fromJson(key, new TypeToken<Set<Products>>() {
+	}.getType());
+    }
+
+    public Set<Products> test(String id, String quantity, String token) throws IOException {
+	HttpPost post = new HttpPost(app.getProperty("web.baseUrl") + "index.php?rand=" + this.rand);
+	List<NameValuePair> params = new ArrayList<>();
+	params.add(new BasicNameValuePair("controller", "cart"));
+	params.add(new BasicNameValuePair("add", "1"));
+	params.add(new BasicNameValuePair("ajax", "true"));
+	params.add(new BasicNameValuePair("qty", quantity));
+	params.add(new BasicNameValuePair("id_product", id));
+	params.add(new BasicNameValuePair("token", token));
+	post.setHeader("Accept", "application/json, text/javascript, */*; q=0.01");
+	post.setHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
+	post.setHeader("X-Requested-With", "XMLHttpRequest");
+	post.setHeader("cache-control", "no-cache");
+	post.setHeader("Connection", "keep-alive");
+	post.setHeader("Host", "automationpractice.com");
+	post.setHeader("Origin", "http://automationpractice.com");
+	post.setHeader("Referer", "http://automationpractice.com/index.php");
+	post.setHeader("Cookie", getCookieValue(cookieStore, this.webCookie));
+	post.setEntity(new UrlEncodedFormEntity(params));
+	CloseableHttpResponse response = httpClient.execute(post, context);
 	String json = getTextFrom(response);
 	JsonElement parsed = new JsonParser().parse(json);
 	JsonElement key = parsed.getAsJsonObject().get("products");
@@ -168,9 +204,9 @@ public class HttpSession {
 	post.setHeader("Accept", "application/json, text/javascript, */*; q=0.01");
 	post.setHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
 	post.setHeader("X-Requested-With", "XMLHttpRequest");
-	post.setHeader("Cookie", this.webCookie);
+	post.setHeader("Cookie", getCookieValue(cookieStore, this.webCookie));
 	post.setEntity(new UrlEncodedFormEntity(params));
-	CloseableHttpResponse response = httpClient.execute(post);
+	CloseableHttpResponse response = httpClient.execute(post, this.context);
 	String json = getTextFrom(response);
 	JsonElement parsed = new JsonParser().parse(json);
 	JsonElement key = parsed.getAsJsonObject().get("products");
@@ -182,7 +218,8 @@ public class HttpSession {
 	String json = Request.Post(app.getProperty("web.baseUrl") + "index.php?rand=" + this.rand)
 		.addHeader("Accept", "application/json, text/javascript, */*; q=0.01")
 		.addHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8")
-		.addHeader("X-Requested-With", "XMLHttpRequest").addHeader("Cookie", this.webCookie)
+		.addHeader("X-Requested-With", "XMLHttpRequest")
+		.addHeader("Cookie", getCookieValue(cookieStore, this.webCookie))
 		.bodyForm(Form.form().add("controller", "cart").add("add", "1").add("ajax", "true")
 			.add("qty", String.valueOf(newProduct.getQuantity()))
 			.add("id_product", String.valueOf(newProduct.getId())).build())
@@ -258,9 +295,28 @@ public class HttpSession {
 
 	return false;
     }
-    
+
     public void insertCookie(String cookie) {
 	this.webCookie = cookie;
+    }
+
+    public String getCookieValue(CookieStore cookieStore, String cookieName) {
+	String value = null;
+	for (Cookie cookie : cookieStore.getCookies()) {
+	    if (cookie.getName().equals(cookieName)) {
+		value = cookie.getName() + "=" + cookie.getValue();
+		break;
+	    }
+	}
+	return value;
+    }
+
+    public void initCookie(String cookieName) throws IOException {
+	HttpGet get = new HttpGet(app.getProperty("web.baseUrl"));
+	get.setHeader("Upgrade-Insecure-Requests", "1");
+	get.setHeader("Host", "automationpractice.com");
+	httpClient.execute(get, context);
+	this.webCookie = cookieName;
     }
 
 }

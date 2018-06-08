@@ -28,13 +28,18 @@ public class CartTests extends TestBase {
 
     @Test
     public void testAddProductToCart() throws IOException {
-	HttpSession session = APP.newSession();
-	session.insertCookie(
-		"PrestaShop-a30a9934ef476d11b6cc3c983616e364=ETZ4rE2I8tHyDOLSyZS1u2BGhYl3CIqtHvDp1ThUMwSuVGa61504FBDvu5sOuHUrb6svJ75NVHmISPROJCO0cKWzyBnRrVvRzyNNHAVyIlRCT16pN2Ey88SOZ%2FErsAWLkdkjD8Hlzq0TVjIXYFLXNQblmftp%2BYJCDrIgnLoh7kWH9dt3sqCUQp9rTWcNPc7d1Actgh%2FbvDZIOTEqNt1%2BdPAPPKXZk1zHx8iw6GtBO5k%3D000175");
 	// generate token
-	String token = "75bcfffc7e0bb8dec3cd64163aeff58c";
-	// clean up cart before test
-	session.cleanUpCart(token);
+	String token = "e817bb0705dd58da8db074c69f729fd8";
+	// Generate cookie PREFIX (Cookie name)
+	String cookieName = "PrestaShop-a30a9934ef476d11b6cc3c983616e364";
+	// Init HTTP session
+	HttpSession session = APP.newSession();
+	// pass cookie name to make Server Side generate cookie and pass them to
+	// CONTEXT
+	session.initCookie(cookieName);
+
+	// String token = "75bcfffc7e0bb8dec3cd64163aeff58c";
+
 	// add item to the cart
 	session.addProductToCart("3", "1", token);
 	// get items from the cart and save them to the init value
