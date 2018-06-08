@@ -30,7 +30,7 @@ public class CartTests extends TestBase {
     public void testAddProductToCart() throws IOException {
 	HttpSession session = APP.newSession();
 	session.insertCookie(
-		"PrestaShop-a30a9934ef476d11b6cc3c983616e364=ETZ4rE2I8tHyDOLSyZS1u5Tf6VIAVCSZv2WXlrri9liuVGa61504FBDvu5sOuHUrR5abV557UJtKmxYSKb%2BWPnAgTKkTiPuNLlAOqMGyvs2bhkq8F%2BuAZAzEU0Lipuwia9q3hs6Xy36EbeL2OOMrX8WpQc4ghLx0CvNScHyyrE0pQAL2Y%2FWIT4cQ0BN58a9HtY46pAqGPexGDw4hnEi%2Fp%2Funbrof486R41S8MTkW83Nhsdy%2Bnet8jiIGBs3J8Km3000189");
+		"PrestaShop-a30a9934ef476d11b6cc3c983616e364=ETZ4rE2I8tHyDOLSyZS1u2BGhYl3CIqtHvDp1ThUMwSuVGa61504FBDvu5sOuHUrb6svJ75NVHmISPROJCO0cKWzyBnRrVvRzyNNHAVyIlRCT16pN2Ey88SOZ%2FErsAWLkdkjD8Hlzq0TVjIXYFLXNQblmftp%2BYJCDrIgnLoh7kWH9dt3sqCUQp9rTWcNPc7d1Actgh%2FbvDZIOTEqNt1%2BdPAPPKXZk1zHx8iw6GtBO5k%3D000175");
 	// generate token
 	String token = "75bcfffc7e0bb8dec3cd64163aeff58c";
 	// clean up cart before test
