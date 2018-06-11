@@ -2,7 +2,7 @@
 /.apt_generated/
 
 *.html
-test-output
+/test-output/
 # eclipse project file
 .settings/
 .classpath
