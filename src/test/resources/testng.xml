@@ -4,8 +4,8 @@
 	<test name="Smoke" thread-count="1" parallel="methods" >
 	<!-- <parameter name="browser" value"Chrome" /> -->
 		<classes>
-			<class name="com.automationpractice.tests.CartTests" />
-			<class name="com.automationpractice.tests.LoginTests" />
+		<!--	<class name="com.automationpractice.tests.CartTests" />-->
+		<!--	<class name="com.automationpractice.tests.LoginTests" />-->
 			<class name="com.automationpractice.tests.RegistrationTests" />
 		</classes>
 	</test>
