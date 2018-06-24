@@ -2,16 +2,16 @@
 <testng-results skipped="0" failed="0" ignored="0" total="4" passed="4">
   <reporter-output>
   </reporter-output>
-  <suite name="Default suite" duration-ms="24070" started-at="2018-06-23T01:04:05Z" finished-at="2018-06-23T01:04:29Z">
+  <suite name="Default suite" duration-ms="22180" started-at="2018-06-24T05:30:50Z" finished-at="2018-06-24T05:31:12Z">
     <groups>
     </groups>
-    <test name="Default test" duration-ms="24070" started-at="2018-06-23T01:04:05Z" finished-at="2018-06-23T01:04:29Z">
+    <test name="Default test" duration-ms="22180" started-at="2018-06-24T05:30:50Z" finished-at="2018-06-24T05:31:12Z">
       <class name="com.automationpractice.tests.RegistrationTests">
-        <test-method status="PASS" signature="setUp()[pri:0, instance:com.automationpractice.tests.RegistrationTests@17776a8]" name="setUp" is-config="true" duration-ms="16" started-at="2018-06-23T01:04:05Z" finished-at="2018-06-23T01:04:05Z">
+        <test-method status="PASS" signature="setUp()[pri:0, instance:com.automationpractice.tests.RegistrationTests@17776a8]" name="setUp" is-config="true" duration-ms="29" started-at="2018-06-24T05:30:50Z" finished-at="2018-06-24T05:30:50Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- setUp -->
-        <test-method status="PASS" signature="beforeMethod(java.lang.reflect.Method, [Ljava.lang.Object;)[pri:0, instance:com.automationpractice.tests.RegistrationTests@17776a8]" name="beforeMethod" is-config="true" duration-ms="2" started-at="2018-06-23T01:04:05Z" finished-at="2018-06-23T01:04:05Z">
+        <test-method status="PASS" signature="beforeMethod(java.lang.reflect.Method, [Ljava.lang.Object;)[pri:0, instance:com.automationpractice.tests.RegistrationTests@17776a8]" name="beforeMethod" is-config="true" duration-ms="3" started-at="2018-06-24T05:30:50Z" finished-at="2018-06-24T05:30:50Z">
           <params>
             <param index="0">
               <value>
@@ -27,11 +27,11 @@
           <reporter-output>
           </reporter-output>
         </test-method> <!-- beforeMethod -->
-        <test-method status="PASS" signature="testRegistration()[pri:0, instance:com.automationpractice.tests.RegistrationTests@17776a8]" name="testRegistration" duration-ms="4966" started-at="2018-06-23T01:04:05Z" finished-at="2018-06-23T01:04:10Z">
+        <test-method status="PASS" signature="testRegistration()[pri:0, instance:com.automationpractice.tests.RegistrationTests@17776a8]" name="testRegistration" duration-ms="3839" started-at="2018-06-24T05:30:50Z" finished-at="2018-06-24T05:30:53Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- testRegistration -->
-        <test-method status="PASS" signature="logTestStop(java.lang.reflect.Method, [Ljava.lang.Object;)[pri:0, instance:com.automationpractice.tests.RegistrationTests@17776a8]" name="logTestStop" is-config="true" duration-ms="0" started-at="2018-06-23T01:04:10Z" finished-at="2018-06-23T01:04:10Z">
+        <test-method status="PASS" signature="logTestStop(java.lang.reflect.Method, [Ljava.lang.Object;)[pri:0, instance:com.automationpractice.tests.RegistrationTests@17776a8]" name="logTestStop" is-config="true" duration-ms="1" started-at="2018-06-24T05:30:53Z" finished-at="2018-06-24T05:30:53Z">
           <params>
             <param index="0">
               <value>
@@ -47,7 +47,7 @@
           <reporter-output>
           </reporter-output>
         </test-method> <!-- logTestStop -->
-        <test-method status="PASS" signature="beforeMethod(java.lang.reflect.Method, [Ljava.lang.Object;)[pri:0, instance:com.automationpractice.tests.RegistrationTests@17776a8]" name="beforeMethod" is-config="true" duration-ms="0" started-at="2018-06-23T01:04:10Z" finished-at="2018-06-23T01:04:10Z">
+        <test-method status="PASS" signature="beforeMethod(java.lang.reflect.Method, [Ljava.lang.Object;)[pri:0, instance:com.automationpractice.tests.RegistrationTests@17776a8]" name="beforeMethod" is-config="true" duration-ms="1" started-at="2018-06-24T05:30:53Z" finished-at="2018-06-24T05:30:53Z">
           <params>
             <param index="0">
               <value>
@@ -63,11 +63,11 @@
           <reporter-output>
           </reporter-output>
         </test-method> <!-- beforeMethod -->
-        <test-method status="PASS" signature="testRegistrationUsingUI()[pri:0, instance:com.automationpractice.tests.RegistrationTests@17776a8]" name="testRegistrationUsingUI" duration-ms="18102" started-at="2018-06-23T01:04:10Z" finished-at="2018-06-23T01:04:28Z">
+        <test-method status="PASS" signature="testRegistrationUsingUI()[pri:0, instance:com.automationpractice.tests.RegistrationTests@17776a8]" name="testRegistrationUsingUI" duration-ms="17296" started-at="2018-06-24T05:30:53Z" finished-at="2018-06-24T05:31:11Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- testRegistrationUsingUI -->
-        <test-method status="PASS" signature="logTestStop(java.lang.reflect.Method, [Ljava.lang.Object;)[pri:0, instance:com.automationpractice.tests.RegistrationTests@17776a8]" name="logTestStop" is-config="true" duration-ms="0" started-at="2018-06-23T01:04:28Z" finished-at="2018-06-23T01:04:28Z">
+        <test-method status="PASS" signature="logTestStop(java.lang.reflect.Method, [Ljava.lang.Object;)[pri:0, instance:com.automationpractice.tests.RegistrationTests@17776a8]" name="logTestStop" is-config="true" duration-ms="0" started-at="2018-06-24T05:31:11Z" finished-at="2018-06-24T05:31:11Z">
           <params>
             <param index="0">
               <value>
@@ -83,7 +83,7 @@
           <reporter-output>
           </reporter-output>
         </test-method> <!-- logTestStop -->
-        <test-method status="PASS" signature="beforeMethod(java.lang.reflect.Method, [Ljava.lang.Object;)[pri:0, instance:com.automationpractice.tests.RegistrationTests@17776a8]" name="beforeMethod" is-config="true" duration-ms="1" started-at="2018-06-23T01:04:28Z" finished-at="2018-06-23T01:04:28Z">
+        <test-method status="PASS" signature="beforeMethod(java.lang.reflect.Method, [Ljava.lang.Object;)[pri:0, instance:com.automationpractice.tests.RegistrationTests@17776a8]" name="beforeMethod" is-config="true" duration-ms="0" started-at="2018-06-24T05:31:11Z" finished-at="2018-06-24T05:31:11Z">
           <params>
             <param index="0">
               <value>
@@ -99,11 +99,11 @@
           <reporter-output>
           </reporter-output>
         </test-method> <!-- beforeMethod -->
-        <test-method status="PASS" signature="testRegistrationWithExistedCredsAPI()[pri:0, instance:com.automationpractice.tests.RegistrationTests@17776a8]" name="testRegistrationWithExistedCredsAPI" duration-ms="539" started-at="2018-06-23T01:04:28Z" finished-at="2018-06-23T01:04:29Z">
+        <test-method status="PASS" signature="testRegistrationWithExistedCredsAPI()[pri:0, instance:com.automationpractice.tests.RegistrationTests@17776a8]" name="testRegistrationWithExistedCredsAPI" duration-ms="526" started-at="2018-06-24T05:31:11Z" finished-at="2018-06-24T05:31:11Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- testRegistrationWithExistedCredsAPI -->
-        <test-method status="PASS" signature="logTestStop(java.lang.reflect.Method, [Ljava.lang.Object;)[pri:0, instance:com.automationpractice.tests.RegistrationTests@17776a8]" name="logTestStop" is-config="true" duration-ms="2" started-at="2018-06-23T01:04:29Z" finished-at="2018-06-23T01:04:29Z">
+        <test-method status="PASS" signature="logTestStop(java.lang.reflect.Method, [Ljava.lang.Object;)[pri:0, instance:com.automationpractice.tests.RegistrationTests@17776a8]" name="logTestStop" is-config="true" duration-ms="0" started-at="2018-06-24T05:31:11Z" finished-at="2018-06-24T05:31:11Z">
           <params>
             <param index="0">
               <value>
@@ -119,7 +119,7 @@
           <reporter-output>
           </reporter-output>
         </test-method> <!-- logTestStop -->
-        <test-method status="PASS" signature="beforeMethod(java.lang.reflect.Method, [Ljava.lang.Object;)[pri:0, instance:com.automationpractice.tests.RegistrationTests@17776a8]" name="beforeMethod" is-config="true" duration-ms="1" started-at="2018-06-23T01:04:29Z" finished-at="2018-06-23T01:04:29Z">
+        <test-method status="PASS" signature="beforeMethod(java.lang.reflect.Method, [Ljava.lang.Object;)[pri:0, instance:com.automationpractice.tests.RegistrationTests@17776a8]" name="beforeMethod" is-config="true" duration-ms="1" started-at="2018-06-24T05:31:11Z" finished-at="2018-06-24T05:31:11Z">
           <params>
             <param index="0">
               <value>
@@ -135,11 +135,11 @@
           <reporter-output>
           </reporter-output>
         </test-method> <!-- beforeMethod -->
-        <test-method status="PASS" signature="testRegistrationWithNotExistedCredsAPI()[pri:0, instance:com.automationpractice.tests.RegistrationTests@17776a8]" name="testRegistrationWithNotExistedCredsAPI" duration-ms="427" started-at="2018-06-23T01:04:29Z" finished-at="2018-06-23T01:04:29Z">
+        <test-method status="PASS" signature="testRegistrationWithNotExistedCredsAPI()[pri:0, instance:com.automationpractice.tests.RegistrationTests@17776a8]" name="testRegistrationWithNotExistedCredsAPI" duration-ms="453" started-at="2018-06-24T05:31:11Z" finished-at="2018-06-24T05:31:12Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- testRegistrationWithNotExistedCredsAPI -->
-        <test-method status="PASS" signature="logTestStop(java.lang.reflect.Method, [Ljava.lang.Object;)[pri:0, instance:com.automationpractice.tests.RegistrationTests@17776a8]" name="logTestStop" is-config="true" duration-ms="1" started-at="2018-06-23T01:04:29Z" finished-at="2018-06-23T01:04:29Z">
+        <test-method status="PASS" signature="logTestStop(java.lang.reflect.Method, [Ljava.lang.Object;)[pri:0, instance:com.automationpractice.tests.RegistrationTests@17776a8]" name="logTestStop" is-config="true" duration-ms="0" started-at="2018-06-24T05:31:12Z" finished-at="2018-06-24T05:31:12Z">
           <params>
             <param index="0">
               <value>
@@ -155,7 +155,7 @@
           <reporter-output>
           </reporter-output>
         </test-method> <!-- logTestStop -->
-        <test-method status="PASS" signature="tearDown()[pri:0, instance:com.automationpractice.tests.RegistrationTests@17776a8]" name="tearDown" is-config="true" duration-ms="1247" started-at="2018-06-23T01:04:29Z" finished-at="2018-06-23T01:04:30Z">
+        <test-method status="PASS" signature="tearDown()[pri:0, instance:com.automationpractice.tests.RegistrationTests@17776a8]" name="tearDown" is-config="true" duration-ms="1202" started-at="2018-06-24T05:31:12Z" finished-at="2018-06-24T05:31:13Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- tearDown -->

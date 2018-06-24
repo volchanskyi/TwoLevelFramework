@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.automationpractice.tests.RegistrationTests" tests="3" skipped="0" failures="0" errors="0" timestamp="2018-06-08T21:51:59" hostname="Latitude" time="2.879">
+<testsuite name="com.automationpractice.tests.RegistrationTests" tests="4" skipped="0" failures="0" errors="0" timestamp="2018-06-24T05:50:52" hostname="Latitude" time="11.836">
   <properties/>
-  <testcase name="testRegistration" classname="com.automationpractice.tests.RegistrationTests" time="1.95"/>
-  <testcase name="testRegistrationWithExistedCredsAPI" classname="com.automationpractice.tests.RegistrationTests" time="0.453"/>
-  <testcase name="testRegistrationWithNotExistedCredsAPI" classname="com.automationpractice.tests.RegistrationTests" time="0.473"/>
+  <testcase name="testRegistration" classname="com.automationpractice.tests.RegistrationTests" time="1.914"/>
+  <testcase name="testRegistrationUsingUI" classname="com.automationpractice.tests.RegistrationTests" time="9.006"/>
+  <testcase name="testRegistrationWithExistedCredsAPI" classname="com.automationpractice.tests.RegistrationTests" time="0.492"/>
+  <testcase name="testRegistrationWithNotExistedCredsAPI" classname="com.automationpractice.tests.RegistrationTests" time="0.42"/>
   <system-out><![CDATA[]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

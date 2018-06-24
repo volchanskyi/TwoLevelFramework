@@ -29,44 +29,48 @@ public class ApplicationManager {
 	properties = new Properties();
     }
 
-    //Refactor (add params to choose browser types)
+    // Refactor (add params to choose browser types)
     public void init() throws IOException {
 	String target = System.getProperty("target", "local");
 	properties.load(new FileReader(new File(String.format("src/test/resources/%s.properties", target))));
-	
-	System.setProperty("webdriver.chrome.driver", "src/test/resources/webdrivers/pc/chromedriver.exe");
-
+	if (System.getProperty("browser") != null) {
+	    getDriver();
+	}
     }
 
     public void stop() {
-	//Lazy init
-	if (wd !=null) {
+	// Lazy init
+	if (wd != null) {
 	    wd.quit();
 	}
-	
+
     }
-    
+
     public HttpSession newSession() {
 	return new HttpSession(this);
     }
 
     public String getProperty(String key) {
 	return properties.getProperty(key);
-	
+
     }
 
     public RegistrationHelper registration() throws MalformedURLException {
-	//Lazy init
+	// Lazy init
 	if (registrationHelper == null) {
-	registrationHelper =  new RegistrationHelper(this);
-    }
+	    registrationHelper = new RegistrationHelper(this);
+	}
 	return registrationHelper;
     }
 
     public WebDriver getDriver() throws MalformedURLException {
-	//Lazy init
-	if ("".equals(properties.getProperty("selenium.server")) && wd == null) {
-	    if (browser.equals(BrowserType.FIREFOX)) {
+	System.setProperty("webdriver.chrome.driver", "src/test/resources/webdrivers/pc/chromedriver.exe");
+	System.setProperty("webdriver.firefox.driver", "src/test/resources/webdrivers/pc/geckodriver.exe");
+	//If we dont use selenium server then run local browser
+	if ("".equals(properties.getProperty("selenium.server"))) {
+	 // Lazy init
+	    if (wd == null) {
+		if (browser.equals(BrowserType.FIREFOX)) {
 		    wd = new FirefoxDriver();
 		} else if (browser.equals(BrowserType.CHROME)) {
 		    wd = new ChromeDriver();
@@ -75,6 +79,7 @@ public class ApplicationManager {
 		}
 		wd.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
 		wd.get(properties.getProperty("web.baseUrl"));
+	    }
 	} else {
 	    DesiredCapabilities capabilities = new DesiredCapabilities();
 	    capabilities.setBrowserName(browser);
@@ -82,6 +87,5 @@ public class ApplicationManager {
 	}
 	return wd;
     }
-    
-   
+
 }
