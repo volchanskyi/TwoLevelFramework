@@ -34,7 +34,7 @@ public class ApplicationManager {
 	String target = System.getProperty("target", "local");
 	properties.load(new FileReader(new File(String.format("src/test/resources/%s.properties", target))));
 	
-	System.setProperty("webdriver.gecko.driver", "src/test/resources/webdrivers/pc/geckodriver.exe");
+	System.setProperty("webdriver.chrome.driver", "src/test/resources/webdrivers/pc/chromedriver.exe");
 
     }
 
@@ -55,7 +55,7 @@ public class ApplicationManager {
 	
     }
 
-    public RegistrationHelper registration() {
+    public RegistrationHelper registration() throws MalformedURLException {
 	//Lazy init
 	if (registrationHelper == null) {
 	registrationHelper =  new RegistrationHelper(this);

@@ -17,6 +17,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import com.automationpractice.appmanager.HttpSession;
+import com.automationpractice.appmanager.RegistrationHelper;
 
 public class RegistrationTests extends TestBase {
 
@@ -56,19 +57,22 @@ public class RegistrationTests extends TestBase {
 	assertEquals(apiMsg, "Invalid email address.");
     }
     
-//    @Test
-//    public void testRegistrationUsingUI() throws MessagingException, IOException, InterruptedException {
-//	long now = System.currentTimeMillis();
-//	String email = "automationpractice_" + now;
-//	String password = "testPWD001";
-////	String link = "https://blablabla"; (not implemented yet) DO NOT DELETE
+    @Test
+    public void testRegistrationUsingUI() throws MessagingException, IOException, InterruptedException {
+	long now = System.currentTimeMillis();
+	String email = "automationpractice_" + now;
+	String password = "testPWD001";
+//	String link = "https://blablabla"; (not implemented yet) DO NOT DELETE
+	RegistrationHelper regHelper = APP.registration();
 //	HttpSession session = APP.newSession();
 //	assertTrue(session.createEmail(email));
 //	assertTrue(session.signUp(email + "@mailinator.com"));
-////	assertTrue(session.verifyActivationLink(link)); (automationpractice.com doesn`t send an activation link) DO NOT DELETE
-//	assertTrue(session.register(email + "@mailinator.com", "My account - My Store", "Ivan", "lastName", password, "178 Somewhere Dr.",
-//		"San Francisco", "94132", "5", "4158962578"));
-//    }
+//	assertTrue(session.verifyActivationLink(link)); (automationpractice.com doesn`t send an activation link) DO NOT DELETE
+	regHelper.initRegistrationUsingEmail(email + "@mailinator.com").fillOutRegistrationForm("Ivan", "lastName", password, "178 Somewhere Dr.", "San Francisco", "94132",
+		 "California", "4158962578");
+	assertTrue(regHelper.verify("My account - My Store"));
+	//"My account - My Store"
+    }
     
 
 

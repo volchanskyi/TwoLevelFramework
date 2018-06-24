@@ -1,57 +1,165 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testng-results skipped="0" failed="0" ignored="0" total="1" passed="1">
+<testng-results skipped="0" failed="0" ignored="0" total="4" passed="4">
   <reporter-output>
   </reporter-output>
-  <suite name="Default suite" duration-ms="4333" started-at="2018-06-08T04:24:42Z" finished-at="2018-06-08T04:24:47Z">
+  <suite name="Default suite" duration-ms="24070" started-at="2018-06-23T01:04:05Z" finished-at="2018-06-23T01:04:29Z">
     <groups>
     </groups>
-    <test name="Default test" duration-ms="4333" started-at="2018-06-08T04:24:42Z" finished-at="2018-06-08T04:24:47Z">
-      <class name="com.automationpractice.tests.CartTests">
-        <test-method status="PASS" signature="setUp()[pri:0, instance:com.automationpractice.tests.CartTests@32cf48b7]" name="setUp" is-config="true" duration-ms="11" started-at="2018-06-08T04:24:42Z" finished-at="2018-06-08T04:24:42Z">
+    <test name="Default test" duration-ms="24070" started-at="2018-06-23T01:04:05Z" finished-at="2018-06-23T01:04:29Z">
+      <class name="com.automationpractice.tests.RegistrationTests">
+        <test-method status="PASS" signature="setUp()[pri:0, instance:com.automationpractice.tests.RegistrationTests@17776a8]" name="setUp" is-config="true" duration-ms="16" started-at="2018-06-23T01:04:05Z" finished-at="2018-06-23T01:04:05Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- setUp -->
-        <test-method status="PASS" signature="beforeMethod(java.lang.reflect.Method, [Ljava.lang.Object;)[pri:0, instance:com.automationpractice.tests.CartTests@32cf48b7]" name="beforeMethod" is-config="true" duration-ms="2" started-at="2018-06-08T04:24:42Z" finished-at="2018-06-08T04:24:42Z">
+        <test-method status="PASS" signature="beforeMethod(java.lang.reflect.Method, [Ljava.lang.Object;)[pri:0, instance:com.automationpractice.tests.RegistrationTests@17776a8]" name="beforeMethod" is-config="true" duration-ms="2" started-at="2018-06-23T01:04:05Z" finished-at="2018-06-23T01:04:05Z">
           <params>
             <param index="0">
               <value>
-                <![CDATA[public void com.automationpractice.tests.CartTests.testAddProductToCart() throws java.io.IOException]]>
+                <![CDATA[public void com.automationpractice.tests.RegistrationTests.testRegistration() throws javax.mail.MessagingException,java.io.IOException,java.lang.InterruptedException]]>
               </value>
             </param>
             <param index="1">
               <value>
-                <![CDATA[[Ljava.lang.Object;@729d991e]]>
+                <![CDATA[[Ljava.lang.Object;@6da00fb9]]>
               </value>
             </param>
           </params>
           <reporter-output>
           </reporter-output>
         </test-method> <!-- beforeMethod -->
-        <test-method status="PASS" signature="testAddProductToCart()[pri:0, instance:com.automationpractice.tests.CartTests@32cf48b7]" name="testAddProductToCart" duration-ms="4310" started-at="2018-06-08T04:24:42Z" finished-at="2018-06-08T04:24:47Z">
+        <test-method status="PASS" signature="testRegistration()[pri:0, instance:com.automationpractice.tests.RegistrationTests@17776a8]" name="testRegistration" duration-ms="4966" started-at="2018-06-23T01:04:05Z" finished-at="2018-06-23T01:04:10Z">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- testAddProductToCart -->
-        <test-method status="PASS" signature="logTestStop(java.lang.reflect.Method, [Ljava.lang.Object;)[pri:0, instance:com.automationpractice.tests.CartTests@32cf48b7]" name="logTestStop" is-config="true" duration-ms="0" started-at="2018-06-08T04:24:47Z" finished-at="2018-06-08T04:24:47Z">
+        </test-method> <!-- testRegistration -->
+        <test-method status="PASS" signature="logTestStop(java.lang.reflect.Method, [Ljava.lang.Object;)[pri:0, instance:com.automationpractice.tests.RegistrationTests@17776a8]" name="logTestStop" is-config="true" duration-ms="0" started-at="2018-06-23T01:04:10Z" finished-at="2018-06-23T01:04:10Z">
           <params>
             <param index="0">
               <value>
-                <![CDATA[public void com.automationpractice.tests.CartTests.testAddProductToCart() throws java.io.IOException]]>
+                <![CDATA[public void com.automationpractice.tests.RegistrationTests.testRegistration() throws javax.mail.MessagingException,java.io.IOException,java.lang.InterruptedException]]>
               </value>
             </param>
             <param index="1">
               <value>
-                <![CDATA[[Ljava.lang.Object;@729d991e]]>
+                <![CDATA[[Ljava.lang.Object;@6da00fb9]]>
               </value>
             </param>
           </params>
           <reporter-output>
           </reporter-output>
         </test-method> <!-- logTestStop -->
-        <test-method status="PASS" signature="tearDown()[pri:0, instance:com.automationpractice.tests.CartTests@32cf48b7]" name="tearDown" is-config="true" duration-ms="0" started-at="2018-06-08T04:24:47Z" finished-at="2018-06-08T04:24:47Z">
+        <test-method status="PASS" signature="beforeMethod(java.lang.reflect.Method, [Ljava.lang.Object;)[pri:0, instance:com.automationpractice.tests.RegistrationTests@17776a8]" name="beforeMethod" is-config="true" duration-ms="0" started-at="2018-06-23T01:04:10Z" finished-at="2018-06-23T01:04:10Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[public void com.automationpractice.tests.RegistrationTests.testRegistrationUsingUI() throws javax.mail.MessagingException,java.io.IOException,java.lang.InterruptedException]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[[Ljava.lang.Object;@a202ccb]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- beforeMethod -->
+        <test-method status="PASS" signature="testRegistrationUsingUI()[pri:0, instance:com.automationpractice.tests.RegistrationTests@17776a8]" name="testRegistrationUsingUI" duration-ms="18102" started-at="2018-06-23T01:04:10Z" finished-at="2018-06-23T01:04:28Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testRegistrationUsingUI -->
+        <test-method status="PASS" signature="logTestStop(java.lang.reflect.Method, [Ljava.lang.Object;)[pri:0, instance:com.automationpractice.tests.RegistrationTests@17776a8]" name="logTestStop" is-config="true" duration-ms="0" started-at="2018-06-23T01:04:28Z" finished-at="2018-06-23T01:04:28Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[public void com.automationpractice.tests.RegistrationTests.testRegistrationUsingUI() throws javax.mail.MessagingException,java.io.IOException,java.lang.InterruptedException]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[[Ljava.lang.Object;@a202ccb]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- logTestStop -->
+        <test-method status="PASS" signature="beforeMethod(java.lang.reflect.Method, [Ljava.lang.Object;)[pri:0, instance:com.automationpractice.tests.RegistrationTests@17776a8]" name="beforeMethod" is-config="true" duration-ms="1" started-at="2018-06-23T01:04:28Z" finished-at="2018-06-23T01:04:28Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[public void com.automationpractice.tests.RegistrationTests.testRegistrationWithExistedCredsAPI() throws java.io.IOException]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[[Ljava.lang.Object;@20f12539]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- beforeMethod -->
+        <test-method status="PASS" signature="testRegistrationWithExistedCredsAPI()[pri:0, instance:com.automationpractice.tests.RegistrationTests@17776a8]" name="testRegistrationWithExistedCredsAPI" duration-ms="539" started-at="2018-06-23T01:04:28Z" finished-at="2018-06-23T01:04:29Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testRegistrationWithExistedCredsAPI -->
+        <test-method status="PASS" signature="logTestStop(java.lang.reflect.Method, [Ljava.lang.Object;)[pri:0, instance:com.automationpractice.tests.RegistrationTests@17776a8]" name="logTestStop" is-config="true" duration-ms="2" started-at="2018-06-23T01:04:29Z" finished-at="2018-06-23T01:04:29Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[public void com.automationpractice.tests.RegistrationTests.testRegistrationWithExistedCredsAPI() throws java.io.IOException]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[[Ljava.lang.Object;@20f12539]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- logTestStop -->
+        <test-method status="PASS" signature="beforeMethod(java.lang.reflect.Method, [Ljava.lang.Object;)[pri:0, instance:com.automationpractice.tests.RegistrationTests@17776a8]" name="beforeMethod" is-config="true" duration-ms="1" started-at="2018-06-23T01:04:29Z" finished-at="2018-06-23T01:04:29Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[public void com.automationpractice.tests.RegistrationTests.testRegistrationWithNotExistedCredsAPI() throws java.io.IOException]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[[Ljava.lang.Object;@75b25825]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- beforeMethod -->
+        <test-method status="PASS" signature="testRegistrationWithNotExistedCredsAPI()[pri:0, instance:com.automationpractice.tests.RegistrationTests@17776a8]" name="testRegistrationWithNotExistedCredsAPI" duration-ms="427" started-at="2018-06-23T01:04:29Z" finished-at="2018-06-23T01:04:29Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testRegistrationWithNotExistedCredsAPI -->
+        <test-method status="PASS" signature="logTestStop(java.lang.reflect.Method, [Ljava.lang.Object;)[pri:0, instance:com.automationpractice.tests.RegistrationTests@17776a8]" name="logTestStop" is-config="true" duration-ms="1" started-at="2018-06-23T01:04:29Z" finished-at="2018-06-23T01:04:29Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[public void com.automationpractice.tests.RegistrationTests.testRegistrationWithNotExistedCredsAPI() throws java.io.IOException]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[[Ljava.lang.Object;@75b25825]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- logTestStop -->
+        <test-method status="PASS" signature="tearDown()[pri:0, instance:com.automationpractice.tests.RegistrationTests@17776a8]" name="tearDown" is-config="true" duration-ms="1247" started-at="2018-06-23T01:04:29Z" finished-at="2018-06-23T01:04:30Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- tearDown -->
-      </class> <!-- com.automationpractice.tests.CartTests -->
+      </class> <!-- com.automationpractice.tests.RegistrationTests -->
     </test> <!-- Default test -->
   </suite> <!-- Default suite -->
 </testng-results>
