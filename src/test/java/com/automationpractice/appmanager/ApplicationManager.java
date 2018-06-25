@@ -33,9 +33,7 @@ public class ApplicationManager {
     public void init() throws IOException {
 	String target = System.getProperty("target", "local");
 	properties.load(new FileReader(new File(String.format("src/test/resources/%s.properties", target))));
-	if (System.getProperty("browser") != null) {
-	    getDriver();
-	}
+
     }
 
     public void stop() {
@@ -64,11 +62,12 @@ public class ApplicationManager {
     }
 
     public WebDriver getDriver() throws MalformedURLException {
+	//Set path to the drivers
 	System.setProperty("webdriver.chrome.driver", "src/test/resources/webdrivers/pc/chromedriver.exe");
-	System.setProperty("webdriver.firefox.driver", "src/test/resources/webdrivers/pc/geckodriver.exe");
-	//If we dont use selenium server then run local browser
+	System.setProperty("webdriver.gecko.driver", "src/test/resources/webdrivers/pc/geckodriver.exe");
+	// If we dont use selenium server then run local browser
 	if ("".equals(properties.getProperty("selenium.server"))) {
-	 // Lazy init
+	    // Lazy init
 	    if (wd == null) {
 		if (browser.equals(BrowserType.FIREFOX)) {
 		    wd = new FirefoxDriver();
@@ -77,7 +76,8 @@ public class ApplicationManager {
 		} else if (browser.equals(BrowserType.IE)) {
 		    wd = new InternetExplorerDriver();
 		}
-		wd.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
+//		wd.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
+		
 		wd.get(properties.getProperty("web.baseUrl"));
 	    }
 	} else {
