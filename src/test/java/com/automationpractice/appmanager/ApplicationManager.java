@@ -9,6 +9,7 @@ import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.Capabilities;
+import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -81,8 +82,10 @@ public class ApplicationManager {
 		wd.get(properties.getProperty("web.baseUrl"));
 	    }
 	} else {
+	    //Run tests remotely
 	    DesiredCapabilities capabilities = new DesiredCapabilities();
 	    capabilities.setBrowserName(browser);
+	    capabilities.setPlatform(Platform.fromString(System.getProperty("platform", "win7")));
 	    wd = new RemoteWebDriver(new URL(properties.getProperty("selenium.server")), capabilities);
 	}
 	return wd;

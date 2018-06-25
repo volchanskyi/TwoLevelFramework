@@ -1,14 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.automationpractice.tests.RegistrationTests" tests="4" skipped="0" failures="0" errors="0" timestamp="2018-06-24T20:38:28" hostname="Latitude" time="18.179">
+<testsuite name="com.automationpractice.tests.RegistrationTests" tests="1" skipped="0" failures="0" errors="0" timestamp="2018-06-25T04:26:19" hostname="Latitude" time="14.458">
   <properties/>
-  <testcase name="testRegistration" classname="com.automationpractice.tests.RegistrationTests" time="2.872"/>
-  <testcase name="testRegistrationUsingUI" classname="com.automationpractice.tests.RegistrationTests" time="14.35"/>
-  <testcase name="testRegistrationWithExistedCredsAPI" classname="com.automationpractice.tests.RegistrationTests" time="0.531"/>
-  <testcase name="testRegistrationWithNotExistedCredsAPI" classname="com.automationpractice.tests.RegistrationTests" time="0.42"/>
+  <testcase name="testRegistrationUsingUI" classname="com.automationpractice.tests.RegistrationTests" time="14.458"/>
   <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[Starting ChromeDriver 2.36.540470 (e522d04694c7ebea4ba8821272dbef4f9b818c91) on port 28743
-Only local connections are allowed.
-Jun 24, 2018 1:38:34 PM org.openqa.selenium.remote.ProtocolHandshake createSession
+  <system-err><![CDATA[Jun 24, 2018 9:26:24 PM org.openqa.selenium.remote.ProtocolHandshake createSession
 INFO: Detected dialect: OSS
 ]]></system-err>
 </testsuite>
