@@ -18,6 +18,11 @@ repositories {
     mavenCentral()
 }
 
+//adding Allure
+configurations {
+    agent
+}
+
 // In this section you declare the dependencies for your production and test code
 dependencies {
     // The production code uses the SLF4J logging API at compile time
@@ -42,9 +47,20 @@ dependencies {
     compile 'com.google.code.gson:gson:2.8.2'
     compile 'org.apache.httpcomponents:httpclient:4.5.3'
     compile 'org.apache.httpcomponents:fluent-hc:4.5.3'
+    //adding Allure
+     agent "org.aspectj:aspectjweaver:1.9.1"
+    compile "ru.yandex.qatools.allure:allure-testng-adaptor:1.5.4"
+
     
     
 }
+
+/*task generateAllureReport(type: Exec) {
+commandLine "allure generate D:/projects/Workspace/TwoLevelFramework/build/allure-results --clean"
+}
+
+test.finalizedBy(generateAllureReport)
+*/
 
 test {
 	useTestNG {
@@ -62,4 +78,8 @@ test {
 	if (project.hasProperty('verifyUI')) {
 	systemProperty 'verifyUI', "${verifyUI}"
 	}
+}
+
+test.doFirst {
+    jvmArgs "-javaagent:${configurations.agent.singleFile}"
 }
