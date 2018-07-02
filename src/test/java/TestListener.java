@@ -7,6 +7,7 @@ import com.automationpractice.appmanager.ApplicationManager;
 import ru.yandex.qatools.allure.annotations.Attachment;
 
 
+
 public class TestListener implements ITestListener {
 
     @Override
