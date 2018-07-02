@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.automationpractice.tests.RegistrationTests" tests="4" skipped="0" failures="0" errors="0" timestamp="2018-07-02T04:27:58" hostname="Latitude" time="21.074">
+<testsuite name="com.automationpractice.tests.RegistrationTests" tests="4" skipped="0" failures="0" errors="0" timestamp="2018-07-02T06:28:42" hostname="Latitude" time="22.262">
   <properties/>
-  <testcase name="testRegistration" classname="com.automationpractice.tests.RegistrationTests" time="2.958"/>
-  <testcase name="testRegistrationUsingUI" classname="com.automationpractice.tests.RegistrationTests" time="16.645"/>
-  <testcase name="testRegistrationWithExistedCredsAPI" classname="com.automationpractice.tests.RegistrationTests" time="0.533"/>
-  <testcase name="testRegistrationWithNotExistedCredsAPI" classname="com.automationpractice.tests.RegistrationTests" time="0.93"/>
+  <testcase name="testRegistrationAPI" classname="com.automationpractice.tests.RegistrationTests" time="3.622"/>
+  <testcase name="testRegistrationGUI" classname="com.automationpractice.tests.RegistrationTests" time="17.677"/>
+  <testcase name="testRegistrationWithExistedCredsAPI" classname="com.automationpractice.tests.RegistrationTests" time="0.541"/>
+  <testcase name="testRegistrationWithNotExistedCredsAPI" classname="com.automationpractice.tests.RegistrationTests" time="0.417"/>
   <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[Jul 01, 2018 9:28:05 PM org.openqa.selenium.remote.ProtocolHandshake createSession
+  <system-err><![CDATA[Jul 01, 2018 11:28:50 PM org.openqa.selenium.remote.ProtocolHandshake createSession
 INFO: Detected dialect: OSS
 ]]></system-err>
 </testsuite>

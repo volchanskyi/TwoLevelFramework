@@ -30,7 +30,7 @@ public class RegistrationTests extends TestBase {
     }
 
     @Test
-    public void testRegistration() throws MessagingException, IOException, InterruptedException {
+    public void testRegistrationAPI() throws MessagingException, IOException, InterruptedException {
 	int now = (int)System.currentTimeMillis();
 	String email = "automationpractice_" + now;
 	String password = "testPWD" + now;
@@ -45,7 +45,7 @@ public class RegistrationTests extends TestBase {
     }
 
     @Test
-    public void testRegistrationWithExistedCredsAPI() throws IOException {
+    public void testRegistrationWithCredsAPI() throws IOException {
 	HttpSession session = APP.newSession();
 	String apiMsg = session.registerExistedAccountWithAPI("volchanskij@gmail.com");
 	assertEquals(apiMsg,
@@ -53,14 +53,14 @@ public class RegistrationTests extends TestBase {
     }
 
     @Test
-    public void testRegistrationWithNotExistedCredsAPI() throws IOException {
+    public void testRegistrationWithNoCredsAPI() throws IOException {
 	HttpSession session = APP.newSession();
 	String apiMsg = session.registerExistedAccountWithAPI("volchanskij@");
 	assertEquals(apiMsg, "Invalid email address.");
     }
 
     @Test
-    public void testRegistrationUsingUI() throws MessagingException, IOException, InterruptedException {
+    public void testRegistrationGUI() throws MessagingException, IOException, InterruptedException {
 	int now = (int)System.currentTimeMillis();
 	String email = "automationpractice_" + now;
 	String password = "testPWD" + now;
