@@ -15,7 +15,7 @@ public class RegistrationHelper extends HelperBase {
 
     }
 
-    public RegistrationHelper initRegistrationUsingEmail(String email) {
+    public RegistrationHelper initRegistrationUsingEmailWith(String email) {
 	wd.get(app.getProperty("web.baseUrl") + "index.php?controller=authentication&back=my-account#account-creation");
 	type(By.cssSelector("#email_create"), email);
 	click(By.cssSelector("#SubmitCreate"));
@@ -23,7 +23,7 @@ public class RegistrationHelper extends HelperBase {
 
     }
 
-    public RegistrationHelper fillOutRegistrationForm(String fName, String lName, String password, String address,
+    public RegistrationHelper fillOutRegistrationFormWith(String fName, String lName, String password, String address,
 	    String city, String postcode, String state, String phone) {
 	// wd.get(app.getProperty("web.baseUrl") +
 	// "index.php?controller=authentication&back=my-account#account-creation");

@@ -71,7 +71,7 @@ public class RegistrationTests extends TestBase {
 	// assertTrue(session.signUp(email + "@mailinator.com"));
 	// assertTrue(session.verifyActivationLink(link)); (automationpractice.com
 	// doesn`t send an activation link) DO NOT DELETE
-	regHelper.initRegistrationUsingEmail(email + "@mailinator.com").fillOutRegistrationForm("Ivan", "lastName",
+	regHelper.initRegistrationUsingEmailWith(email + "@mailinator.com").fillOutRegistrationFormWith("Ivan", "lastName",
 		password, "178 Somewhere Dr.", "San Francisco", "94132", "California", "4158962578");
 	assertTrue(regHelper.verify("My account - My Store"));
 	// "My account - My Store"
