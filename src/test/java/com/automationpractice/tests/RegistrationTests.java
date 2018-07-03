@@ -21,13 +21,13 @@ import com.automationpractice.appmanager.RegistrationHelper;
 
 public class RegistrationTests extends TestBase {
 
-    final private Logger logger = LoggerFactory.getLogger(TestBase.class);
-
-    @BeforeMethod
-    private void beforeMethod(Method method, Object[] parameters) {
-	logger.debug("Start test " + method.getName() + " with params " + Arrays.asList(parameters));
-
-    }
+//    final private Logger logger = LoggerFactory.getLogger(TestBase.class);
+//
+//    @BeforeMethod
+//    private void beforeMethod(Method method, Object[] parameters) {
+//	logger.debug("Start test " + method.getName() + " with params " + Arrays.asList(parameters));
+//
+//    }
 
     @Test
     public void testRegistrationAPI() throws MessagingException, IOException, InterruptedException {
@@ -76,11 +76,11 @@ public class RegistrationTests extends TestBase {
 	assertTrue(regHelper.verify("My account - My Store"));
 	// "My account - My Store"
     }
-
-    @AfterMethod(alwaysRun = true)
-    private void logTestStop(Method method, Object[] parameters) {
-	logger.debug("Stop test " + method.getName());
-
-    }
+//
+//    @AfterMethod(alwaysRun = true)
+//    private void logTestStop(Method method, Object[] parameters) {
+//	logger.debug("Stop test " + method.getName());
+//
+//    }
 
 }

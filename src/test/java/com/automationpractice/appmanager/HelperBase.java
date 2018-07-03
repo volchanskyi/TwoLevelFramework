@@ -50,7 +50,7 @@ public class HelperBase {
     protected void selectFromDDM(By locator, String value) {
 //	WebElement ddMenu = waitForPresenceOfElement(p, objectName, objectType);
 
-	Select choose = new Select(wait.until(ExpectedConditions.elpresenceOfElementLocated(locator)));
+	Select choose = new Select(wait.until(ExpectedConditions.presenceOfElementLocated(locator)));
 	// Selecting value
 	choose.selectByVisibleText(value);
 //	// Create instance of Javascript executor

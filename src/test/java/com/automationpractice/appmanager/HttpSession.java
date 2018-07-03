@@ -34,8 +34,8 @@ import com.google.gson.reflect.TypeToken;
 
 public class HttpSession {
     private CloseableHttpClient httpClient;
-    HttpClientContext context = HttpClientContext.create();
-    CookieStore cookieStore = new BasicCookieStore();
+    private HttpClientContext context = HttpClientContext.create();
+    private CookieStore cookieStore = new BasicCookieStore();
     private ApplicationManager app;
     protected static final Products PRODUCTS = new Products();
     private Timestamp timeStamp = new Timestamp(System.currentTimeMillis());

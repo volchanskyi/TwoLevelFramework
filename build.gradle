@@ -57,6 +57,7 @@ dependencies {
     compile 'com.google.code.gson:gson:2.8.2'
     compile 'org.apache.httpcomponents:httpclient:4.5.3'
     compile 'org.apache.httpcomponents:fluent-hc:4.5.3'
+    compile 'org.apache.commons:commons-lang3:3.7'
     //adding Allure
  	agent "org.aspectj:aspectjweaver:1.9.1"
     compile 'ru.yandex.qatools.allure:allure-testng-adaptor:1.5.4'

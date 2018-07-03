@@ -18,13 +18,9 @@ import com.automationpractice.model.Products;
 
 public class CartTests extends TestBase {
 
-    final private Logger logger = LoggerFactory.getLogger(TestBase.class);
+   
 
-    @BeforeMethod
-    private void beforeMethod(Method method, Object[] parameters) {
-	logger.debug("Start test " + method.getName() + " with params " + Arrays.asList(parameters));
-
-    }
+  
 
     @Test
     public void testAddProductToCart() throws IOException {
@@ -59,10 +55,6 @@ public class CartTests extends TestBase {
 	assertEquals(newCart, oldCart);
     }
 
-    @AfterMethod(alwaysRun = true)
-    private void logTestStop(Method method, Object[] parameters) {
-	logger.debug("Stop test " + method.getName());
-
-    }
+   
 
 }
