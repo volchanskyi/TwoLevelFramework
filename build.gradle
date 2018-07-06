@@ -10,6 +10,8 @@
 
 // Apply the java plugin to add support for Java
 apply plugin: 'java'
+//apply plugin: 'aspectj'
+
 //apply plugin: "io.qameta.allure"
 
 sourceCompatibility = JavaVersion.VERSION_1_8
@@ -60,6 +62,7 @@ dependencies {
     compile 'org.apache.commons:commons-lang3:3.7'
     //adding Allure
  	agent "org.aspectj:aspectjweaver:1.9.1"
+// 	compile "org.aspectj:aspectjweaver:1.9.1"
     compile 'ru.yandex.qatools.allure:allure-testng-adaptor:1.5.4'
 
     
