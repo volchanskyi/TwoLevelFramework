@@ -70,6 +70,7 @@ public class HelperBase {
     }
 
     protected String getPageTitle(By locator) {
+	wait.until(ExpectedConditions.presenceOfElementLocated(locator));
 	return wd.getTitle();
     }
 

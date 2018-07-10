@@ -68,6 +68,8 @@ public class ApplicationManager {
 	//Set path to the drivers
 	System.setProperty("webdriver.chrome.driver", "src/test/resources/webdrivers/pc/chromedriver.exe");
 	System.setProperty("webdriver.gecko.driver", "src/test/resources/webdrivers/pc/geckodriver.exe");
+	System.setProperty("webdriver.edge.driver", "src/test/resources/webdrivers/pc/MicrosoftWebDriver.exe");
+	System.setProperty("webdriver.ie.driver", "src/test/resources/webdrivers/pc/IEDriverServer.exe");
 	// If we dont use selenium server then run local browser
 	if ("".equals(properties.getProperty("selenium.server"))) {
 	    // Lazy init
