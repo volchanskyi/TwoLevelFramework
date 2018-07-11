@@ -43,14 +43,14 @@ public class RegistrationHelper extends HelperBase {
     }
 
     // TODO Method is not finished!
-    public void finish(String confirmationLink, String password) {
+    public void finishWith(String confirmationLink, String password) {
 	wd.get(confirmationLink);
 	type(By.name("password"), password);
 	type(By.name("password_confirm"), password);
 	click(By.xpath("//*[@id='SubmitCreate']/span"));
     }
 
-    public boolean verify(String text) {
+    public boolean verifyWith(String text) {
 	return getPageTitle(By.cssSelector("title")).equals(text);
     }
 

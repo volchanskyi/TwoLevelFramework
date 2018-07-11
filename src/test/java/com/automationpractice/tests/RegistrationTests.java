@@ -62,7 +62,7 @@ public class RegistrationTests extends TestBase {
     @Test
     public void testRegistrationGUI() throws MessagingException, IOException, InterruptedException {
 	int now = (int)System.currentTimeMillis();
-	String email = "automationpractice_" + now;
+	String email = "automationpractice_" + now + "@mailinator.com";
 	String password = "testPWD" + now;
 	// String link = "https://blablabla"; (not implemented yet) DO NOT DELETE
 	RegistrationHelper regHelper = APP.registration();
@@ -71,9 +71,9 @@ public class RegistrationTests extends TestBase {
 	// assertTrue(session.signUp(email + "@mailinator.com"));
 	// assertTrue(session.verifyActivationLink(link)); (automationpractice.com
 	// doesn`t send an activation link) DO NOT DELETE
-	regHelper.initRegistrationUsingEmailWith(email + "@mailinator.com").fillOutRegistrationFormWith("Ivan", "lastName",
+	regHelper.initRegistrationUsingEmailWith(email).fillOutRegistrationFormWith("Ivan", "lastName",
 		password, "178 Somewhere Dr.", "San Francisco", "94132", "California", "4158962578");
-	assertTrue(regHelper.verify("My account - My Store"));
+	assertTrue(regHelper.verifyWith("My account - My Store"));
 	// "My account - My Store"
     }
 //
