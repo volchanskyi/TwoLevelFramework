@@ -16,6 +16,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.ie.InternetExplorerOptions;
 import org.openqa.selenium.remote.BrowserType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
@@ -65,7 +66,7 @@ public class ApplicationManager {
     }
 
     public WebDriver getDriver() throws MalformedURLException {
-	//Set path to the drivers
+	// Set path to the drivers
 	System.setProperty("webdriver.chrome.driver", "src/test/resources/webdrivers/pc/chromedriver.exe");
 	System.setProperty("webdriver.gecko.driver", "src/test/resources/webdrivers/pc/geckodriver.exe");
 	System.setProperty("webdriver.edge.driver", "src/test/resources/webdrivers/pc/MicrosoftWebDriver.exe");
@@ -79,14 +80,15 @@ public class ApplicationManager {
 		} else if (browser.equals(BrowserType.CHROME)) {
 		    wd = new ChromeDriver();
 		} else if (browser.equals(BrowserType.IE)) {
-		    wd = new InternetExplorerDriver();
+		    InternetExplorerOptions options = new InternetExplorerOptions();
+		    options.ignoreZoomSettings().destructivelyEnsureCleanSession()
+			    .introduceFlakinessByIgnoringSecurityDomains();
+		    wd = new InternetExplorerDriver(options);
 		}
-//		wd.manage().timeouts().implicitlyWait(0, TimeUnit.SECONDS);
-		
 		wd.get(properties.getProperty("web.baseUrl"));
 	    }
 	} else {
-	    //Run tests remotely
+	    // Run tests remotely
 	    DesiredCapabilities capabilities = new DesiredCapabilities();
 	    capabilities.setBrowserName(browser);
 	    capabilities.setPlatform(Platform.fromString(System.getProperty("platform", "win7")));
@@ -94,8 +96,9 @@ public class ApplicationManager {
 	}
 	return wd;
     }
-    
+
     public byte[] takeScreenshot() {
+
 	return ((TakesScreenshot) wd).getScreenshotAs(OutputType.BYTES);
     }
 
