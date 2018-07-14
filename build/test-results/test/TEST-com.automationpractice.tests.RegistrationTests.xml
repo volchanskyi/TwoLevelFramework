@@ -1,16 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.automationpractice.tests.RegistrationTests" tests="4" skipped="0" failures="0" errors="0" timestamp="2018-07-12T05:45:07" hostname="Latitude" time="37.654">
+<testsuite name="com.automationpractice.tests.RegistrationTests" tests="4" skipped="0" failures="0" errors="0" timestamp="2018-07-13T23:40:51" hostname="LATITUDE" time="21.068">
   <properties/>
-  <testcase name="testRegistrationAPI" classname="com.automationpractice.tests.RegistrationTests" time="1.97"/>
-  <testcase name="testRegistrationGUI" classname="com.automationpractice.tests.RegistrationTests" time="34.677"/>
-  <testcase name="testRegistrationWithCredsAPI" classname="com.automationpractice.tests.RegistrationTests" time="0.556"/>
-  <testcase name="testRegistrationWithNoCredsAPI" classname="com.automationpractice.tests.RegistrationTests" time="0.447"/>
+  <testcase name="testRegistrationAPI" classname="com.automationpractice.tests.RegistrationTests" time="1.878"/>
+  <testcase name="testRegistrationGUI" classname="com.automationpractice.tests.RegistrationTests" time="18.269"/>
+  <testcase name="testRegistrationWithCredsAPI" classname="com.automationpractice.tests.RegistrationTests" time="0.502"/>
+  <testcase name="testRegistrationWithNoCredsAPI" classname="com.automationpractice.tests.RegistrationTests" time="0.412"/>
   <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[Started InternetExplorerDriver server (32-bit)
-3.13.0.0
-Listening on port 47224
-Only local connections are allowed
-Jul 11, 2018 10:45:15 PM org.openqa.selenium.remote.ProtocolHandshake createSession
-INFO: Detected dialect: W3C
+  <system-err><![CDATA[Jul 13, 2018 11:40:59 PM org.openqa.selenium.remote.ProtocolHandshake createSession
+INFO: Detected dialect: OSS
 ]]></system-err>
 </testsuite>
