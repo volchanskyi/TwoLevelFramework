@@ -45,7 +45,7 @@ public class RegistrationTests extends TestBase {
     }
 
     @Test
-    public void testRegistrationWithCredentialsUsingAPI() throws IOException {
+    public void testRegistrationWithExistedCredentialsUsingAPI() throws IOException {
 	HttpSession session = APP.newSession();
 	String apiMsg = session.registerExistedAccountWithAPI("volchanskij@gmail.com");
 	assertEquals(apiMsg,
@@ -53,7 +53,7 @@ public class RegistrationTests extends TestBase {
     }
 
     @Test
-    public void testRegistrationWithNoCredentialsUsingAPI() throws IOException {
+    public void testRegistrationWithWrongEmailFormatUsingAPI() throws IOException {
 	HttpSession session = APP.newSession();
 	String apiMsg = session.registerExistedAccountWithAPI("volchanskij@");
 	assertEquals(apiMsg, "Invalid email address.");
