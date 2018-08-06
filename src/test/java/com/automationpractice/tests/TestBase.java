@@ -17,7 +17,7 @@ import com.automationpractice.appmanager.ApplicationManager;
 
 
 
-@Listeners(TestListener.class)
+//@Listeners(TestListener.class)
 public class TestBase {
     
     final private Logger logger = LoggerFactory.getLogger(TestBase.class);
@@ -26,7 +26,7 @@ public class TestBase {
 	    // for local GUI tests
 	    System.getProperty("browser", BrowserType.CHROME));
 
-    @BeforeSuite
+    @BeforeSuite(alwaysRun = true)
     public void setUp(ITestContext context) throws Exception {
 	APP.init();
 	context.setAttribute("app", APP);
@@ -48,5 +48,6 @@ public class TestBase {
     public void tearDown() {
 	APP.stop();
     }
+    
 
 }

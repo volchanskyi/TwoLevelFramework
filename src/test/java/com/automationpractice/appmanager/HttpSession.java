@@ -73,6 +73,7 @@ public class HttpSession {
 	return content.contains(errorMsg);
     }
 
+
     public boolean signUp(String email) throws IOException {
 	HttpPost post = new HttpPost(app.getProperty("web.baseUrl") + "index.php");
 	List<NameValuePair> params = new ArrayList<>();

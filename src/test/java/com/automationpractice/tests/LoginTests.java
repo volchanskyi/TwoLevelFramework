@@ -4,13 +4,14 @@ import static org.testng.Assert.assertTrue;
 
 import java.io.IOException;
 
+import org.testng.annotations.Guice;
 import org.testng.annotations.Test;
 
 import com.automationpractice.appmanager.HttpSession;
-
+@Guice
 public class LoginTests extends TestBase {
 
-    @Test
+	@Test
     public void testLoginWithExistedAccountUsingAPI() throws IOException {
 	HttpSession session = APP.newSession();
 	assertTrue(session.loginWith("volchanskij@gmail.com", "testPWD001", "My account - My Store"));
@@ -29,10 +30,15 @@ public class LoginTests extends TestBase {
 	assertTrue(session.loginWithErrorHandling("volchanskij@gmail.com", "", "Password is required."));
     }
     
-    @Test
-    public void testLoginWithIlligalPasswordUsingAPI() throws IOException {
+
+    @Test(dataProvider = "invalidCredentials", dataProviderClass = TestDataProviders.class)
+    public void testLoginWithIlligalPasswordUsingAPI(String a, String b) throws IOException {
 	HttpSession session = APP.newSession();
-	assertTrue(session.loginWithErrorHandling("volchanskij@gmail.com", "brbrbr", "Authentication failed."));
+//	assertTrue(session.loginWithErrorHandling("volchanskij@gmail.com", "brbrbr", "Authentication failed."));
+	String errMsg = "Authentication failed.";
+	assertTrue(session.loginWithErrorHandling(a, b, errMsg));
     }
+    
+    
 
 }

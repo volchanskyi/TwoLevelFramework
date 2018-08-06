@@ -21,6 +21,8 @@ import org.openqa.selenium.remote.BrowserType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
+import com.automationpractice.tests.Override;
+
 public class ApplicationManager {
     private final Properties properties;
     private WebDriver wd;
@@ -97,6 +99,8 @@ public class ApplicationManager {
 	return wd;
     }
 
+ 
+    
     public byte[] takeScreenshot() {
 
 	return ((TakesScreenshot) wd).getScreenshotAs(OutputType.BYTES);

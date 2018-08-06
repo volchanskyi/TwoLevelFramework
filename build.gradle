@@ -26,9 +26,6 @@ repositories {
     mavenCentral()
 }
 
-
-
-
 //adding Allure
 configurations {
     agent
@@ -64,6 +61,8 @@ dependencies {
  	agent "org.aspectj:aspectjweaver:1.9.1"
 // 	compile "org.aspectj:aspectjweaver:1.9.1"
     compile 'ru.yandex.qatools.allure:allure-testng-adaptor:1.5.4'
+    // https://mvnrepository.com/artifact/com.google.inject/guice
+    compile group: 'com.google.inject', name: 'guice', version: '4.2.0'
 
     
     
