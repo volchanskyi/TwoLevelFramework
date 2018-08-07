@@ -7,12 +7,26 @@ public class TestDataProviders {
 	// GUI tests Data Provider that reads params from an excel file
 	@DataProvider(name = "invalidCredentials")
 	// TODO implement data generator to generate illigal credentials here
-	public static Object[][] illigalCredentials() {
-		return new Object[][] { 
-			{"volchanskij@gmail.com", "brbbr"}, 
-			{"volchanskij@gmail.com","gzgz"},
-			{"volchanskij@gmail.com","thth"}
-			};
+	public static Object[][] generateIlligalCredentials() {
+		return new Object[][] { { "volchanskij@gmail.com", "brbDbr" }, { "sqd123@gmail.com", "gz?}{:>gz21312" },
+				{ "sdq2131@yandex.com", "thZZZZth" },
+				{ "zsew@mail.ru", "tht!@#$%^&*()_+=-0987654321`h213" },
+				{ "sdq2131@gmail.com", "thtAAAAAAAAAAAAAAAAAAAAAh" } };
+	}
+
+	@DataProvider(name = "invalidPassword")
+	// TODO implement data generator to generate illigal credentials here
+	public static Object[][] generateInvalidPassword() {
+		return new Object[][] { { "volchanskij@gmail.com", "`" }, { "volck@gmail.com", "1z" },
+				{ "karamba@gmail.com", "_0?A" }, { "set@gmail.com", "+__@" }, };
+	}
+
+	@DataProvider(name = "invalidEmail")
+	// TODO implement data generator to generate illigal credentials here
+	public static Object[][] generateInvalidEmail() {
+		return new Object[][] { { "!@#$%^&*()(*&^%$#@!QWERTYUIOP{}:LKJHGFDSAZXCVBNM<>?com", "tht147896523+-*/h" },
+			 { "~!@#$%^&*()_+@gmail.com", "t~!@#$%^&*()_hth" }, { "sd?}{:>q2131@gmail.com", "_0?A" },
+				{ "~!@#$%^&*()_+@gmail.com", "+__@" }, };
 	}
 
 	// protected Object[][] getDataFromUiDataProvider() throws IOException {

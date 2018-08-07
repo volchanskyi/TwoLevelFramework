@@ -17,7 +17,7 @@ import com.automationpractice.appmanager.ApplicationManager;
 
 
 
-//@Listeners(TestListener.class)
+@Listeners(TestListener.class)
 public class TestBase {
     
     final private Logger logger = LoggerFactory.getLogger(TestBase.class);
