@@ -2,7 +2,7 @@ package com.automationpractice.tests;
 
 import org.testng.annotations.DataProvider;
 
-public class TestDataProviders {
+public class TestDataProviders extends TestDataGenerator{
 
 	// GUI tests Data Provider that reads params from an excel file
 	@DataProvider(name = "invalidCredentials")

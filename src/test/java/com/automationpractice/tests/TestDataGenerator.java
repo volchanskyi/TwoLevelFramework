@@ -2,9 +2,9 @@ package com.automationpractice.tests;
 
 import org.apache.commons.lang3.RandomStringUtils;
 
-public class DataGenerator {
+public abstract class TestDataGenerator {
 
-      String names = RandomStringUtils.randomAscii(20, 50);
+	  String names = RandomStringUtils.randomAscii(20, 50);
       String names2 = RandomStringUtils.randomAlphanumeric(20, 50);
       String names3 = RandomStringUtils.randomNumeric(10, 20);
       String names4 = RandomStringUtils.randomGraph(10, 20);
