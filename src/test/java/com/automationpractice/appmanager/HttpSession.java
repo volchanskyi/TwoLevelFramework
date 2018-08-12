@@ -243,9 +243,9 @@ public class HttpSession {
 	public boolean searchForProduct(Products product) throws IOException {
 		// Use fluent API
 		String prod = product.getName().toString();
-		String response = Request.Get(app.getProperty("web.searchUrl") + prod + "&limit=10&timestamp="
+		String response = Request.Get(app.getProperty("web.searchUrl") + prod.replaceAll(" ", "+") + "&limit=10&timestamp="
 				+ timeStamp.getTime() + "&ajaxSearch=1&id_lang=1").execute().returnContent().asString();
-		return response.contains(prod);
+		return response.contains(prod.replaceAll(" ", "-"));
 
 	}
 
