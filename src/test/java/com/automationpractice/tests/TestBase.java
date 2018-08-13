@@ -24,7 +24,7 @@ public class TestBase {
 
     protected static final ApplicationManager APP = new ApplicationManager(
 	    // for local GUI tests
-	    System.getProperty("browser", BrowserType.CHROME));
+	    System.getProperty("browser", BrowserType.EDGE));
 
     @BeforeSuite(alwaysRun = true)
     public void setUp(ITestContext context) throws Exception {

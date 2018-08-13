@@ -63,6 +63,9 @@ dependencies {
     compile 'ru.yandex.qatools.allure:allure-testng-adaptor:1.5.4'
     // https://mvnrepository.com/artifact/com.google.inject/guice
     compile group: 'com.google.inject', name: 'guice', version: '4.2.0'
+    // https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-surefire-plugin
+	//compile group: 'org.apache.maven.plugins', name: 'maven-surefire-plugin', version: '2.22.0'
+    
 
     
     

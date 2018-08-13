@@ -4,7 +4,9 @@ import java.net.MalformedURLException;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -25,6 +27,8 @@ public class HelperBase {
 	// Set timeout for Async Java Script
 	this.wd.manage().timeouts().setScriptTimeout(20, TimeUnit.SECONDS);
 	this.wd.manage().timeouts().pageLoadTimeout(15, TimeUnit.SECONDS);
+	this.wd.manage().window().setPosition(new Point(0, 0));
+	this.wd.manage().window().setSize(new Dimension(1280,1024));
     }
 
     protected void click(By locator) {
@@ -69,9 +73,17 @@ public class HelperBase {
 //	    return "The value hasn`t been selected";
     }
 
-    protected String getPageTitle(By locator) {
-	wait.until(ExpectedConditions.presenceOfElementLocated(locator));
-	return wd.getTitle();
+    //Get title by using locator
+//    protected String getPageTitle(By locator) {
+//	wait.until(ExpectedConditions.presenceOfElementLocated(locator));
+//	return wd.getTitle();
+//    }
+
+    //Get title by using embedded method
+    protected String getPageTitle(String title) {
+    	wait.until(ExpectedConditions.titleIs(title));
+    	return wd.getTitle();
     }
+
 
 }

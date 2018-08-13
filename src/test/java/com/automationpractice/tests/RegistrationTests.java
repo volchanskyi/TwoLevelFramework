@@ -29,8 +29,8 @@ public class RegistrationTests extends TestBase {
 //
 //    }
 
-    @Test
-    public void testRegistrationUsingAPI() throws MessagingException, IOException, InterruptedException {
+    @Test(groups = { "API" })
+    public void testRegisterNewAccountUsingAPI() throws MessagingException, IOException, InterruptedException {
 	int now = (int)System.currentTimeMillis();
 	String email = "automationpractice_" + now;
 	String password = "testPWD" + now;
@@ -45,7 +45,7 @@ public class RegistrationTests extends TestBase {
     }
 
     @Test
-    public void testRegistrationWithExistedCredentialsUsingAPI() throws IOException {
+    public void testRegisterNewAccountWithExistedCredentialsUsingAPI() throws IOException {
 	HttpSession session = APP.newSession();
 	String apiMsg = session.registerExistedAccountWithAPI("volchanskij@gmail.com");
 	assertEquals(apiMsg,
@@ -53,14 +53,14 @@ public class RegistrationTests extends TestBase {
     }
 
     @Test
-    public void testRegistrationWithWrongEmailFormatUsingAPI() throws IOException {
+    public void testRegisterNewAccountWithWrongEmailFormatUsingAPI() throws IOException {
 	HttpSession session = APP.newSession();
 	String apiMsg = session.registerExistedAccountWithAPI("volchanskij@");
 	assertEquals(apiMsg, "Invalid email address.");
     }
 
-    @Test
-    public void testRegistrationUsingGUI() throws MessagingException, IOException, InterruptedException {
+    @Test(groups = { "GUI" })
+    public void testRegisterNewAccountUsingGUI() throws MessagingException, IOException, InterruptedException {
 	int now = (int)System.currentTimeMillis();
 	String email = "automationpractice_" + now + "@mailinator.com";
 	String password = "testPWD" + now;
@@ -73,7 +73,7 @@ public class RegistrationTests extends TestBase {
 	// doesn`t send an activation link) DO NOT DELETE
 	regHelper.initRegistrationUsingEmailWith(email).fillOutRegistrationFormWith("Ivan", "lastName",
 		password, "178 Somewhere Dr.", "San Francisco", "94132", "California", "4158962578");
-	assertTrue(regHelper.verifyWith("My account - My Store"));
+	assertTrue(regHelper.verifyWithTitle("My account - My Store"));
 	// "My account - My Store"
     }
 //

@@ -50,8 +50,10 @@ public class RegistrationHelper extends HelperBase {
 	click(By.xpath("//*[@id='SubmitCreate']/span"));
     }
 
-    public boolean verifyWith(String text) {
-	return getPageTitle(By.cssSelector("title")).equals(text);
+    
+    public boolean verifyWithTitle(String title) {
+    	String actualTitle = getPageTitle(title);
+    	return actualTitle.equals(title);
     }
 
 }

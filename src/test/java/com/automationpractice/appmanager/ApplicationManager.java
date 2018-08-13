@@ -14,10 +14,14 @@ import org.openqa.selenium.Platform;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.ie.InternetExplorerOptions;
 import org.openqa.selenium.remote.BrowserType;
+import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
@@ -86,6 +90,13 @@ public class ApplicationManager {
 					options.ignoreZoomSettings().destructivelyEnsureCleanSession()
 							.introduceFlakinessByIgnoringSecurityDomains();
 					wd = new InternetExplorerDriver(options);
+				} else if (browser.equals(BrowserType.EDGE)) {
+					EdgeOptions options = new EdgeOptions();
+					options.setCapability(CapabilityType.SUPPORTS_JAVASCRIPT, true);  
+					options.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
+					options.setCapability(CapabilityType.SUPPORTS_ALERTS, true);            
+					options.setCapability("InPrivate", true);
+					wd = new EdgeDriver(options);
 				}
 				wd.get(properties.getProperty("web.baseUrl"));
 			}
@@ -93,7 +104,7 @@ public class ApplicationManager {
 			// Run tests remotely
 			DesiredCapabilities capabilities = new DesiredCapabilities();
 			capabilities.setBrowserName(browser);
-			capabilities.setPlatform(Platform.fromString(System.getProperty("platform", "win7")));
+			capabilities.setPlatform(Platform.fromString(System.getProperty("platform", "win10")));
 			wd = new RemoteWebDriver(new URL(properties.getProperty("selenium.server")), capabilities);
 		}
 		return wd;

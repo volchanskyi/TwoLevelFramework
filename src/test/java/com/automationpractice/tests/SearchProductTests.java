@@ -13,7 +13,7 @@ import com.automationpractice.model.Products;
 public class SearchProductTests extends TestBase {
 
         @Test(dataProvider = "validProducts", dataProviderClass = TestDataProviders.class)
-        public void testProductSearchValidproductsUsingAPI(String product) throws IOException {
+        public void testProductSearchForValidProductsUsingAPI(String product) throws IOException {
         	HttpSession session = APP.newSession();
         	Products newProduct =  new Products();
         	assertTrue(session.searchForProduct(newProduct.withName(product)));
