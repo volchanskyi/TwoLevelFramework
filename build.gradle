@@ -7,16 +7,30 @@
  * user guide available at https://docs.gradle.org/2.14.1/userguide/tutorial_java_projects.html
  */
 
+
 // Apply the java plugin to add support for Java
 apply plugin: 'java'
+//apply plugin: 'aspectj'
+
+//apply plugin: "io.qameta.allure"
+
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
+
 
 // In this section you declare where to find the dependencies of your project
 repositories {
     // Use 'jcenter' for resolving your dependencies.
     // You can declare any Maven/Ivy/file repository here.
-    //jcenter()
+    jcenter()
     mavenCentral()
 }
+
+//adding Allure
+configurations {
+    agent
+}
+
 
 // In this section you declare the dependencies for your production and test code
 dependencies {
@@ -42,9 +56,21 @@ dependencies {
     compile 'com.google.code.gson:gson:2.8.2'
     compile 'org.apache.httpcomponents:httpclient:4.5.3'
     compile 'org.apache.httpcomponents:fluent-hc:4.5.3'
+    compile 'org.apache.commons:commons-lang3:3.7'
+    //adding Allure
+ 	agent "org.aspectj:aspectjweaver:1.9.1"
+// 	compile "org.aspectj:aspectjweaver:1.9.1"
+    compile 'ru.yandex.qatools.allure:allure-testng-adaptor:1.5.4'
+    // https://mvnrepository.com/artifact/com.google.inject/guice
+    compile group: 'com.google.inject', name: 'guice', version: '4.2.0'
+    // https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-surefire-plugin
+	//compile group: 'org.apache.maven.plugins', name: 'maven-surefire-plugin', version: '2.22.0'
+    
+
     
     
 }
+
 
 test {
 	useTestNG {
@@ -53,6 +79,9 @@ test {
 	if (project.hasProperty('browser')) {
 	systemProperty 'browser', "${browser}"
 	}
+	if (project.hasProperty('platform')) {
+	systemProperty 'platform', "${platform}"
+	}
 	if (project.hasProperty('target')) {
 	systemProperty 'target', "${target}"
 	}
@@ -60,3 +89,22 @@ test {
 	systemProperty 'verifyUI', "${verifyUI}"
 	}
 }
+
+
+
+test.doFirst {
+    jvmArgs "-javaagent:${configurations.agent.singleFile}"
+}
+
+/*
+gradle.buildFinished { buildResult ->
+    if (buildResult.failure) {
+        exec {
+            executable "generateReport.bat"
+        }
+    }
+}
+
+*/
+
+

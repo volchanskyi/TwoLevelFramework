@@ -1,6 +1,5 @@
 /target/
 /.apt_generated/
-
 *.html
 /test-output/
 # eclipse project file
@@ -11,6 +10,12 @@
 .DS_Store
 # Maven 
 target/
+# Gradle
+.gradle/
+build/
+build
+/build
+gradle/
 # Binaries
 *.7z
 *.dmg
@@ -26,6 +31,7 @@ target/
 *.ear
 *.sar
 *.class
-/.gradle/
-/bin/
-/build/
+# Other
+bin/
+*.old
+

@@ -1,0 +1,115 @@
+plugins {
+    id 'java'
+    id 'ru.vyarus.quality' version '2.2.0'
+    id "io.qameta.allure" version "2.5"
+}
+
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
+
+configurations {
+    agent
+}
+
+repositories {
+    jcenter()
+    mavenCentral()
+}
+
+group 'io.github.sskorol'
+description 'Allure 2 integration with TestNG'
+
+dependencies {
+
+// This dependency is used internally, and not exposed to consumers on their own compile classpath.
+    implementation 'com.google.guava:guava:22.0'
+    
+    agent 'org.aspectj:aspectjweaver:1.9.1'
+    compile('org.assertj:assertj-core:3.8.0',
+            'io.github.sskorol:test-data-supplier:1.0.0',
+            'org.jooq:joor:0.9.6',
+            // https://mvnrepository.com/artifact/io.qameta.allure/allure-testng
+            'io.qameta.allure:allure-testng:2.6.0',
+            'io.qameta.allure:allure-java-commons:2.6.0',
+            'io.qameta.allure:allure-attachments:2.6.0',
+            'ru.yandex.qatools.allure:allure-testng-adaptor:1.5.4',
+          // The production code uses the SLF4J logging API at compile time
+            'org.slf4j:slf4j-simple:1.7.25',
+            'org.projectlombok:lombok:1.16.18',
+            'org.slf4j:slf4j-api:1.7.21',
+            'org.testng:testng:6.14.2',
+   			'org.seleniumhq.selenium:selenium-java:3.10.0',
+   			'org.hamcrest:java-hamcrest:2.0.0.0',
+   			'com.beust:jcommander:1.72',
+    		'org.subethamail:subethasmtp:3.1.7',
+    		'ru.lanwen.verbalregex:java-verbal-expressions:1.5',
+    		'ch.qos.logback:logback-classic:1.2.3',
+    		'com.googlecode.json-simple:json-simple:1.1.1',
+    		'com.google.code.gson:gson:2.8.2',
+    		'org.apache.httpcomponents:httpclient:4.5.3',
+    		'org.apache.httpcomponents:fluent-hc:4.5.3'
+    )
+}
+
+[compileJava, compileTestJava]*.options*.compilerArgs = ['-parameters']
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '4.8'
+}
+
+/*
+task copyConfig(type: Copy) {
+    from 'src/test/resources/config'
+    into 'build/allure-results'
+}
+
+task copyHistory(type: Copy) {
+    from 'src/test/resources/history'
+    into 'build/allure-results/history'
+}
+*/
+
+test.doFirst {
+    jvmArgs "-javaagent:${configurations.agent.singleFile}"
+}
+
+
+test {
+	useTestNG {
+	        listeners << 'io.github.sskorol.listeners.BaseListener'
+        listeners << 'io.github.sskorol.dataprovider.DataProviderTransformer'
+		suites 'src/test/resources/testng.xml'
+	}
+	if (project.hasProperty('browser')) {
+	systemProperty 'browser', "${browser}"
+	}
+	if (project.hasProperty('platform')) {
+	systemProperty 'platform', "${platform}"
+	}
+	if (project.hasProperty('target')) {
+	systemProperty 'target', "${target}"
+	}
+	if (project.hasProperty('verifyUI')) {
+	systemProperty 'verifyUI', "${verifyUI}"
+	}
+	  systemProperty 'allure.model.indentOutput', true
+    systemProperty 'allure.results.directory', 'build/allure-results'
+    systemProperty 'allure.link.issue.pattern', 'https://github.com/allure-framework/allure-docs/issues/{}'
+    systemProperty 'allure.link.tms.pattern', 'https://github.com/allure-framework/allure-docs/issues/{}'
+	
+}
+
+
+//test.dependsOn copyConfig, copyHistory
+
+allure {
+    autoconfigure = true
+    version = '2.4.1'
+    useTestNG {
+        version = '2.0-BETA15'
+    }
+}
+
+
+
+

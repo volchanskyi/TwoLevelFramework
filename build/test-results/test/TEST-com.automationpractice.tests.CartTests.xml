@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.automationpractice.tests.CartTests" tests="1" skipped="0" failures="0" errors="0" timestamp="2018-06-08T21:51:51" hostname="Latitude" time="4.47">
-  <properties/>
-  <testcase name="testAddProductToCart" classname="com.automationpractice.tests.CartTests" time="4.47"/>
-  <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>
