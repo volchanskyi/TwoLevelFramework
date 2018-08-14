@@ -37,13 +37,17 @@ public class ApplicationManager {
 	public ApplicationManager(String browser) {
 		this.browser = browser;
 		properties = new Properties();
+
 	}
 
 	// Refactor (add params to choose browser types)
 	public void init() throws IOException {
-		String target = System.getProperty("target", "local");
+		String target = System.getProperty("target", "local");		
 		properties.load(new FileReader(new File(String.format("src/test/resources/%s.properties", target))));
-
+		System.setProperty("ui", "enabled");
+		if (System.getProperty("ui").equalsIgnoreCase("enabled")) {
+			properties.load(new FileReader(new File(String.format("src/test/resources/locator.properties"))));
+		}
 	}
 
 	public void stop() {
@@ -87,14 +91,15 @@ public class ApplicationManager {
 					wd = new ChromeDriver();
 				} else if (browser.equals(BrowserType.IE)) {
 					InternetExplorerOptions options = new InternetExplorerOptions();
-					options.ignoreZoomSettings().destructivelyEnsureCleanSession()
-							.introduceFlakinessByIgnoringSecurityDomains();
+					options.ignoreZoomSettings();
+					options.destructivelyEnsureCleanSession();
+					options.introduceFlakinessByIgnoringSecurityDomains();
 					wd = new InternetExplorerDriver(options);
 				} else if (browser.equals(BrowserType.EDGE)) {
 					EdgeOptions options = new EdgeOptions();
-					options.setCapability(CapabilityType.SUPPORTS_JAVASCRIPT, true);  
+					options.setCapability(CapabilityType.SUPPORTS_JAVASCRIPT, true);
 					options.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
-					options.setCapability(CapabilityType.SUPPORTS_ALERTS, true);            
+					options.setCapability(CapabilityType.SUPPORTS_ALERTS, true);
 					options.setCapability("InPrivate", true);
 					wd = new EdgeDriver(options);
 				}
@@ -104,7 +109,7 @@ public class ApplicationManager {
 			// Run tests remotely
 			DesiredCapabilities capabilities = new DesiredCapabilities();
 			capabilities.setBrowserName(browser);
-			capabilities.setPlatform(Platform.fromString(System.getProperty("platform", "win10")));
+			capabilities.setPlatform(Platform.fromString(System.getProperty("platform", "win7")));
 			wd = new RemoteWebDriver(new URL(properties.getProperty("selenium.server")), capabilities);
 		}
 		return wd;
@@ -112,7 +117,7 @@ public class ApplicationManager {
 
 	public byte[] takeScreenshot() {
 		// Lazy init
-		//no need to take screenshot if there`s no UI being tested
+		// no need to take screenshot if there`s no UI involved
 		if (wd != null) {
 			return ((TakesScreenshot) wd).getScreenshotAs(OutputType.BYTES);
 		} else

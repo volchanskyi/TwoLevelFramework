@@ -17,8 +17,8 @@ public class RegistrationHelper extends HelperBase {
 
     public RegistrationHelper initRegistrationUsingEmailWith(String email) {
 	wd.get(app.getProperty("web.baseUrl") + "index.php?controller=authentication&back=my-account#account-creation");
-	type(By.cssSelector("#email_create"), email);
-	click(By.cssSelector("#SubmitCreate"));
+	type(By.cssSelector(app.getProperty("locator.newUserNameField")), email);
+	click(By.cssSelector(app.getProperty("locator.createAccBtn(RP)")));
 	return this;
 
     }
