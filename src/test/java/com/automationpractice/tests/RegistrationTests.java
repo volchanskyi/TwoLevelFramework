@@ -44,7 +44,7 @@ public class RegistrationTests extends TestBase {
 		"178 Somewhere Dr.", "San Francisco", "94132", "5", "4158962578"));
     }
 
-    @Test
+    @Test(groups = { "API" })
     public void testRegisterNewAccountWithExistedCredentialsUsingAPI() throws IOException {
 	HttpSession session = APP.newSession();
 	String apiMsg = session.registerExistedAccountWithAPI("volchanskij@gmail.com");
@@ -52,7 +52,7 @@ public class RegistrationTests extends TestBase {
 		"An account using this email address has already been registered. Please enter a valid password or request a new one. ");
     }
 
-    @Test
+    @Test(groups = { "API" })
     public void testRegisterNewAccountWithWrongEmailFormatUsingAPI() throws IOException {
 	HttpSession session = APP.newSession();
 	String apiMsg = session.registerExistedAccountWithAPI("volchanskij@");

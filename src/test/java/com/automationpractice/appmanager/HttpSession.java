@@ -292,5 +292,13 @@ public class HttpSession {
 		httpClient.execute(get, context);
 		this.webCookie = cookieName;
 	}
+	
+	public String getToken() {
+		return app.getProperty("web.token");
+	}
+	
+	public String getCookieName() {
+		return app.getProperty("web.cookies");
+	}
 
 }
