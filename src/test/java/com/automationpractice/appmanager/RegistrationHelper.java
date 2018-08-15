@@ -16,29 +16,29 @@ public class RegistrationHelper extends HelperBase {
     }
 
     public RegistrationHelper initRegistrationUsingEmailWith(String email) {
-	wd.get(app.getProperty("web.baseUrl") + "index.php?controller=authentication&back=my-account#account-creation");
-	type(By.cssSelector(app.getProperty("locator.newUserNameField")), email);
-	click(By.cssSelector(app.getProperty("locator.createAccBtn(RP)")));
+	wd.get(useProperty("web.baseUrl") + "index.php?controller=authentication&back=my-account#account-creation");
+	type(By.cssSelector(useProperty("locator.newUserNameField")), email);
+	click(By.cssSelector(useProperty("locator.createAccBtn(RP)")));
 	return this;
 
     }
-
-    public RegistrationHelper fillOutRegistrationFormWith(String fName, String lName, String password, String address,
+    
+    public HelperBase fillOutRegistrationFormWith(String fName, String lName, String password, String address,
 	    String city, String postcode, String state, String phone) {
 	// wd.get(app.getProperty("web.baseUrl") +
 	// "index.php?controller=authentication&back=my-account#account-creation");
-	type(By.name("customer_firstname"), fName);
-	type(By.name("customer_lastname"), lName);
-	type(By.cssSelector("#passwd"), password);
+	type(By.name(useProperty("locator.fNameTxtFld(RP)")), fName);
+	type(By.name(useProperty("locator.lastNameTextField")), lName);
+	type(By.cssSelector(useProperty("locator.newPasswordTextField")), password);
 	type(By.cssSelector("#firstname"), fName);
 	type(By.cssSelector("#lastname"), lName);
-	type(By.cssSelector("#address1"), address);
-	type(By.cssSelector("#city"), city);
-	type(By.cssSelector("#postcode"), postcode);
-	selectFromDDM(By.cssSelector("#id_state"), state);
-	type(By.cssSelector("#phone_mobile"), phone);
+	type(By.cssSelector(useProperty("locator.newAddressTextField")), address);
+	type(By.cssSelector(useProperty("locator.newCityTextField")), city);
+	type(By.cssSelector(useProperty("locator.newPostCodeTextField")), postcode);
+	selectFromDDM(By.cssSelector(useProperty("locator.stateDropDownMenu")), state);
+	type(By.cssSelector(useProperty("locator.newMobilePhoneTextField")), phone);
 	type(By.cssSelector("#alias"), address);
-	click(By.cssSelector("#submitAccount"));
+	click(By.cssSelector(useProperty("locator.registerAccountButton")));
 	return this;
     }
 
@@ -47,7 +47,7 @@ public class RegistrationHelper extends HelperBase {
 	wd.get(confirmationLink);
 	type(By.name("password"), password);
 	type(By.name("password_confirm"), password);
-	click(By.xpath("//*[@id='SubmitCreate']/span"));
+	click(By.xpath(useProperty("locator.createAccBtn(RP)")));
     }
 
     

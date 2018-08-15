@@ -87,4 +87,8 @@ public class HelperBase {
 		return wd.getTitle();
 	}
 
+	public String useProperty(String property) {
+		return app.getProperty(property);
+	}
+
 }
