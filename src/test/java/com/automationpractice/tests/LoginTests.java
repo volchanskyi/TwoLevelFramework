@@ -9,7 +9,7 @@ import org.testng.annotations.Test;
 
 import com.automationpractice.appmanager.HttpSession;
 
-@Guice
+//@Guice
 public class LoginTests extends TestBase {
 
 	@Test
