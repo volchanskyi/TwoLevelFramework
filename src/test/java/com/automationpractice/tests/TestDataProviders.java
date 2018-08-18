@@ -9,10 +9,9 @@ public class TestDataProviders extends TestDataGenerator {
 	// GUI tests Data Provider that reads params from an excel file
 	@DataProvider(name = "invalidCredentials")
 	// TODO implement data generator to generate illigal credentials here
-	public static Object[][] generateIlligalCredentials() {
-		return new Object[][] { { "volchanskij@gmail.com", "brbDbr" }, { "sqd123@gmail.com", "gz?}{:>gz21312" },
-				{ "sdq2131@yandex.com", "thZZZZth" }, { "zsew@mail.ru", "tht!@#$%^&*()_+=-0987654321`h213" },
-				{ "sdq2131@gmail.com", "thtAAAAAAAAAAAAAAAAAAAAAh" } };
+	public static Object[][] getIlligalCredentials() {
+		return new Object[][] { generateIlligalCredentials(), generateIlligalCredentials(),
+				generateIlligalCredentials()};
 	}
 
 	@DataProvider(name = "invalidPassword")

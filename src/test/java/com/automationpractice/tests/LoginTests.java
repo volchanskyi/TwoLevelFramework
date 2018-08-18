@@ -32,7 +32,7 @@ public class LoginTests extends TestBase {
 	}
 
 	@Test(dataProvider = "invalidCredentials", dataProviderClass = TestDataProviders.class)
-	public void testLoginWithIlligalPasswordUsingAPI(String email, String password) throws IOException {
+	public void testLoginWithIlligalCredentialsUsingAPI(String email, String password) throws IOException {
 		HttpSession session = APP.newSession();
 		String errMsg = "Authentication failed.";
 		assertTrue(session.loginWithErrorHandling(email, password, errMsg));
