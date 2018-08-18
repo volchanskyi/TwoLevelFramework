@@ -4,29 +4,31 @@ import org.testng.annotations.DataProvider;
 
 public class TestDataProviders extends TestDataGenerator {
 
-	// **************INVALID TEST DATA********************//
+	// **************INVALID/ILLIGAL TEST DATA********************//
 
 	// GUI tests Data Provider that reads params from an excel file
-	@DataProvider(name = "invalidCredentials")
+	@DataProvider(name = "illigalCredentials")
 	// TODO implement data generator to generate illigal credentials here
 	public static Object[][] getIlligalCredentials() {
-		return new Object[][] { generateIlligalCredentials(), generateIlligalCredentials(),
-				generateIlligalCredentials()};
+		return new Object[][] { generateValidFormatCredentials(), generateValidFormatCredentials(),
+				generateValidFormatCredentials() };
 	}
 
 	@DataProvider(name = "invalidPassword")
 	// TODO implement data generator to generate illigal credentials here
 	public static Object[][] generateInvalidPassword() {
-		return new Object[][] { { "volchanskij@gmail.com", "`" }, { "volck@gmail.com", "1z" },
-				{ "karamba@gmail.com", "_0?A" }, { "set@gmail.com", "+__@" }, };
+		return new Object[][] { { "volchanskij@gmail.com", generateInvalidFormatPasswords() },
+				{ "volck@gmail.com", generateInvalidFormatPasswords() },
+				{ "karamba@gmail.com", generateInvalidFormatPasswords() },
+				{ "set@gmail.com", generateInvalidFormatPasswords() }, };
 	}
 
 	@DataProvider(name = "invalidEmail")
 	// TODO implement data generator to generate illigal credentials here
 	public static Object[][] generateInvalidEmail() {
-		return new Object[][] { { "!@#$%^&*()(*&^%$#@!QWERTYUIOP{}:LKJHGFDSAZXCVBNM<>?com", "tht147896523+-*/h" },
-				{ "~!@#$%^&*()_+@gmail.com", "t~!@#$%^&*()_hth" }, { "sd?}{:>q2131@gmail.com", "_0?A" },
-				{ "~!@#$%^&*()_+@gmail.com", "+__@" }, };
+		return new Object[][] { { generateInvalidFormatEmails(), "tht147896523+-*/h" },
+				{ generateInvalidFormatEmails(), "t~!@#$%^&*()_hth" }, { generateInvalidFormatEmails(), "_0?A" },
+				{ generateInvalidFormatEmails(), "+__@" }, };
 	}
 
 	// **************VALID TEST DATA********************//

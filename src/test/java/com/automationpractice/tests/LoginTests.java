@@ -22,16 +22,18 @@ public class LoginTests extends TestBase {
 	@Test
 	public void testLoginWithEmptyEmailUsingAPI() throws IOException {
 		HttpSession session = APP.newSession();
-		assertTrue(session.loginWithErrorHandling("", "", "An email address required."));
+		String errMsg = "An email address required.";
+		assertTrue(session.loginWithErrorHandling("", "", errMsg));
 	}
 
 	@Test
 	public void testLoginWithEmptyPasswordUsingAPI() throws IOException {
 		HttpSession session = APP.newSession();
-		assertTrue(session.loginWithErrorHandling("volchanskij@gmail.com", "", "Password is required."));
+		String errMsg = "Password is required.";
+		assertTrue(session.loginWithErrorHandling("volchanskij@gmail.com", "", errMsg));
 	}
 
-	@Test(dataProvider = "invalidCredentials", dataProviderClass = TestDataProviders.class)
+	@Test(dataProvider = "illigalCredentials", dataProviderClass = TestDataProviders.class)
 	public void testLoginWithIlligalCredentialsUsingAPI(String email, String password) throws IOException {
 		HttpSession session = APP.newSession();
 		String errMsg = "Authentication failed.";
@@ -44,7 +46,7 @@ public class LoginTests extends TestBase {
 		String errMsg = "Invalid password.";
 		assertTrue(session.loginWithErrorHandling(email, password, errMsg));
 	}
-	
+
 	@Test(dataProvider = "invalidEmail", dataProviderClass = TestDataProviders.class)
 	public void testLoginWithInvalidEmailUsingAPI(String email, String password) throws IOException {
 		HttpSession session = APP.newSession();

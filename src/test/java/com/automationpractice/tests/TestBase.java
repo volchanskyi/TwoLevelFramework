@@ -15,39 +15,36 @@ import org.testng.annotations.Listeners;
 
 import com.automationpractice.appmanager.ApplicationManager;
 
-
-
 @Listeners(TestListener.class)
 public class TestBase {
-    
-    final private Logger logger = LoggerFactory.getLogger(TestBase.class);
 
-    protected static final ApplicationManager APP = new ApplicationManager(
-	    // for local GUI tests
-	    System.getProperty("browser", BrowserType.CHROME));
+	final private Logger logger = LoggerFactory.getLogger(TestBase.class);
 
-    @BeforeSuite(alwaysRun = true)
-    public void setUp(ITestContext context) throws Exception {
-	APP.init();
-	context.setAttribute("app", APP);
-    }
-    
-    @BeforeMethod(alwaysRun = true)
-    private void beforeMethod(Method method, Object[] parameters) {
-	logger.debug("Start test " + method.getName() + " with params " + Arrays.asList(parameters));
+	protected static final ApplicationManager APP = new ApplicationManager(
+			// for local GUI tests
+			System.getProperty("browser", BrowserType.CHROME));
 
-    }
-    
-    @AfterMethod(alwaysRun = true)
-    private void logTestStop(Method method, Object[] parameters) {
-	logger.debug("Stop test " + method.getName());
+	@BeforeSuite(alwaysRun = true)
+	public void setUp(ITestContext context) throws Exception {
+		APP.init();
+		context.setAttribute("app", APP);
+	}
 
-    }
+	@BeforeMethod(alwaysRun = true)
+	private void beforeMethod(Method method, Object[] parameters) {
+		logger.debug("Start test " + method.getName() + " with params " + Arrays.asList(parameters));
 
-    @AfterSuite(alwaysRun = true)
-    public void tearDown() {
-	APP.stop();
-    }
-    
+	}
+
+	@AfterMethod(alwaysRun = true)
+	private void logTestStop(Method method, Object[] parameters) {
+		logger.debug("Stop test " + method.getName());
+
+	}
+
+	@AfterSuite(alwaysRun = true)
+	public void tearDown() {
+		APP.stop();
+	}
 
 }
