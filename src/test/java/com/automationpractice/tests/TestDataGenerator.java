@@ -17,27 +17,60 @@ public abstract class TestDataGenerator {
 	private static String generateAlphaNumeric(int min, int max) {
 		return RandomStringUtils.randomAlphanumeric(min, max).toString();
 	}
+	
+	private static String generateNumeric(int min, int max) {
+		return RandomStringUtils.randomNumeric(min, max).toString();
+	}
+	
+	private static String generateAlphabetic(int min, int max) {
+		return RandomStringUtils.randomAlphabetic(min, max).toString();
+	}
 
+	//Name
+	protected static String generateValidFormatName() {
+		return generateAlphabetic(4, 10);
+	}
+	
+	//Last Name
+	protected static String generateValidFormatLastName() {
+		return generateAlphabetic(5, 12);
+	}
+	
+	//Address
+	protected static String generateValidFormatAddress() {
+		return generateNumeric(1, 4) + " " + generateAlphabetic(5, 10) + " Dr.";
+	}
+	
+	//PostalCode
+	protected static String generateValidFormatPostalCode() {
+		return generateNumeric(5, 5);
+	}
+	
+	//PhoneNumber
+	protected static String generateValidFormatPhoneNumber() {
+		return generateNumeric(10, 10);
+	}
+	
 	// Emails
-	private static String generateValidFormatEmails() {
+	protected static String generateValidFormatEmails() {
 		return generateAlphaNumeric(5, 15) + "@mailinator.com";
 	}
 
-	public static String generateInvalidFormatEmails() {
+	protected static String generateInvalidFormatEmails() {
 		return generateAscii(5, 30) + "@" + generateAscii(3, 10) + ".com";
 	}
 
 	// Passwords
-	private static String generateValidFormatPasswords() {
+	protected static String generateValidFormatPasswords() {
 		return generateAlphaNumeric(5, 10);
 	}
 
-	public static String generateInvalidFormatPasswords() {
-		return generateAscii(1, 4).replace("\\", ":");
+	protected static String generateInvalidFormatPasswords() {
+		return generateAscii(1, 4);
 	}
 
 	// Credentials
-	public static String[] generateValidFormatCredentials() {
+	protected static String[] generateValidFormatCredentials() {
 		String[] validFormatEmailAndPassword = { generateValidFormatEmails(), generateValidFormatPasswords() };
 		return validFormatEmailAndPassword;
 	}

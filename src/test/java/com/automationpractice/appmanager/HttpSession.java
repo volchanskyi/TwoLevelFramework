@@ -74,7 +74,7 @@ public class HttpSession {
 
 	}
 
-	public boolean signUp(String email) throws IOException {
+	public boolean signUpWith(String email) throws IOException {
 		HttpPost post = new HttpPost(app.getProperty("web.baseUrl") + "index.php");
 		List<NameValuePair> params = new ArrayList<>();
 		params.add(new BasicNameValuePair("controller", "authentication"));
@@ -89,20 +89,20 @@ public class HttpSession {
 		return body.contains(String.format("<h1 class=\\\"page-heading\\\">%s<\\/h1>", "Create an account"));
 	}
 
-	public boolean register(String email, String title, String fName, String lName, String password, String address,
-			String city, String postcode, String state, String phone) throws IOException {
+	public boolean register(String fName, String lName, String password, String address,
+		    String city, String postcode, String state, String phone, String title, String email) throws IOException {
 		HttpPost post = new HttpPost(app.getProperty("web.baseUrl")
 				+ "index.php?controller=authentication&back=my-account#account-creation");
 		List<NameValuePair> params = new ArrayList<>();
 		params.add(new BasicNameValuePair("customer_firstname", fName));
 		params.add(new BasicNameValuePair("customer_lastname", lName));
-		params.add(new BasicNameValuePair("email", email));
 		params.add(new BasicNameValuePair("passwd", password));
+		params.add(new BasicNameValuePair("firstname", fName));
+		params.add(new BasicNameValuePair("lastname", lName));
+		params.add(new BasicNameValuePair("email", email));
 		params.add(new BasicNameValuePair("days", ""));
 		params.add(new BasicNameValuePair("months", ""));
 		params.add(new BasicNameValuePair("years", ""));
-		params.add(new BasicNameValuePair("firstname", fName));
-		params.add(new BasicNameValuePair("lastname", lName));
 		params.add(new BasicNameValuePair("company", ""));
 		params.add(new BasicNameValuePair("address1", address));
 		params.add(new BasicNameValuePair("address2", ""));
@@ -135,7 +135,7 @@ public class HttpSession {
 		return key.getAsJsonArray().getAsString();
 	}
 
-	public boolean createEmail(String email) throws IOException, InterruptedException {
+	public boolean createEmailWith(String email) throws IOException, InterruptedException {
 		HttpGet get = new HttpGet(app.getProperty("web.mailinator") + "v2/inbox.jsp?zone=public&query=" + email);
 		get.setHeader(":authority", "www.mailinator.com");
 		get.setHeader(":method", "GET");
