@@ -2,7 +2,6 @@ package com.automationpractice.tests;
 
 import static org.testng.Assert.assertEquals;
 
-import java.io.IOException;
 import java.util.Set;
 
 import org.testng.annotations.Test;
@@ -13,7 +12,7 @@ import com.automationpractice.model.Products;
 public class CartTests extends TestBase {
 
 	@Test
-	public void testAddProductToCart() throws IOException {
+	public void testAddProductToCart() throws Exception {
 		// Init HTTP session
 		HttpSession session = APP.newSession();
 		// read token

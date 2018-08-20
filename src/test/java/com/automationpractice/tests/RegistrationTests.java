@@ -1,7 +1,6 @@
 package com.automationpractice.tests;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
 import java.io.IOException;
@@ -36,14 +35,21 @@ public class RegistrationTests extends TestBase {
 	public void testRegisterNewAccountWithExistedCredentialsUsingAPI() throws IOException {
 		HttpSession session = APP.newSession();
 		String errMsg = "An account using this email address has already been registered. Please enter a valid password or request a new one. ";
-		assertThat(session.registerExistedAccountWithApiUsing("volchanskij@gmail.com"), equalTo(errMsg));
+		assertEquals(session.registerExistedAccountWithApiUsing("volchanskij@gmail.com"), errMsg);
+	}
+	
+	@Test(groups = { "API" }, priority = 4)
+	public void testRegisterNewAccountWithEmptyCredentialsUsingAPI() throws IOException {
+		HttpSession session = APP.newSession();
+		String errMsg = "Invalid email address.";
+		assertEquals(session.registerExistedAccountWithApiUsing(""), errMsg);
 	}
 
 	@Test(groups = { "API" }, priority = 1, dataProvider = "invalidEmail", dataProviderClass = TestDataProviders.class)
 	public void testRegisterNewAccountWithWrongEmailFormatUsingAPI(String email) throws IOException {
 		HttpSession session = APP.newSession();
 		String errMsg = "Invalid email address.";
-		assertThat(session.registerExistedAccountWithApiUsing(email), equalTo(errMsg));
+		assertEquals(session.registerExistedAccountWithApiUsing(email), errMsg);
 	}
 
 	@Test(groups = {

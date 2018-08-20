@@ -24,6 +24,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
+import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 
 public class HttpSession extends HttpSessionHelper {
@@ -92,7 +93,8 @@ public class HttpSession extends HttpSessionHelper {
 		return body.contains(String.format("<title>%s</title>", title));
 	}
 
-	public String registerExistedAccountWithApiUsing(String email) throws IOException, IllegalStateException {
+	public String registerExistedAccountWithApiUsing(String email)
+			throws JsonSyntaxException, IOException, IllegalStateException {
 		String pageContent = Request.Post(app.getProperty("web.baseUrl") + "index.php?controller=authentication")
 				.bodyForm(Form.form().add("controller", "authentication").add("SubmitCreate", "1").add("ajax", "true")
 						.add("email_create", email).add("back", "my-account").build())
@@ -113,7 +115,8 @@ public class HttpSession extends HttpSessionHelper {
 		return body.contains(String.format("%s", inboxMsg));
 	}
 
-	public Set<Products> addProductToCart(String id, String quantity, String token) throws IOException {
+	public Set<Products> addProductToCart(String id, String quantity, String token)
+			throws JsonSyntaxException, IOException, IllegalStateException {
 		String postRequest = app.getProperty("web.baseUrl") + "index.php?rand=" + this.rand;
 		String[][] headerParams = { { "Accept", "application/json, text/javascript, */*; q=0.01" },
 				{ "Content-Type", "application/x-www-form-urlencoded; charset=UTF-8" },
@@ -217,7 +220,7 @@ public class HttpSession extends HttpSessionHelper {
 		return false;
 	}
 
-	//Cookie management section
+	// Cookie management section
 	public void insertCookie(String cookie) {
 		this.webCookie = cookie;
 	}
