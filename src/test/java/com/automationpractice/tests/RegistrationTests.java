@@ -1,6 +1,7 @@
 package com.automationpractice.tests;
 
-import static org.testng.Assert.assertEquals;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.testng.Assert.assertTrue;
 
 import java.io.IOException;
@@ -14,7 +15,8 @@ import com.automationpractice.appmanager.RegistrationHelper;
 
 public class RegistrationTests extends TestBase {
 
-	@Test(groups = { "API" }, dataProvider = "validCredentialsForRegistrationController", dataProviderClass = TestDataProviders.class)
+	@Test(groups = {
+			"API" }, priority = 3, dataProvider = "validCredentialsForRegistrationController", dataProviderClass = TestDataProviders.class)
 	public void testRegisterNewAccountUsingAPI(String email, String fName, String lName, String password,
 			String address, String city, String postalCode, String state, String phone)
 			throws MessagingException, IOException, InterruptedException {
@@ -26,25 +28,26 @@ public class RegistrationTests extends TestBase {
 		assertTrue(session.signUpWith(newEmail));
 		// assertTrue(session.verifyActivationLink(link)); (automationpractice.com
 		// doesn`t send an activation link) DO NOT DELETE
-		assertTrue(session.register(fName, lName, password, address, city, postalCode, state, phone, title, newEmail));
+		assertTrue(
+				session.registerWith(fName, lName, password, address, city, postalCode, state, phone, title, newEmail));
 	}
 
-	@Test(groups = { "API" })
+	@Test(groups = { "API" }, priority = 2)
 	public void testRegisterNewAccountWithExistedCredentialsUsingAPI() throws IOException {
 		HttpSession session = APP.newSession();
-		String apiMsg = session.registerExistedAccountWithAPI("volchanskij@gmail.com");
-		assertEquals(apiMsg,
-				"An account using this email address has already been registered. Please enter a valid password or request a new one. ");
+		String errMsg = "An account using this email address has already been registered. Please enter a valid password or request a new one. ";
+		assertThat(session.registerExistedAccountWithApiUsing("volchanskij@gmail.com"), equalTo(errMsg));
 	}
 
-	@Test(groups = { "API" })
-	public void testRegisterNewAccountWithWrongEmailFormatUsingAPI() throws IOException {
+	@Test(groups = { "API" }, priority = 1, dataProvider = "invalidEmail", dataProviderClass = TestDataProviders.class)
+	public void testRegisterNewAccountWithWrongEmailFormatUsingAPI(String email) throws IOException {
 		HttpSession session = APP.newSession();
-		String apiMsg = session.registerExistedAccountWithAPI("volchanskij@");
-		assertEquals(apiMsg, "Invalid email address.");
+		String errMsg = "Invalid email address.";
+		assertThat(session.registerExistedAccountWithApiUsing(email), equalTo(errMsg));
 	}
 
-	@Test(groups = { "GUI" }, dataProvider = "validCredentialsForRegistrationPage", dataProviderClass = TestDataProviders.class)
+	@Test(groups = {
+			"GUI" }, priority = 100, dataProvider = "validCredentialsForRegistrationPage", dataProviderClass = TestDataProviders.class)
 	public void testRegisterNewAccountUsingGUI(String email, String fName, String lName, String password,
 			String address, String city, String postalCode, String state, String phone)
 			throws MessagingException, IOException, InterruptedException {

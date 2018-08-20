@@ -2,15 +2,11 @@ package com.automationpractice.appmanager;
 
 import java.io.IOException;
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
-import org.apache.http.NameValuePair;
 import org.apache.http.client.CookieStore;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.fluent.Executor;
 import org.apache.http.client.fluent.Form;
 import org.apache.http.client.fluent.Request;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -22,8 +18,6 @@ import org.apache.http.impl.client.BasicCookieStore;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.client.LaxRedirectStrategy;
-import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.util.EntityUtils;
 
 import com.automationpractice.model.Products;
 import com.google.gson.Gson;
@@ -32,7 +26,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 
-public class HttpSession {
+public class HttpSession extends HttpSessionHelper {
 	private CloseableHttpClient httpClient;
 	private HttpClientContext context = HttpClientContext.create();
 	private CookieStore cookieStore = new BasicCookieStore();
@@ -44,21 +38,16 @@ public class HttpSession {
 
 	public HttpSession(ApplicationManager app) {
 		this.app = app;
-
 		this.context.setCookieStore(cookieStore);
-
 		// Enable following REDIRECTIONS on POST
 		httpClient = HttpClients.custom().setRedirectStrategy(new LaxRedirectStrategy()).build();
 	}
 
 	public boolean loginWith(String email, String password, String title) throws IOException {
 		HttpPost post = new HttpPost(app.getProperty("web.baseUrl") + "index.php?controller=authentication");
-		List<NameValuePair> params = new ArrayList<>();
-		params.add(new BasicNameValuePair("email", email));
-		params.add(new BasicNameValuePair("passwd", password));
-		params.add(new BasicNameValuePair("back", "my-account"));
-		params.add(new BasicNameValuePair("SubmitLogin", ""));
-		post.setEntity(new UrlEncodedFormEntity(params));
+		String[][] bodyParams = { { "email", email }, { "passwd", password }, { "back", "my-account" },
+				{ "SubmitLogin", "" } };
+		post.setEntity(new UrlEncodedFormEntity(createHttpBodyParamsWith(bodyParams)));
 		CloseableHttpResponse response = httpClient.execute(post);
 		// this.webCookie = response.getFirstHeader("Set-Cookie").getValue();
 		String body = getTextFrom(response);
@@ -76,56 +65,34 @@ public class HttpSession {
 
 	public boolean signUpWith(String email) throws IOException {
 		HttpPost post = new HttpPost(app.getProperty("web.baseUrl") + "index.php");
-		List<NameValuePair> params = new ArrayList<>();
-		params.add(new BasicNameValuePair("controller", "authentication"));
-		params.add(new BasicNameValuePair("SubmitCreate", "1"));
-		params.add(new BasicNameValuePair("ajax", "true"));
-		params.add(new BasicNameValuePair("email_create", email));
-		params.add(new BasicNameValuePair("back", "my-account"));
-		params.add(new BasicNameValuePair("token", "ce65cefcbafad255f0866d3b32d32058"));
-		post.setEntity(new UrlEncodedFormEntity(params));
+		String[][] bodyParams = { { "controller", "authentication" }, { "SubmitCreate", "1" }, { "ajax", "true" },
+				{ "email_create", email }, { "back", "my-account" }, { "token", "ce65cefcbafad255f0866d3b32d32058" } };
+		post.setEntity(new UrlEncodedFormEntity(createHttpBodyParamsWith(bodyParams)));
 		CloseableHttpResponse response = httpClient.execute(post);
 		String body = getTextFrom(response);
 		return body.contains(String.format("<h1 class=\\\"page-heading\\\">%s<\\/h1>", "Create an account"));
 	}
 
-	public boolean register(String fName, String lName, String password, String address,
-		    String city, String postcode, String state, String phone, String title, String email) throws IOException {
-		HttpPost post = new HttpPost(app.getProperty("web.baseUrl")
-				+ "index.php?controller=authentication&back=my-account#account-creation");
-		List<NameValuePair> params = new ArrayList<>();
-		params.add(new BasicNameValuePair("customer_firstname", fName));
-		params.add(new BasicNameValuePair("customer_lastname", lName));
-		params.add(new BasicNameValuePair("passwd", password));
-		params.add(new BasicNameValuePair("firstname", fName));
-		params.add(new BasicNameValuePair("lastname", lName));
-		params.add(new BasicNameValuePair("email", email));
-		params.add(new BasicNameValuePair("days", ""));
-		params.add(new BasicNameValuePair("months", ""));
-		params.add(new BasicNameValuePair("years", ""));
-		params.add(new BasicNameValuePair("company", ""));
-		params.add(new BasicNameValuePair("address1", address));
-		params.add(new BasicNameValuePair("address2", ""));
-		params.add(new BasicNameValuePair("city", city));
-		params.add(new BasicNameValuePair("id_state", state));
-		params.add(new BasicNameValuePair("postcode", postcode));
-		params.add(new BasicNameValuePair("id_country", "21"));
-		params.add(new BasicNameValuePair("phone_mobile", phone));
-		params.add(new BasicNameValuePair("alias", "My address"));
-		params.add(new BasicNameValuePair("back", "my-account"));
-		params.add(new BasicNameValuePair("dni", ""));
-		params.add(new BasicNameValuePair("email_create", "1"));
-		params.add(new BasicNameValuePair("is_new_customer", "1"));
-		params.add(new BasicNameValuePair("submitAccount", ""));
-		post.setHeader("Accept", "application/json, text/javascript");
-		post.setHeader("Content-Type", "application/x-www-form-urlencoded");
-		post.setEntity(new UrlEncodedFormEntity(params));
+	public boolean registerWith(String fName, String lName, String password, String address, String city,
+			String postcode, String state, String phone, String title, String email) throws IOException {
+		String postRequest = app.getProperty("web.baseUrl")
+				+ "index.php?controller=authentication&back=my-account#account-creation";
+		String[][] headerParams = { { "Accept", "application/json, text/javascript" },
+				{ "Content-Type", "application/x-www-form-urlencoded" } };
+		String[][] bodyParams = { { "customer_firstname", fName }, { "customer_lastname", lName },
+				{ "passwd", password }, { "firstname", fName }, { "lastname", lName }, { "email", email },
+				{ "days", "" }, { "months", "" }, { "years", "" }, { "company", "" }, { "address1", address },
+				{ "address2", "" }, { "city", city }, { "id_state", state }, { "postcode", postcode },
+				{ "id_country", "21" }, { "phone_mobile", phone }, { "alias", "My address" }, { "back", "my-account" },
+				{ "dni", "" }, { "email_create", "1" }, { "is_new_customer", "1" }, { "submitAccount", "" } };
+		HttpPost post = createPostRequestWithParams(postRequest, headerParams);
+		post.setEntity(new UrlEncodedFormEntity(createHttpBodyParamsWith(bodyParams)));
 		CloseableHttpResponse response = httpClient.execute(post);
 		String body = getTextFrom(response);
 		return body.contains(String.format("<title>%s</title>", title));
 	}
 
-	public String registerExistedAccountWithAPI(String email) throws IOException {
+	public String registerExistedAccountWithApiUsing(String email) throws IOException, IllegalStateException {
 		String pageContent = Request.Post(app.getProperty("web.baseUrl") + "index.php?controller=authentication")
 				.bodyForm(Form.form().add("controller", "authentication").add("SubmitCreate", "1").add("ajax", "true")
 						.add("email_create", email).add("back", "my-account").build())
@@ -136,11 +103,10 @@ public class HttpSession {
 	}
 
 	public boolean createEmailWith(String email) throws IOException, InterruptedException {
-		HttpGet get = new HttpGet(app.getProperty("web.mailinator") + "v2/inbox.jsp?zone=public&query=" + email);
-		get.setHeader(":authority", "www.mailinator.com");
-		get.setHeader(":method", "GET");
-		get.setHeader(":scheme", "https");
-		get.setHeader(":path", "/v2/inbox.jsp?zone=public&query=" + email);
+		String getRequest = app.getProperty("web.mailinator") + "v2/inbox.jsp?zone=public&query=" + email;
+		String[][] headerParams = { { ":authority", "www.mailinator.com" }, { ":method", "GET" },
+				{ ":scheme", "https" }, { ":path", "/v2/inbox.jsp?zone=public&query=" + email } };
+		HttpGet get = createGetRequestWithParams(getRequest, headerParams);
 		CloseableHttpResponse response = httpClient.execute(get);
 		String body = getTextFrom(response);
 		String inboxMsg = "[ This Inbox channel is currently Empty ]";
@@ -148,19 +114,14 @@ public class HttpSession {
 	}
 
 	public Set<Products> addProductToCart(String id, String quantity, String token) throws IOException {
-		HttpPost post = new HttpPost(app.getProperty("web.baseUrl") + "index.php?rand=" + this.rand);
-		List<NameValuePair> params = new ArrayList<>();
-		params.add(new BasicNameValuePair("controller", "cart"));
-		params.add(new BasicNameValuePair("add", "1"));
-		params.add(new BasicNameValuePair("ajax", "true"));
-		params.add(new BasicNameValuePair("qty", quantity));
-		params.add(new BasicNameValuePair("id_product", id));
-		params.add(new BasicNameValuePair("token", token));
-		post.setHeader("Accept", "application/json, text/javascript, */*; q=0.01");
-		post.setHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
-		post.setHeader("X-Requested-With", "XMLHttpRequest");
-		post.setHeader("Cookie", getCookieValue(cookieStore, this.webCookie));
-		post.setEntity(new UrlEncodedFormEntity(params));
+		String postRequest = app.getProperty("web.baseUrl") + "index.php?rand=" + this.rand;
+		String[][] headerParams = { { "Accept", "application/json, text/javascript, */*; q=0.01" },
+				{ "Content-Type", "application/x-www-form-urlencoded; charset=UTF-8" },
+				{ "X-Requested-With", "XMLHttpRequest" }, { "Cookie", getCookieValue(cookieStore, this.webCookie) } };
+		String[][] bodyParams = { { "controller", "cart" }, { "add", "1" }, { "ajax", "true" }, { "qty", quantity },
+				{ "id_product", id }, { "token", token } };
+		HttpPost post = createPostRequestWithParams(postRequest, headerParams);
+		post.setEntity(new UrlEncodedFormEntity(createHttpBodyParamsWith(bodyParams)));
 		CloseableHttpResponse response = httpClient.execute(post, this.context);
 		String json = getTextFrom(response);
 		JsonElement parsed = new JsonParser().parse(json);
@@ -170,16 +131,13 @@ public class HttpSession {
 	}
 
 	public Set<Products> getProductsFromCart(String token) throws IOException {
-		HttpPost post = new HttpPost(app.getProperty("web.baseUrl") + "index.php?rand=" + this.rand);
-		List<NameValuePair> params = new ArrayList<>();
-		params.add(new BasicNameValuePair("controller", "cart"));
-		params.add(new BasicNameValuePair("ajax", "true"));
-		params.add(new BasicNameValuePair("token", token));
-		post.setHeader("Accept", "application/json, text/javascript, */*; q=0.01");
-		post.setHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
-		post.setHeader("X-Requested-With", "XMLHttpRequest");
-		post.setHeader("Cookie", getCookieValue(cookieStore, this.webCookie));
-		post.setEntity(new UrlEncodedFormEntity(params));
+		String postRequest = app.getProperty("web.baseUrl") + "index.php?rand=" + this.rand;
+		String[][] headerParams = { { "Accept", "application/json, text/javascript, */*; q=0.01" },
+				{ "Content-Type", "application/x-www-form-urlencoded; charset=UTF-8" },
+				{ "X-Requested-With", "XMLHttpRequest" }, { "Cookie", getCookieValue(cookieStore, this.webCookie) } };
+		String[][] bodyParams = { { "controller", "cart" }, { "ajax", "true" }, { "token", token } };
+		HttpPost post = createPostRequestWithParams(postRequest, headerParams);
+		post.setEntity(new UrlEncodedFormEntity(createHttpBodyParamsWith(bodyParams)));
 		CloseableHttpResponse response = httpClient.execute(post, this.context);
 		String json = getTextFrom(response);
 		JsonElement parsed = new JsonParser().parse(json);
@@ -236,25 +194,14 @@ public class HttpSession {
 		}
 	}
 
-	private Executor getExecutor() {
-		return Executor.newInstance(httpClient);
-	}
-
 	public boolean searchForProduct(Products product) throws IOException {
 		// Use fluent API
 		String prod = product.getName().toString();
-		String response = Request.Get(app.getProperty("web.searchUrl") + prod.replaceAll(" ", "+") + "&limit=10&timestamp="
-				+ timeStamp.getTime() + "&ajaxSearch=1&id_lang=1").execute().returnContent().asString();
+		String response = Request.Get(app.getProperty("web.searchUrl") + prod.replaceAll(" ", "+")
+				+ "&limit=10&timestamp=" + timeStamp.getTime() + "&ajaxSearch=1&id_lang=1").execute().returnContent()
+				.asString();
 		return response.contains(prod.replaceAll(" ", "-"));
 
-	}
-
-	private String getTextFrom(CloseableHttpResponse response) throws IOException {
-		try {
-			return EntityUtils.toString(response.getEntity());
-		} finally {
-			response.close();
-		}
 	}
 
 	public boolean isLoggedInAs(String username) throws IOException {
@@ -270,6 +217,7 @@ public class HttpSession {
 		return false;
 	}
 
+	//Cookie management section
 	public void insertCookie(String cookie) {
 		this.webCookie = cookie;
 	}
@@ -292,11 +240,11 @@ public class HttpSession {
 		httpClient.execute(get, context);
 		this.webCookie = cookieName;
 	}
-	
+
 	public String getToken() {
 		return app.getProperty("web.token");
 	}
-	
+
 	public String getCookieName() {
 		return app.getProperty("web.cookies");
 	}

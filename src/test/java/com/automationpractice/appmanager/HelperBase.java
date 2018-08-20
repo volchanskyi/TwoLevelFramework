@@ -5,10 +5,8 @@ import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -22,15 +20,15 @@ public class HelperBase {
 	public HelperBase(ApplicationManager app) throws MalformedURLException {
 		this.app = app;
 		this.wd = app.getDriver();
+		// Assure all browsers have the same screen resolution and starting point (for
+		// GUI tests)
+		this.wd.manage().window().setPosition(new Point(0, 0));
+		this.wd.manage().window().setSize(new Dimension(1280, 1024));
 		// set EXPLICIT timeouts
 		this.wait = new WebDriverWait(this.wd, 15);
 		// Set timeout for Async Java Script
 		this.wd.manage().timeouts().setScriptTimeout(20, TimeUnit.SECONDS);
 		this.wd.manage().timeouts().pageLoadTimeout(15, TimeUnit.SECONDS);
-		// Assure all browsers have the same screen resolution and starting point (for
-		// GUI tests)
-		this.wd.manage().window().setPosition(new Point(0, 0));
-		this.wd.manage().window().setSize(new Dimension(1280, 1024));
 	}
 
 	protected void click(By locator) {

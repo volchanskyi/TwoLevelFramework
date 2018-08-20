@@ -3,17 +3,10 @@ package com.automationpractice.tests;
 import static org.testng.Assert.assertEquals;
 
 import java.io.IOException;
-import java.lang.reflect.Method;
-import java.util.Arrays;
 import java.util.Set;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import com.automationpractice.appmanager.ApplicationManager;
 import com.automationpractice.appmanager.HttpSession;
 import com.automationpractice.model.Products;
 
@@ -30,9 +23,7 @@ public class CartTests extends TestBase {
 		// pass cookie name to make Server Side generate cookie and pass them to
 		// CONTEXT
 		session.initCookie(cookieName);
-
 		// String token = "75bcfffc7e0bb8dec3cd64163aeff58c";
-
 		// add item to the cart
 		session.addProductToCart("3", "1", token);
 		// get items from the cart and save them to the init value

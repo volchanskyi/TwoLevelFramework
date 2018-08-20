@@ -3,10 +3,6 @@ package com.automationpractice.appmanager;
 import java.net.MalformedURLException;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.Select;
 
 public class RegistrationHelper extends HelperBase {
 
@@ -51,7 +47,7 @@ public class RegistrationHelper extends HelperBase {
     }
 
     
-    public boolean verifyWithTitle(String title) {
+	public boolean verifyWithTitle(String title) {
     	String actualTitle = getPageTitle(title);
     	return actualTitle.equals(title);
     }

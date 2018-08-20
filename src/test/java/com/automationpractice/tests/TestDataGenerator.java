@@ -1,13 +1,10 @@
 package com.automationpractice.tests;
 
+import java.util.Random;
+
 import org.apache.commons.lang3.RandomStringUtils;
 
 public abstract class TestDataGenerator {
-
-//	  String ascii = RandomStringUtils.randomAscii(5, 20);
-//      String alnum = RandomStringUtils.randomAlphanumeric(20, 50);
-//      String num = RandomStringUtils.randomNumeric(10, 20);
-//      String graph = RandomStringUtils.randomGraph(10, 20);
 
 	// String generators
 	private static String generateAscii(int min, int max) {
@@ -17,47 +14,52 @@ public abstract class TestDataGenerator {
 	private static String generateAlphaNumeric(int min, int max) {
 		return RandomStringUtils.randomAlphanumeric(min, max).toString();
 	}
-	
+
 	private static String generateNumeric(int min, int max) {
 		return RandomStringUtils.randomNumeric(min, max).toString();
 	}
-	
+
+	private static String generateNegativeNumeric() {
+		Double rand = new Random().nextDouble() - 3;
+		return rand.toString();
+	}
+
 	private static String generateAlphabetic(int min, int max) {
 		return RandomStringUtils.randomAlphabetic(min, max).toString();
 	}
 
-	//Name
+	// Name
 	protected static String generateValidFormatName() {
 		return generateAlphabetic(4, 10);
 	}
-	
-	//Last Name
+
+	// Last Name
 	protected static String generateValidFormatLastName() {
 		return generateAlphabetic(5, 12);
 	}
-	
-	//Address
+
+	// Address
 	protected static String generateValidFormatAddress() {
 		return generateNumeric(1, 4) + " " + generateAlphabetic(5, 10) + " Dr.";
 	}
-	
-	//PostalCode
+
+	// PostalCode
 	protected static String generateValidFormatPostalCode() {
 		return generateNumeric(5, 5);
 	}
-	
-	//PhoneNumber
+
+	// PhoneNumber
 	protected static String generateValidFormatPhoneNumber() {
 		return generateNumeric(10, 10);
 	}
-	
+
 	// Emails
 	protected static String generateValidFormatEmails() {
 		return generateAlphaNumeric(5, 15) + "@mailinator.com";
 	}
 
 	protected static String generateInvalidFormatEmails() {
-		return generateAscii(5, 30) + "@" + generateAscii(3, 10) + ".com";
+		return generateAscii(5, 230) + generateNegativeNumeric() + "@" + generateAscii(3, 10) + ".com";
 	}
 
 	// Passwords
@@ -75,5 +77,19 @@ public abstract class TestDataGenerator {
 		return validFormatEmailAndPassword;
 	}
 
+	protected static String[] generateValidFormatCredentialsForRegistrationPage() {
+		String[] validFormatCredentialsForRegistrationPage = { generateValidFormatEmails(), generateValidFormatName(),
+				generateValidFormatLastName(), generateValidFormatPasswords(), generateValidFormatAddress(),
+				"San Francisco", generateValidFormatPostalCode(), "California", generateValidFormatPhoneNumber() };
+		return validFormatCredentialsForRegistrationPage;
+	}
+
+	protected static String[] generateValidFormatCredentialsForRegistrationController() {
+		String[] validFormatCredentialsForRegistrationController = { generateValidFormatEmails(),
+				generateValidFormatName(), generateValidFormatLastName(), generateValidFormatPasswords(),
+				generateValidFormatAddress(), "San Francisco", generateValidFormatPostalCode(), "5",
+				generateValidFormatPhoneNumber() };
+		return validFormatCredentialsForRegistrationController;
+	}
 
 }
