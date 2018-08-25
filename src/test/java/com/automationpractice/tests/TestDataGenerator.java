@@ -1,8 +1,18 @@
 package com.automationpractice.tests;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.Charset;
+import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.Random;
 
 import org.apache.commons.lang3.RandomStringUtils;
+
+import com.automationpractice.model.Products;
 
 public abstract class TestDataGenerator {
 
@@ -90,6 +100,31 @@ public abstract class TestDataGenerator {
 				generateValidFormatAddress(), "San Francisco", generateValidFormatPostalCode(), "5",
 				generateValidFormatPhoneNumber() };
 		return validFormatCredentialsForRegistrationController;
+	}
+
+	// Products
+	public static LinkedHashSet<Products> readProductList() throws InterruptedException, IOException {
+		String productListFile = "src/test/resources/validProducts.csv";
+		LinkedHashSet<Products> set = new LinkedHashSet<Products>();
+		String line;
+		try (
+				// open an input stream
+				InputStream fileInputStream = new FileInputStream(productListFile);
+				// read file as UTF-8
+				InputStreamReader reader = new InputStreamReader(fileInputStream, Charset.forName("UTF-8"));
+				// open a BufferedReader to read line-by-line
+				BufferedReader br = new BufferedReader(reader);) {
+			while ((line = br.readLine()) != null) {
+
+				String[] objects = line.split(",");
+				int id = Integer.parseInt(objects[0]);
+				int qty = Integer.parseInt(objects[1]);
+				// create a model object (new product item with real ID nad QTY)
+				set.add(new Products().withId(id).withQuantity(qty));
+			}
+		}
+		return set;
+
 	}
 
 }

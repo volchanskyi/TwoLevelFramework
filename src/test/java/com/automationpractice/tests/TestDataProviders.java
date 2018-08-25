@@ -1,6 +1,13 @@
 package com.automationpractice.tests;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.LinkedHashSet;
+
 import org.testng.annotations.DataProvider;
+
+import com.automationpractice.model.Products;
 
 public class TestDataProviders extends TestDataGenerator {
 
@@ -15,7 +22,7 @@ public class TestDataProviders extends TestDataGenerator {
 		}
 		return generatedTestData;
 	}
-	
+
 	@DataProvider(name = "invalidEmail")
 	public static Object[] generateInvalidEmail() {
 		Object[] generatedTestData = new Object[40];
@@ -51,7 +58,12 @@ public class TestDataProviders extends TestDataGenerator {
 	// **************VALID TEST DATA********************//
 
 	@DataProvider(name = "validProducts")
-	public static Object[] generateValidProduct() {
+	public static Object[] generateValidProductNames() {
+		return new Object[] { "blouse", "printed summer dress", "printed chiffon dress" };
+	}
+
+	@DataProvider(name = "validProductIDsAndQty")
+	public static Object[] generateValidProductIdAndQty() {
 		return new Object[] { "blouse", "printed summer dress", "printed chiffon dress" };
 	}
 
@@ -73,4 +85,12 @@ public class TestDataProviders extends TestDataGenerator {
 		}
 		return generatedTestData;
 	}
+
+	@DataProvider(name = "getValidProducts")
+	public static Iterator<Products> generateValidProducts() throws InterruptedException, IOException {
+		LinkedHashSet<Products> generatedProducts = readProductList();
+		return generatedProducts.iterator();
+
+	}
+
 }

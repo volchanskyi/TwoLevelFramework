@@ -1,9 +1,11 @@
 package com.automationpractice.tests;
 
 
+import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
 import java.io.IOException;
+import java.util.Set;
 
 import org.testng.annotations.Test;
 
@@ -18,5 +20,7 @@ public class SearchProductTests extends TestBase {
         	Products newProduct =  new Products();
         	assertTrue(session.searchForProduct(newProduct.withName(product)));
         }
+        
+        
         
     }
