@@ -1,11 +1,8 @@
 package com.automationpractice.tests;
 
-
-import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
 import java.io.IOException;
-import java.util.Set;
 
 import org.testng.annotations.Test;
 
@@ -14,13 +11,11 @@ import com.automationpractice.model.Products;
 
 public class SearchProductTests extends TestBase {
 
-        @Test(dataProvider = "validProducts", dataProviderClass = TestDataProviders.class)
-        public void testProductSearchForValidProductsUsingAPI(String product) throws IOException {
-        	HttpSession session = APP.newSession();
-        	Products newProduct =  new Products();
-        	assertTrue(session.searchForProduct(newProduct.withName(product)));
-        }
-        
-        
-        
-    }
+	@Test(dataProvider = "getValidProductsFromPropertyFile", dataProviderClass = TestDataProviders.class)
+	public void testProductSearchForValidProductsUsingAPI(Products product) throws IOException {
+		HttpSession session = APP.newSession();
+		Products newProduct = new Products();
+		assertTrue(session.searchForProduct(newProduct.withName(product.getName())));
+	}
+
+}

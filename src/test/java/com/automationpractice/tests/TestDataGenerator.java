@@ -6,12 +6,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
-import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.Random;
 
 import org.apache.commons.lang3.RandomStringUtils;
 
+import com.automationpractice.model.LigalCredentials;
 import com.automationpractice.model.Products;
 
 public abstract class TestDataGenerator {
@@ -102,8 +102,34 @@ public abstract class TestDataGenerator {
 		return validFormatCredentialsForRegistrationController;
 	}
 
+	protected static LinkedHashSet<LigalCredentials> readLigalCredentialsList() throws InterruptedException, IOException {
+		String productListFile = "src/test/resources/validAccounts.csv";
+		LinkedHashSet<LigalCredentials> set = new LinkedHashSet<LigalCredentials>();
+		String line;
+		try (
+				// open an input stream
+				InputStream fileInputStream = new FileInputStream(productListFile);
+				// read file as UTF-8
+				InputStreamReader reader = new InputStreamReader(fileInputStream, Charset.forName("UTF-8"));
+				// open a BufferedReader to read line-by-line
+				BufferedReader br = new BufferedReader(reader);) {
+			while ((line = br.readLine()) != null) {
+				// split objects by ","
+				String[] objects = line.split(",");
+				String email = objects[0];
+				String password = objects[1];
+				String name = objects[2].replaceAll("_", " ");
+				// create a model object (new product item with real ID nad QTY)
+				set.add(new LigalCredentials().withEmail(email).withPassword(password).withName(name));
+
+			}
+		}
+		return set;
+
+	}
+
 	// Products
-	public static LinkedHashSet<Products> readProductList() throws InterruptedException, IOException {
+	protected static LinkedHashSet<Products> readProductList() throws InterruptedException, IOException {
 		String productListFile = "src/test/resources/validProducts.csv";
 		LinkedHashSet<Products> set = new LinkedHashSet<Products>();
 		String line;
@@ -115,12 +141,13 @@ public abstract class TestDataGenerator {
 				// open a BufferedReader to read line-by-line
 				BufferedReader br = new BufferedReader(reader);) {
 			while ((line = br.readLine()) != null) {
-
+				// split objects by ","
 				String[] objects = line.split(",");
 				int id = Integer.parseInt(objects[0]);
 				int qty = Integer.parseInt(objects[1]);
+				String name = objects[2].toLowerCase().replaceAll("_", " ");
 				// create a model object (new product item with real ID nad QTY)
-				set.add(new Products().withId(id).withQuantity(qty));
+				set.add(new Products().withId(id).withQuantity(qty).withName(name));
 			}
 		}
 		return set;

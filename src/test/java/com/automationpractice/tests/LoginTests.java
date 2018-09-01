@@ -7,15 +7,17 @@ import java.io.IOException;
 import org.testng.annotations.Test;
 
 import com.automationpractice.appmanager.HttpSession;
+import com.automationpractice.model.LigalCredentials;
 
 //@Guice
 public class LoginTests extends TestBase {
 
-	@Test
-	public void testLoginWithExistedAccountUsingAPI() throws IOException {
+	@Test(dataProvider = "getLigalCredentialsForAuthenticationControllerFromPropertyFile", dataProviderClass = TestDataProviders.class)
+	public void testLoginWithExistedAccountUsingAPI(LigalCredentials credentials) throws IOException {
 		HttpSession session = APP.newSession();
-		assertTrue(session.loginWith("volchanskij@gmail.com", "testPWD001", "My account - My Store"));
-		assertTrue(session.isLoggedInAs("Ivan Volchanskyi"));
+		String pageTitle = "My account - My Store";
+		assertTrue(session.loginWith(credentials, pageTitle));
+		assertTrue(session.isLoggedInAs(credentials));
 	}
 
 	@Test
@@ -29,7 +31,7 @@ public class LoginTests extends TestBase {
 	public void testLoginWithEmptyPasswordUsingAPI() throws IOException {
 		HttpSession session = APP.newSession();
 		String errMsg = "Password is required.";
-		assertTrue(session.loginWithErrorHandling("volchanskij@gmail.com", "", errMsg));
+		assertTrue(session.loginWithErrorHandling("whatever@gmail.com", "", errMsg));
 	}
 
 	@Test(dataProvider = "illegalCredentials", dataProviderClass = TestDataProviders.class)

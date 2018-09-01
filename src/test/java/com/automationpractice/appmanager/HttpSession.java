@@ -19,6 +19,7 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.client.LaxRedirectStrategy;
 
+import com.automationpractice.model.LigalCredentials;
 import com.automationpractice.model.Products;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -44,15 +45,15 @@ public class HttpSession extends HttpSessionHelper {
 		httpClient = HttpClients.custom().setRedirectStrategy(new LaxRedirectStrategy()).build();
 	}
 
-	public boolean loginWith(String email, String password, String title) throws IOException {
+	public boolean loginWith(LigalCredentials credentials, String pageTitle) throws IOException {
 		HttpPost post = new HttpPost(app.getProperty("web.baseUrl") + "index.php?controller=authentication");
-		String[][] bodyParams = { { "email", email }, { "passwd", password }, { "back", "my-account" },
-				{ "SubmitLogin", "" } };
+		String[][] bodyParams = { { "email", credentials.getEmail() }, { "passwd", credentials.getPassword() },
+				{ "back", "my-account" }, { "SubmitLogin", "" } };
 		post.setEntity(new UrlEncodedFormEntity(createHttpBodyParamsWith(bodyParams)));
 		CloseableHttpResponse response = httpClient.execute(post);
 		// this.webCookie = response.getFirstHeader("Set-Cookie").getValue();
 		String body = getTextFrom(response);
-		return body.contains(String.format("<title>%s</title>", title));
+		return body.contains(String.format("<title>%s</title>", pageTitle));
 	}
 
 	public boolean loginWithErrorHandling(String email, String password, String errorMsg) throws IOException {
@@ -207,11 +208,11 @@ public class HttpSession extends HttpSessionHelper {
 
 	}
 
-	public boolean isLoggedInAs(String username) throws IOException {
+	public boolean isLoggedInAs(LigalCredentials credentials) throws IOException {
 		HttpGet get = new HttpGet(app.getProperty("web.baseUrl") + "/index.php?controller=my-account");
 		CloseableHttpResponse response = httpClient.execute(get);
 		String body = getTextFrom(response);
-		return body.contains(String.format("<span>%s</span>", username));
+		return body.contains(String.format("<span>%s</span>", credentials.getName()));
 	}
 
 	// TODO implement link verification

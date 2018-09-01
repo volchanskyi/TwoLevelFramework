@@ -11,7 +11,7 @@ import com.automationpractice.model.Products;
 
 public class CartTests extends TestBase {
 
-	@Test(dataProvider = "getValidProducts", dataProviderClass = TestDataProviders.class)
+	@Test(dataProvider = "getValidProductsFromPropertyFile", dataProviderClass = TestDataProviders.class)
 	public void testAddProductToCart(Products product) throws Exception {
 		// Init HTTP session
 		HttpSession session = APP.newSession();
@@ -23,7 +23,7 @@ public class CartTests extends TestBase {
 		// CONTEXT
 		session.initCookie(cookieName);
 		// add sample item to the cart
-		session.addProductToCart("1", "1", token);
+		session.addProductToCart("1", "99", token);
 		// get items from the cart and save them to the init value
 		Set<Products> oldCart = session.getProductsFromCart(token);
 		// add the product to the cart and save it to var

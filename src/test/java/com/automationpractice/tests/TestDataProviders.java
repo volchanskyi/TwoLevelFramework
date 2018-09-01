@@ -1,12 +1,12 @@
 package com.automationpractice.tests;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 
 import org.testng.annotations.DataProvider;
 
+import com.automationpractice.model.LigalCredentials;
 import com.automationpractice.model.Products;
 
 public class TestDataProviders extends TestDataGenerator {
@@ -86,11 +86,17 @@ public class TestDataProviders extends TestDataGenerator {
 		return generatedTestData;
 	}
 
-	@DataProvider(name = "getValidProducts")
+	@DataProvider(name = "getValidProductsFromPropertyFile")
 	public static Iterator<Products> generateValidProducts() throws InterruptedException, IOException {
 		LinkedHashSet<Products> generatedProducts = readProductList();
 		return generatedProducts.iterator();
+	}
 
+	@DataProvider(name = "getLigalCredentialsForAuthenticationControllerFromPropertyFile")
+	public static Iterator<LigalCredentials> generateValidCredentialsForController()
+			throws InterruptedException, IOException {
+		LinkedHashSet<LigalCredentials> generatedLigalCreds = readLigalCredentialsList();
+		return generatedLigalCreds.iterator();
 	}
 
 }
