@@ -119,7 +119,7 @@ public abstract class TestDataGenerator {
 				String email = objects[0];
 				String password = objects[1];
 				String name = objects[2].replaceAll("_", " ");
-				// create a model object (new product item with real ID nad QTY)
+				// create a model object (new product item with real email, name and password)
 				set.add(new LigalCredentials().withEmail(email).withPassword(password).withName(name));
 
 			}

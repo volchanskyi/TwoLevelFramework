@@ -14,9 +14,10 @@ import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Listeners;
 
 import com.automationpractice.appmanager.ApplicationManager;
+import com.automationpractice.matchers.MatcherBase;
 
 @Listeners(TestListener.class)
-public class TestBase {
+public class TestBase extends MatcherBase {
 
 	final private Logger logger = LoggerFactory.getLogger(TestBase.class);
 
