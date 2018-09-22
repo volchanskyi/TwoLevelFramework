@@ -18,7 +18,7 @@ public class RegistrationHelper extends HelperBase {
 	return this;
 
     }
-    
+
     public HelperBase fillOutRegistrationFormWith(String fName, String lName, String password, String address,
 	    String city, String postcode, String state, String phone) {
 	// wd.get(app.getProperty("web.baseUrl") +

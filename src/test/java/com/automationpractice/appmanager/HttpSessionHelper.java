@@ -49,5 +49,4 @@ public class HttpSessionHelper {
 	protected Executor getExecutor(CloseableHttpClient httpClient) {
 		return Executor.newInstance(httpClient);
 	}
-
 }

@@ -28,6 +28,7 @@ public class ApplicationManager {
 
 	private String browser;
 	private RegistrationHelper registrationHelper;
+	private PdpHelper pdpHelper;
 
 	public ApplicationManager(String browser) {
 		this.browser = browser;
@@ -68,6 +69,14 @@ public class ApplicationManager {
 			registrationHelper = new RegistrationHelper(this);
 		}
 		return registrationHelper;
+	}
+	
+	public PdpHelper pdp() throws MalformedURLException {
+		// Lazy init
+		if (pdpHelper == null) {
+			pdpHelper = new PdpHelper(this);
+		}
+		return pdpHelper;
 	}
 
 	public WebDriver getDriver() throws MalformedURLException {

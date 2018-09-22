@@ -31,6 +31,12 @@ public class HelperBase {
 		this.wd.manage().timeouts().pageLoadTimeout(15, TimeUnit.SECONDS);
 	}
 
+	protected void navigateTo(String url) {
+		this.wd.navigate().to(url);
+		;
+		wait.until(ExpectedConditions.urlToBe(url));
+	}
+
 	protected void click(By locator) {
 		// wd.findElement(locator).click();
 		wait.until(ExpectedConditions.elementToBeClickable(locator)).click();
@@ -83,6 +89,11 @@ public class HelperBase {
 	protected String getPageTitle(String title) {
 		wait.until(ExpectedConditions.titleIs(title));
 		return wd.getTitle();
+	}
+
+	protected String getActiveOverlay(By locator, String overlay) {
+		wait.until(ExpectedConditions.textToBe(locator, overlay));
+		return wait.until(ExpectedConditions.visibilityOfElementLocated(locator)).getAttribute("value");
 	}
 
 	public String useProperty(String property) {

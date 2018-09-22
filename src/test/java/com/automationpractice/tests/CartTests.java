@@ -36,5 +36,4 @@ public class CartTests extends TestBase {
 		// verify the init and new cart values are equal
 		assertEquals(newCart, oldCart);
 	}
-
 }

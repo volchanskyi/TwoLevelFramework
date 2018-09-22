@@ -17,5 +17,4 @@ public class SearchProductTests extends TestBase {
 		Products newProduct = new Products();
 		assertTrue(session.searchForProduct(newProduct.withName(product.getName())));
 	}
-
 }

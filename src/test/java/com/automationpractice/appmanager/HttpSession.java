@@ -33,7 +33,6 @@ public class HttpSession extends HttpSessionHelper {
 	private HttpClientContext context = HttpClientContext.create();
 	private CookieStore cookieStore = new BasicCookieStore();
 	private ApplicationManager app;
-	protected static final Products PRODUCTS = new Products();
 	private Timestamp timeStamp = new Timestamp(System.currentTimeMillis());
 	private int rand = new Random().nextInt(99999998) + 1;
 	private String webCookie;
@@ -132,6 +131,21 @@ public class HttpSession extends HttpSessionHelper {
 		JsonElement key = parsed.getAsJsonObject().get("products");
 		return new Gson().fromJson(key, new TypeToken<Set<Products>>() {
 		}.getType());
+	}
+
+	public String addProductToWishList(Products product)
+			throws JsonSyntaxException, IOException, IllegalStateException {
+		String postRequest = app.getProperty("web.baseUrl") + "modules/blockwishlist/cart.php?";
+		String rand = String.valueOf(this.rand);
+		String[][] headerParams = { { "Accept", "application/json, text/javascript, */*; q=0.01" },
+				{ "Content-Type", "application/x-www-form-urlencoded; charset=UTF-8" },
+				{ "X-Requested-With", "XMLHttpRequest" }, { "Cookie", getCookieValue(cookieStore, this.webCookie) } };
+		String[][] bodyParams = { { "rand", rand }, { "action", "add" }, { "id_product", String.valueOf(product.getId()) }, { "quantity", String.valueOf(product.getQuantity()) },
+				{ "id_product_attribute", "false" }, { "_", rand } };
+		HttpPost post = createPostRequestWithParams(postRequest, headerParams);
+		post.setEntity(new UrlEncodedFormEntity(createHttpBodyParamsWith(bodyParams)));
+		CloseableHttpResponse response = httpClient.execute(post, this.context);
+		return getTextFrom(response);
 	}
 
 	public Set<Products> getProductsFromCart(String token) throws IOException {

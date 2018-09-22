@@ -54,5 +54,4 @@ public class LoginTests extends TestBase {
 		String errMsg = "Invalid email address.";
 		assertTrue(session.loginWithErrorHandling(email, password, errMsg));
 	}
-
 }

@@ -37,7 +37,7 @@ public class RegistrationTests extends TestBase {
 		String errMsg = "An account using this email address has already been registered. Please enter a valid password or request a new one. ";
 		assertEquals(session.registerExistedAccountWithApiUsing("volchanskij@gmail.com"), errMsg);
 	}
-	
+
 	@Test(groups = { "API" }, priority = 4)
 	public void testRegisterNewAccountWithEmptyCredentialsUsingAPI() throws IOException {
 		HttpSession session = APP.newSession();
