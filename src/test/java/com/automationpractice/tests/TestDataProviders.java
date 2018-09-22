@@ -55,7 +55,7 @@ public class TestDataProviders extends TestDataGenerator {
 		return generatedTestData;
 	}
 
-	// **************VALID TEST DATA********************//
+	// **************VALID/LEGAL TEST DATA********************//
 
 	@DataProvider(name = "validProducts")
 	public static Object[] generateValidProductNames() {
@@ -88,8 +88,8 @@ public class TestDataProviders extends TestDataGenerator {
 
 	@DataProvider(name = "getValidProductsFromPropertyFile")
 	public static Iterator<Products> generateValidProducts() throws InterruptedException, IOException {
-		LinkedHashSet<Products> generatedProducts = readProductList();
-		return generatedProducts.iterator();
+		LinkedHashSet<Products> generatedLigalProducts = readProductList();
+		return generatedLigalProducts.iterator();
 	}
 
 	@DataProvider(name = "getLigalCredentialsForAuthenticationControllerFromPropertyFile")

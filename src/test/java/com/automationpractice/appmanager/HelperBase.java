@@ -33,7 +33,6 @@ public class HelperBase {
 
 	protected void navigateTo(String url) {
 		this.wd.navigate().to(url);
-		;
 		wait.until(ExpectedConditions.urlToBe(url));
 	}
 

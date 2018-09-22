@@ -5,6 +5,7 @@ import java.sql.Timestamp;
 import java.util.Random;
 import java.util.Set;
 
+import org.apache.http.HttpResponse;
 import org.apache.http.client.CookieStore;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.fluent.Form;
@@ -133,19 +134,39 @@ public class HttpSession extends HttpSessionHelper {
 		}.getType());
 	}
 
-	public String addProductToWishList(Products product)
+//	public String addProductToWishListUsing(Products product, String token)
+//			throws JsonSyntaxException, IOException, IllegalStateException {
+//		String postRequest = app.getProperty("web.baseUrl") + "modules/blockwishlist/cart.php?";
+//		String rand = String.valueOf(this.rand);
+//		String[][] headerParams = { { "Accept", "application/json, text/javascript, */*; q=0.01" },
+//				{ "Content-Type", "application/x-www-form-urlencoded; charset=UTF-8" },
+//				{ "X-Requested-With", "XMLHttpRequest" }, { "Cookie", getCookieValue(cookieStore, this.webCookie) } };
+//		String[][] bodyParams = { { "rand", rand }, { "action", "add" },
+//				{ "id_product", String.valueOf(product.getId()) },
+//				{ "quantity", String.valueOf(product.getQuantity()) }, { "token", token },
+//				{ "id_product_attribute", "34" }, { "_", rand } };
+//		HttpPost post = createPostRequestWithParams(postRequest, headerParams);
+//		post.setEntity(new UrlEncodedFormEntity(createHttpBodyParamsWith(bodyParams)));
+//		CloseableHttpResponse response = httpClient.execute(post, this.context);
+//		return getTextFrom(response);
+//	}
+
+	public boolean navigateToPdpUsing(Products product) throws JsonSyntaxException, IOException, IllegalStateException {
+		HttpGet get = new HttpGet(
+				app.getProperty("web.baseUrl") + "index.php?id_product=" + product.getId() + "&controller=product");
+		CloseableHttpResponse response = httpClient.execute(get);
+		String body = getTextFrom(response);
+		return body.toLowerCase().contains(String.format("<title>%s</title>", product.getName() + " - my store"));
+	}
+
+	public String addProductToWishListUsing(Products product, String token)
 			throws JsonSyntaxException, IOException, IllegalStateException {
-		String postRequest = app.getProperty("web.baseUrl") + "modules/blockwishlist/cart.php?";
-		String rand = String.valueOf(this.rand);
-		String[][] headerParams = { { "Accept", "application/json, text/javascript, */*; q=0.01" },
-				{ "Content-Type", "application/x-www-form-urlencoded; charset=UTF-8" },
-				{ "X-Requested-With", "XMLHttpRequest" }, { "Cookie", getCookieValue(cookieStore, this.webCookie) } };
-		String[][] bodyParams = { { "rand", rand }, { "action", "add" }, { "id_product", String.valueOf(product.getId()) }, { "quantity", String.valueOf(product.getQuantity()) },
-				{ "id_product_attribute", "false" }, { "_", rand } };
-		HttpPost post = createPostRequestWithParams(postRequest, headerParams);
-		post.setEntity(new UrlEncodedFormEntity(createHttpBodyParamsWith(bodyParams)));
-		CloseableHttpResponse response = httpClient.execute(post, this.context);
+		HttpGet get = new HttpGet(app.getProperty("web.baseUrl") + "modules/blockwishlist/cart.php?rand=" + this.rand
+				+ "&action=add&id_product=" + product.getId() + "&quantity=" + product.getQuantity() + "&token=" + token
+				+ "&id_product_attribute=&_=" + (this.rand - 2539031));
+		CloseableHttpResponse response = httpClient.execute(get, this.context);
 		return getTextFrom(response);
+//		return body.toLowerCase().contains(String.format("<title>%s</title>", product.getName() + " - my store"));
 	}
 
 	public Set<Products> getProductsFromCart(String token) throws IOException {

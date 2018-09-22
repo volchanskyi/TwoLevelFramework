@@ -8,6 +8,7 @@ public class LigalCredentials {
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result + ((password == null) ? 0 : password.hashCode());
+		result = prime * result + ((token == null) ? 0 : token.hashCode());
 		return result;
 	}
 
@@ -29,12 +30,15 @@ public class LigalCredentials {
 			return false;
 		if (password != other.password)
 			return false;
+		if (token != other.token)
+			return false;
 		return true;
 	}
 
 	private String name;
 	private String email;
 	private String password;
+	private String token;
 
 	public String getEmail() {
 		return email;
@@ -60,6 +64,15 @@ public class LigalCredentials {
 
 	public LigalCredentials withName(String name) {
 		this.name = name;
+		return this;
+	}
+	
+	public String getToken() {
+		return token;
+	}
+
+	public LigalCredentials withToken(String token) {
+		this.token = token;
 		return this;
 	}
 
