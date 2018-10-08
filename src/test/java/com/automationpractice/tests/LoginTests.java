@@ -8,6 +8,7 @@ import org.testng.annotations.Test;
 
 import com.automationpractice.appmanager.HttpSession;
 import com.automationpractice.model.LigalCredentials;
+import com.automationpractice.model.LigalCreds;
 
 //@Guice
 public class LoginTests extends TestBase {

@@ -2,11 +2,11 @@ package com.automationpractice.tests;
 
 import java.io.IOException;
 import java.util.Iterator;
-import java.util.LinkedHashSet;
 
 import org.testng.annotations.DataProvider;
 
 import com.automationpractice.model.LigalCredentials;
+import com.automationpractice.model.PDP;
 import com.automationpractice.model.Products;
 
 public class TestDataProviders extends TestDataGenerator {
@@ -57,16 +57,6 @@ public class TestDataProviders extends TestDataGenerator {
 
 	// **************VALID/LEGAL TEST DATA********************//
 
-	@DataProvider(name = "validProducts")
-	public static Object[] generateValidProductNames() {
-		return new Object[] { "blouse", "printed summer dress", "printed chiffon dress" };
-	}
-
-	@DataProvider(name = "validProductIDsAndQty")
-	public static Object[] generateValidProductIdAndQty() {
-		return new Object[] { "blouse", "printed summer dress", "printed chiffon dress" };
-	}
-
 	@DataProvider(name = "validCredentialsForRegistrationPage")
 	public static Object[][] generateligalCredentialsForRegistrationPage() {
 		Object[][] generatedTestData = new Object[1][9];
@@ -88,15 +78,20 @@ public class TestDataProviders extends TestDataGenerator {
 
 	@DataProvider(name = "getValidProductsFromPropertyFile")
 	public static Iterator<Products> generateValidProducts() throws InterruptedException, IOException {
-		LinkedHashSet<Products> generatedLigalProducts = readProductList();
-		return generatedLigalProducts.iterator();
+		return readProductList().iterator();
 	}
 
 	@DataProvider(name = "getLigalCredentialsForAuthenticationControllerFromPropertyFile")
 	public static Iterator<LigalCredentials> generateValidCredentialsForController()
 			throws InterruptedException, IOException {
-		LinkedHashSet<LigalCredentials> generatedLigalCreds = readLigalCredentialsList();
-		return generatedLigalCreds.iterator();
+		return readLigalCredentialsList().iterator();
+	}
+
+	@DataProvider(name = "getLigalCredentialsAndProductIdsForPdpControllerFromPropertyFiles")
+	public static Iterator<PDP> generateValidUserTokensAndProductIdsForController()
+			throws InterruptedException, IOException {
+		return generatePDP().iterator();
+
 	}
 
 }

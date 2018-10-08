@@ -5,7 +5,6 @@ import java.sql.Timestamp;
 import java.util.Random;
 import java.util.Set;
 
-import org.apache.http.HttpResponse;
 import org.apache.http.client.CookieStore;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.fluent.Form;
@@ -21,6 +20,7 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.client.LaxRedirectStrategy;
 
 import com.automationpractice.model.LigalCredentials;
+import com.automationpractice.model.PDP;
 import com.automationpractice.model.Products;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -65,6 +65,7 @@ public class HttpSession extends HttpSessionHelper {
 
 	}
 
+	// TODO refactor token
 	public boolean signUpWith(String email) throws IOException {
 		HttpPost post = new HttpPost(app.getProperty("web.baseUrl") + "index.php");
 		String[][] bodyParams = { { "controller", "authentication" }, { "SubmitCreate", "1" }, { "ajax", "true" },
@@ -106,14 +107,26 @@ public class HttpSession extends HttpSessionHelper {
 	}
 
 	public boolean createEmailWith(String email) throws IOException, InterruptedException {
-		String getRequest = app.getProperty("web.mailinator") + "v2/inbox.jsp?zone=public&query=" + email;
-		String[][] headerParams = { { ":authority", "www.mailinator.com" }, { ":method", "GET" },
-				{ ":scheme", "https" }, { ":path", "/v2/inbox.jsp?zone=public&query=" + email } };
-		HttpGet get = createGetRequestWithParams(getRequest, headerParams);
-		CloseableHttpResponse response = httpClient.execute(get);
-		String body = getTextFrom(response);
-		String inboxMsg = "[ This Inbox channel is currently Empty ]";
-		return body.contains(String.format("%s", inboxMsg));
+		String postRequest = app.getProperty("web.emailGenerator") + "/ajax.php?f=set_email_user";
+		String[][] headerParams = { { "Accept", "application/json, text/javascript, */*; q=0.01" },
+				{ "Authorization", "ApiToken 6cecc4da415fcd63b23a6993cbf429ea620b086a0adaefe73f3143b3cdf086ef" },
+				{ "Content-Type", "application/x-www-form-urlencoded; charset=UTF-8" },
+				{ "X-Requested-With", "XMLHttpRequest" } };
+		String[][] bodyParams = { { "email_user", email.split("@")[0] }, { "lang", "en" },
+				{ "site", "guerrillamail.com" }, { "in", "Set cancel" } };
+		HttpPost post = createPostRequestWithParams(postRequest, headerParams);
+		post.setEntity(new UrlEncodedFormEntity(createHttpBodyParamsWith(bodyParams)));
+		CloseableHttpResponse response = httpClient.execute(post, this.context);
+		String json = getTextFrom(response);
+		JsonElement parsed = new JsonParser().parse(json);
+		String emailAddrKey = parsed.getAsJsonObject().get("email_addr").getAsString();
+		JsonElement authKey = parsed.getAsJsonObject().get("auth");
+		boolean statusKey = authKey.getAsJsonObject().get("success").getAsBoolean();
+		JsonArray errorCodeKey = authKey.getAsJsonObject().get("error_codes").getAsJsonArray();
+		if (statusKey == true & errorCodeKey.size() == 0)
+			return emailAddrKey.equals(email);
+		else
+			return false;
 	}
 
 	public Set<Products> addProductToCart(String id, String quantity, String token)
@@ -134,39 +147,31 @@ public class HttpSession extends HttpSessionHelper {
 		}.getType());
 	}
 
-//	public String addProductToWishListUsing(Products product, String token)
-//			throws JsonSyntaxException, IOException, IllegalStateException {
-//		String postRequest = app.getProperty("web.baseUrl") + "modules/blockwishlist/cart.php?";
-//		String rand = String.valueOf(this.rand);
-//		String[][] headerParams = { { "Accept", "application/json, text/javascript, */*; q=0.01" },
-//				{ "Content-Type", "application/x-www-form-urlencoded; charset=UTF-8" },
-//				{ "X-Requested-With", "XMLHttpRequest" }, { "Cookie", getCookieValue(cookieStore, this.webCookie) } };
-//		String[][] bodyParams = { { "rand", rand }, { "action", "add" },
-//				{ "id_product", String.valueOf(product.getId()) },
-//				{ "quantity", String.valueOf(product.getQuantity()) }, { "token", token },
-//				{ "id_product_attribute", "34" }, { "_", rand } };
-//		HttpPost post = createPostRequestWithParams(postRequest, headerParams);
-//		post.setEntity(new UrlEncodedFormEntity(createHttpBodyParamsWith(bodyParams)));
-//		CloseableHttpResponse response = httpClient.execute(post, this.context);
-//		return getTextFrom(response);
-//	}
-
-	public boolean navigateToPdpUsing(Products product) throws JsonSyntaxException, IOException, IllegalStateException {
+	public boolean navigateToPdpUsing(PDP pdp) throws JsonSyntaxException, IOException, IllegalStateException {
 		HttpGet get = new HttpGet(
-				app.getProperty("web.baseUrl") + "index.php?id_product=" + product.getId() + "&controller=product");
-		CloseableHttpResponse response = httpClient.execute(get);
+				app.getProperty("web.baseUrl") + "index.php?id_product=" + pdp.getId() + "&controller=product");
+		get.setHeader("Cookie", getCookieValue(cookieStore, this.webCookie));
+		CloseableHttpResponse response = httpClient.execute(get, this.context);
 		String body = getTextFrom(response);
-		return body.toLowerCase().contains(String.format("<title>%s</title>", product.getName() + " - my store"));
+		return body.toLowerCase().contains(String.format("<title>%s</title>", pdp.getProductName() + " - my store"));
 	}
 
-	public String addProductToWishListUsing(Products product, String token)
-			throws JsonSyntaxException, IOException, IllegalStateException {
-		HttpGet get = new HttpGet(app.getProperty("web.baseUrl") + "modules/blockwishlist/cart.php?rand=" + this.rand
-				+ "&action=add&id_product=" + product.getId() + "&quantity=" + product.getQuantity() + "&token=" + token
-				+ "&id_product_attribute=&_=" + (this.rand - 2539031));
+	public String addProductToWishListWithNoTokenUsing(PDP pdp) throws IOException {
+		String getRequest = app.getProperty("web.baseUrl") + "modules/blockwishlist/cart.php?";
+		String[][] headerParams = { { "Accept", "application/json, text/javascript, */*; q=0.01" },
+				{ "Content-Type", "application/x-www-form-urlencoded; charset=UTF-8" },
+				{ "Cookie", getCookieValue(cookieStore, this.webCookie) }, { "Host", "automationpractice.com" },
+				{ "Referer",
+						"http://automationpractice.com/index.php?id_product=" + String.valueOf(pdp.getId())
+								+ "&controller=product" },
+				{ "X-Requested-With", "XMLHttpRequest" }, { "rand", String.valueOf(this.rand) }, { "action", "add" },
+				{ "id_product", String.valueOf(pdp.getId()) }, { "quantity", String.valueOf(pdp.getQuantity()) },
+				{ "token", String.valueOf(pdp.getToken()) }, { "id_product_attribute", "1" },
+				{ "_", String.valueOf((this.rand - 2539031)) } };
+		HttpGet get = createGetRequestWithParams(getRequest, headerParams);
+//		get.setHeaders((createHttpBodyParamsWith(bodyParams)));
 		CloseableHttpResponse response = httpClient.execute(get, this.context);
 		return getTextFrom(response);
-//		return body.toLowerCase().contains(String.format("<title>%s</title>", product.getName() + " - my store"));
 	}
 
 	public Set<Products> getProductsFromCart(String token) throws IOException {
@@ -235,11 +240,11 @@ public class HttpSession extends HttpSessionHelper {
 
 	public boolean searchForProduct(Products product) throws IOException {
 		// Use fluent API
-		String prod = product.getName().toString();
+		String prod = product.getProductName();
 		String response = Request.Get(app.getProperty("web.searchUrl") + prod.replaceAll(" ", "+")
 				+ "&limit=10&timestamp=" + timeStamp.getTime() + "&ajaxSearch=1&id_lang=1").execute().returnContent()
 				.asString();
-		return response.contains(prod.replaceAll(" ", "-"));
+		return response.contains(prod.replaceAll("-", "").replaceAll(" ", "-").toLowerCase());
 
 	}
 
@@ -247,7 +252,7 @@ public class HttpSession extends HttpSessionHelper {
 		HttpGet get = new HttpGet(app.getProperty("web.baseUrl") + "/index.php?controller=my-account");
 		CloseableHttpResponse response = httpClient.execute(get);
 		String body = getTextFrom(response);
-		return body.contains(String.format("<span>%s</span>", credentials.getName()));
+		return body.contains(String.format("<span>%s</span>", credentials.getAccountName()));
 	}
 
 	// TODO implement link verification

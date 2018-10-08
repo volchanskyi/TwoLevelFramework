@@ -8,45 +8,40 @@ import java.io.IOException;
 import org.testng.annotations.Test;
 
 import com.automationpractice.appmanager.HttpSession;
-import com.automationpractice.model.Products;
+import com.automationpractice.model.PDP;
 
 public class WishListTests extends TestBase {
 
-	// TODO implement test
-	@Test(groups = {
-			"API" }, dataProvider = "getValidProductsFromPropertyFile", dataProviderClass = TestDataProviders.class)
-	public void testAddProductToWishListWithOutLoggingInUsingAPI(Products product) throws IOException {
-		// Init HTTP session
-		HttpSession session = APP.newSession();
-		// read token
-		String token = session.getToken();
-		String errMsg = "You must be logged in to manage your wishlist.";
-		// read cookie PREFIX (Cookie name)
-		String cookieName = session.getCookieName();
-		// pass cookie name to make Server Side generate cookie and pass them to
-		// CONTEXT
-		session.initCookie(cookieName);
-		assertTrue(session.navigateToPdpUsing(product));
-		assertEquals(session.addProductToWishListUsing(product, token), errMsg);
-	}
+//	@Test(groups = {
+//			"API" },  dataProvider = "getLigalCredentialsAndProductIdsForPdpControllerFromPropertyFiles", dataProviderClass = TestDataProviders.class)
+//	public void testAddProductToWishListWithOutLoggingInUsingAPI(PDP pdp) throws IOException {
+//		// Init HTTP session
+//		HttpSession session = APP.newSession();
+//		// read token
+////		String token = session.getToken();
+//		String errMsg = "You must be logged in to manage your wishlist.";
+//		// read cookie PREFIX (Cookie name)
+//		String cookieName = session.getCookieName();
+//		// pass cookie name to make Server Side generate cookie and pass them to
+//		// CONTEXT
+//		session.initCookie(cookieName);
+//		assertTrue(session.navigateToPdpUsing(pdp));
+//		assertEquals(session.addProductToWishListWithNoTokenUsing(pdp), errMsg);
+//	}
 
 	@Test(groups = {
-			"API" }, dataProvider = "getValidProductsFromPropertyFile", dataProviderClass = TestDataProviders.class)
-	public void testAddProductToWishListWhileLoggedInUsingAPI(Products product) throws IOException {
+			"API" }, dataProvider = "getLigalCredentialsAndProductIdsForPdpControllerFromPropertyFiles", dataProviderClass = TestDataProviders.class)
+	public void testAddProductToWishListWhileLoggedInUsingAPI(PDP pdp) throws IOException {
 		// Init HTTP session
 		HttpSession session = APP.newSession();
-		// read token
-//		String token = session.getToken();
-		String token = "75bcfffc7e0bb8dec3cd64163aeff58c";
 		// read cookie PREFIX (Cookie name)
 		String cookieName = session.getCookieName();
 		String errMsg = "expected message";
 		// pass cookie name to make Server Side generate cookie and pass them to
 		// CONTEXT
-		//75bcfffc7e0bb8dec3cd64163aeff58c
 		session.initCookie(cookieName);
-		assertTrue(session.navigateToPdpUsing(product));
-		assertEquals(session.addProductToWishListUsing(product, token), errMsg);
+		assertTrue(session.navigateToPdpUsing(pdp));
+		assertEquals(session.addProductToWishListWithNoTokenUsing(pdp), errMsg);
 	}
 
 //	@Test(groups = {

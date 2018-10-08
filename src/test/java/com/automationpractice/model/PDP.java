@@ -1,12 +1,7 @@
 package com.automationpractice.model;
 
-public class LigalCredentials implements LigalCreds {
+public class PDP implements LigalCreds, Prods {
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.automationpractice.model.LigalCreds#hashCode()
-	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -15,15 +10,12 @@ public class LigalCredentials implements LigalCreds {
 		result = prime * result + ((accountName == null) ? 0 : accountName.hashCode());
 		result = prime * result + ((password == null) ? 0 : password.hashCode());
 		result = prime * result + ((token == null) ? 0 : token.hashCode());
+		result = prime * result + id;
+		result = prime * result + ((productName == null) ? 0 : productName.hashCode());
+		result = prime * result + quantity;
 		return result;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.automationpractice.model.LigalCreds#equals(java.lang.Object)
-	 */
-	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
@@ -31,17 +23,27 @@ public class LigalCredentials implements LigalCreds {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		LigalCredentials other = (LigalCredentials) obj;
-		if (email != other.email)
+		LigalCredentials otherCredentials = (LigalCredentials) obj;
+		if (email != otherCredentials.getEmail())
 			return false;
 		if (accountName == null) {
-			if (other.accountName != null)
+			if (otherCredentials.getAccountName() != null)
 				return false;
-		} else if (!accountName.equals(other.accountName))
+		} else if (!accountName.equals(otherCredentials.getAccountName()))
 			return false;
-		if (password != other.password)
+		if (password != otherCredentials.getPassword())
 			return false;
-		if (token != other.token)
+		if (token != otherCredentials.getToken())
+			return false;
+		Products otherProducts = (Products) obj;
+		if (id != otherProducts.getId())
+			return false;
+		if (productName == null) {
+			if (otherProducts.getProductName() != null)
+				return false;
+		} else if (!productName.equals(otherProducts.getProductName()))
+			return false;
+		if (quantity != otherProducts.getQuantity())
 			return false;
 		return true;
 	}
@@ -50,6 +52,72 @@ public class LigalCredentials implements LigalCreds {
 	private String email;
 	private String password;
 	private String token;
+	private String productName;
+	private int id;
+	private int quantity;
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.automationpractice.model.Prods#getId()
+	 */
+	@Override
+	public int getId() {
+		return id;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.automationpractice.model.Prods#withId(int)
+	 */
+	@Override
+	public PDP withId(int id) {
+		this.id = id;
+		return this;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.automationpractice.model.Prods#getQuantity()
+	 */
+	@Override
+	public int getQuantity() {
+		return quantity;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.automationpractice.model.Prods#withQuantity(int)
+	 */
+	@Override
+	public PDP withQuantity(int quantity) {
+		this.quantity = quantity;
+		return this;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.automationpractice.model.Prods#getName()
+	 */
+	@Override
+	public String getProductName() {
+		return productName;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.automationpractice.model.Prods#withName(java.lang.String)
+	 */
+	@Override
+	public PDP withProductName(String productName) {
+		this.productName = productName;
+		return this;
+	}
 
 	/*
 	 * (non-Javadoc)
@@ -67,7 +135,7 @@ public class LigalCredentials implements LigalCreds {
 	 * @see com.automationpractice.model.LigalCreds#withEmail(java.lang.String)
 	 */
 	@Override
-	public LigalCredentials withEmail(String email) {
+	public PDP withEmail(String email) {
 		this.email = email;
 		return this;
 	}
@@ -88,7 +156,7 @@ public class LigalCredentials implements LigalCreds {
 	 * @see com.automationpractice.model.LigalCreds#withPassword(java.lang.String)
 	 */
 	@Override
-	public LigalCredentials withPassword(String password) {
+	public PDP withPassword(String password) {
 		this.password = password;
 		return this;
 	}
@@ -109,7 +177,7 @@ public class LigalCredentials implements LigalCreds {
 	 * @see com.automationpractice.model.LigalCreds#withName(java.lang.String)
 	 */
 	@Override
-	public LigalCredentials withAccountName(String accountName) {
+	public PDP withAccountName(String accountName) {
 		this.accountName = accountName;
 		return this;
 	}
@@ -130,7 +198,7 @@ public class LigalCredentials implements LigalCreds {
 	 * @see com.automationpractice.model.LigalCreds#withToken(java.lang.String)
 	 */
 	@Override
-	public LigalCredentials withToken(String token) {
+	public PDP withToken(String token) {
 		this.token = token;
 		return this;
 	}

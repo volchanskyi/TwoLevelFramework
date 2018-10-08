@@ -15,6 +15,6 @@ public class SearchProductTests extends TestBase {
 	public void testProductSearchForValidProductsUsingAPI(Products product) throws IOException {
 		HttpSession session = APP.newSession();
 		Products newProduct = new Products();
-		assertTrue(session.searchForProduct(newProduct.withName(product.getName())));
+		assertTrue(session.searchForProduct(newProduct.withProductName(product.getProductName())));
 	}
 }

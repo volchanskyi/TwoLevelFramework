@@ -2,7 +2,7 @@ package com.automationpractice.appmanager;
 
 import java.net.MalformedURLException;
 
-import com.automationpractice.model.Products;
+import com.automationpractice.model.Prods;
 
 public class ProductsHelper extends HelperBase {
 
@@ -11,7 +11,7 @@ public class ProductsHelper extends HelperBase {
 
     }
 
-    public int createProduct(Products newProduct) {
+    public int createProduct(Prods newProduct) {
 	return 0;
     }
 

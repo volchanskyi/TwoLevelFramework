@@ -1,18 +1,26 @@
 package com.automationpractice.model;
 
-public class Products {
+public class Products implements Prods{
+
+    /* (non-Javadoc)
+	 * @see com.automationpractice.model.Prods#hashCode()
+	 */
     @Override
-    public int hashCode() {
+	public int hashCode() {
 	final int prime = 31;
 	int result = 1;
 	result = prime * result + id;
-	result = prime * result + ((name == null) ? 0 : name.hashCode());
+	result = prime * result + ((productName == null) ? 0 : productName.hashCode());
 	result = prime * result + quantity;
 	return result;
     }
 
+ 
+    /* (non-Javadoc)
+	 * @see com.automationpractice.model.Prods#equals(java.lang.Object)
+	 */
     @Override
-    public boolean equals(Object obj) {
+	public boolean equals(Object obj) {
 	if (this == obj)
 	    return true;
 	if (obj == null)
@@ -22,45 +30,75 @@ public class Products {
 	Products other = (Products) obj;
 	if (id != other.id)
 	    return false;
-	if (name == null) {
-	    if (other.name != null)
+	if (productName == null) {
+	    if (other.productName != null)
 		return false;
-	} else if (!name.equals(other.name))
+	} else if (!productName.equals(other.productName))
 	    return false;
 	if (quantity != other.quantity)
 	    return false;
 	return true;
     }
 
-    private String name;
+    private String productName;
     private int id;
     private int quantity;
     
-    public int getId() {
+
+	/* (non-Javadoc)
+	 * @see com.automationpractice.model.Prods#getId()
+	 */
+	@Override
+	public int getId() {
         return id;
     }
 
-    public Products withId(int id) {
+
+	/* (non-Javadoc)
+	 * @see com.automationpractice.model.Prods#withId(int)
+	 */
+	@Override
+	public Products withId(int id) {
         this.id = id;
         return this;
     }
 
-    public int getQuantity() {
+
+	/* (non-Javadoc)
+	 * @see com.automationpractice.model.Prods#getQuantity()
+	 */
+	@Override
+	public int getQuantity() {
         return quantity;
     }
 
-    public Products withQuantity(int quantity) {
+
+	/* (non-Javadoc)
+	 * @see com.automationpractice.model.Prods#withQuantity(int)
+	 */
+	@Override
+	public Products withQuantity(int quantity) {
         this.quantity = quantity;
         return this;
     }
 
 
-    public String getName() {
-	return name;
+
+	/* (non-Javadoc)
+	 * @see com.automationpractice.model.Prods#getName()
+	 */
+	@Override
+	public String getProductName() {
+	return productName;
     }
 
-    public Products withName(String name) {
-	this.name = name;
+
+	/* (non-Javadoc)
+	 * @see com.automationpractice.model.Prods#withName(java.lang.String)
+	 */
+	@Override
+	public Products withProductName(String productName) {
+	this.productName = productName;
 	return this;
     }
 

@@ -8,6 +8,7 @@
 	<class name="com.automationpractice.tests.LoginTests" />
 	<class name="com.automationpractice.tests.RegistrationTests" />
 	<class name="com.automationpractice.tests.SearchProductTests" />
+	<class name="com.automationpractice.tests.WishListTests" />
 		</classes>
 	</test>
 </suite>
