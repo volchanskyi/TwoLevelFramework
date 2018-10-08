@@ -1,6 +1,7 @@
 package com.automationpractice.appmanager;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.sql.Timestamp;
 import java.util.Random;
 import java.util.Set;
@@ -13,6 +14,7 @@ import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.protocol.HttpClientContext;
+import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.cookie.Cookie;
 import org.apache.http.impl.client.BasicCookieStore;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -41,7 +43,7 @@ public class HttpSession extends HttpSessionHelper {
 	public HttpSession(ApplicationManager app) {
 		this.app = app;
 		this.context.setCookieStore(cookieStore);
-		// Enable following REDIRECTIONS on POST
+		// Enable following REDIRECTIONS (302) on POST
 		httpClient = HttpClients.custom().setRedirectStrategy(new LaxRedirectStrategy()).build();
 	}
 
@@ -51,7 +53,6 @@ public class HttpSession extends HttpSessionHelper {
 				{ "back", "my-account" }, { "SubmitLogin", "" } };
 		post.setEntity(new UrlEncodedFormEntity(createHttpBodyParamsWith(bodyParams)));
 		CloseableHttpResponse response = httpClient.execute(post);
-		// this.webCookie = response.getFirstHeader("Set-Cookie").getValue();
 		String body = getTextFrom(response);
 		return body.contains(String.format("<title>%s</title>", pageTitle));
 	}
@@ -129,6 +130,34 @@ public class HttpSession extends HttpSessionHelper {
 			return false;
 	}
 
+	// TODO IT IS A STUB
+	//THIS LOGIC DOESNT CHECK VERIFICATION LINK 
+	// CHECKS ONLY FOR ABSENCE OF ERRORS
+	public boolean verifyActivationLink(String email) throws IOException, URISyntaxException {
+		URIBuilder getRequest = new URIBuilder(app.getProperty("web.emailGenerator") + "/ajax.php");
+		//query string params
+		getRequest.setParameter("f", "get_email_list").setParameter("offset", "0")
+		.setParameter("site", "guerrillamail.com").setParameter("in", email.split("@")[0])
+		.setParameter("_", String.valueOf(timeStamp.getTime()));
+		//request header 
+		String[][] headerParams = { { "Accept", "application/json, text/javascript, */*; q=0.01" },
+				{ "Authorization", "ApiToken 6cecc4da415fcd63b23a6993cbf429ea620b086a0adaefe73f3143b3cdf086ef" },
+				{ "Content-Type", "application/x-www-form-urlencoded; charset=UTF-8" },
+				{ "X-Requested-With", "XMLHttpRequest" } };
+		HttpGet get = createGetRequestWithParams(getRequest.toString(), headerParams);
+		CloseableHttpResponse response = httpClient.execute(get, this.context);
+		String json = getTextFrom(response);
+		JsonElement parsed = new JsonParser().parse(json);
+		String emailAddrKey = parsed.getAsJsonObject().get("email").getAsString();
+		JsonElement authKey = parsed.getAsJsonObject().get("auth");
+		boolean statusKey = authKey.getAsJsonObject().get("success").getAsBoolean();
+		JsonArray errorCodeKey = authKey.getAsJsonObject().get("error_codes").getAsJsonArray();
+		if (statusKey == true & errorCodeKey.size() == 0)
+			return emailAddrKey.equals(email);
+		else
+			return false;
+	}
+
 	public Set<Products> addProductToCart(String id, String quantity, String token)
 			throws JsonSyntaxException, IOException, IllegalStateException {
 		String postRequest = app.getProperty("web.baseUrl") + "index.php?rand=" + this.rand;
@@ -167,9 +196,8 @@ public class HttpSession extends HttpSessionHelper {
 				{ "X-Requested-With", "XMLHttpRequest" }, { "rand", String.valueOf(this.rand) }, { "action", "add" },
 				{ "id_product", String.valueOf(pdp.getId()) }, { "quantity", String.valueOf(pdp.getQuantity()) },
 				{ "token", String.valueOf(pdp.getToken()) }, { "id_product_attribute", "1" },
-				{ "_", String.valueOf((this.rand - 2539031)) } };
+				{ "_", String.valueOf((timeStamp.getTime())) } };
 		HttpGet get = createGetRequestWithParams(getRequest, headerParams);
-//		get.setHeaders((createHttpBodyParamsWith(bodyParams)));
 		CloseableHttpResponse response = httpClient.execute(get, this.context);
 		return getTextFrom(response);
 	}
@@ -253,12 +281,6 @@ public class HttpSession extends HttpSessionHelper {
 		CloseableHttpResponse response = httpClient.execute(get);
 		String body = getTextFrom(response);
 		return body.contains(String.format("<span>%s</span>", credentials.getAccountName()));
-	}
-
-	// TODO implement link verification
-	public boolean verifyActivationLink(String link) throws IOException {
-
-		return false;
 	}
 
 	// Cookie management section

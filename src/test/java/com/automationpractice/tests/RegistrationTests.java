@@ -4,6 +4,7 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 
 import javax.mail.MessagingException;
 
@@ -18,14 +19,15 @@ public class RegistrationTests extends TestBase {
 			"API" }, priority = 3, dataProvider = "validCredentialsForRegistrationController", dataProviderClass = TestDataProviders.class)
 	public void testRegisterNewAccountUsingAPI(String email, String fName, String lName, String password,
 			String address, String city, String postalCode, String state, String phone)
-			throws MessagingException, IOException, InterruptedException {
+			throws MessagingException, IOException, InterruptedException, URISyntaxException {
 		String title = "My account - My Store";
 		String newEmail = email;
 		// String link = "https://blablabla"; (not implemented yet) DO NOT DELETE
 		HttpSession session = APP.newSession();
 		assertTrue(session.createEmailWith(newEmail));
 		assertTrue(session.signUpWith(newEmail));
-		// assertTrue(session.verifyActivationLink(link)); (automationpractice.com
+		assertTrue(session.verifyActivationLink(newEmail)); 
+//		(automationpractice.com
 		// doesn`t send an activation link) DO NOT DELETE
 		assertTrue(
 				session.registerWith(fName, lName, password, address, city, postalCode, state, phone, title, newEmail));
