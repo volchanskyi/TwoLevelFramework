@@ -131,15 +131,15 @@ public class HttpSession extends HttpSessionHelper {
 	}
 
 	// TODO IT IS A STUB
-	//THIS LOGIC DOESNT CHECK VERIFICATION LINK 
+	// THIS LOGIC DOESNT CHECK VERIFICATION LINK
 	// CHECKS ONLY FOR ABSENCE OF ERRORS
-	public boolean verifyActivationLink(String email) throws IOException, URISyntaxException {
+	public boolean verifyActivationLink(String email, String link) throws IOException, URISyntaxException {
 		URIBuilder getRequest = new URIBuilder(app.getProperty("web.emailGenerator") + "/ajax.php");
-		//query string params
+		// query string params
 		getRequest.setParameter("f", "get_email_list").setParameter("offset", "0")
-		.setParameter("site", "guerrillamail.com").setParameter("in", email.split("@")[0])
-		.setParameter("_", String.valueOf(timeStamp.getTime()));
-		//request header 
+				.setParameter("site", "guerrillamail.com").setParameter("in", email.split("@")[0])
+				.setParameter("_", String.valueOf(timeStamp.getTime()));
+		// request header
 		String[][] headerParams = { { "Accept", "application/json, text/javascript, */*; q=0.01" },
 				{ "Authorization", "ApiToken 6cecc4da415fcd63b23a6993cbf429ea620b086a0adaefe73f3143b3cdf086ef" },
 				{ "Content-Type", "application/x-www-form-urlencoded; charset=UTF-8" },
@@ -152,10 +152,15 @@ public class HttpSession extends HttpSessionHelper {
 		JsonElement authKey = parsed.getAsJsonObject().get("auth");
 		boolean statusKey = authKey.getAsJsonObject().get("success").getAsBoolean();
 		JsonArray errorCodeKey = authKey.getAsJsonObject().get("error_codes").getAsJsonArray();
-		if (statusKey == true & errorCodeKey.size() == 0)
-			return emailAddrKey.equals(email);
-		else
-			return false;
+		if (statusKey == true & errorCodeKey.size() == 0) {
+			JsonArray inbox = parsed.getAsJsonObject().get("list").getAsJsonArray();
+			for (JsonElement jSo : inbox) {
+				if (jSo.getAsJsonObject().get("mail_body").getAsString().contains(link)) {
+					return emailAddrKey.equals(email);
+				}
+			}
+		}
+		return false;
 	}
 
 	public Set<Products> addProductToCart(String id, String quantity, String token)

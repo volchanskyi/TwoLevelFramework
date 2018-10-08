@@ -22,13 +22,11 @@ public class RegistrationTests extends TestBase {
 			throws MessagingException, IOException, InterruptedException, URISyntaxException {
 		String title = "My account - My Store";
 		String newEmail = email;
-		// String link = "https://blablabla"; (not implemented yet) DO NOT DELETE
+		String activationLink = "Dear Random User";
 		HttpSession session = APP.newSession();
 		assertTrue(session.createEmailWith(newEmail));
 		assertTrue(session.signUpWith(newEmail));
-		assertTrue(session.verifyActivationLink(newEmail)); 
-//		(automationpractice.com
-		// doesn`t send an activation link) DO NOT DELETE
+		assertTrue(session.verifyActivationLink(newEmail, activationLink));
 		assertTrue(
 				session.registerWith(fName, lName, password, address, city, postalCode, state, phone, title, newEmail));
 	}
