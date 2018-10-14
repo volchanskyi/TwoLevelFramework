@@ -8,8 +8,6 @@ import java.util.Set;
 
 import org.apache.http.client.CookieStore;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.fluent.Form;
-import org.apache.http.client.fluent.Request;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
@@ -54,7 +52,7 @@ public class HttpSession extends HttpSessionHelper {
 		// request header
 		String[][] headerParams = { { "Host", "automationpractice.com" } };
 		// Form Data
-		String[][] bodyParams = getBodyParamsForLoginWithMethod(credentials);
+		String[][] bodyParams = getBodyParamsWith(credentials);
 		HttpPost post = createPostRequestWithParams(postRequest.toString(), headerParams);
 		post.setEntity(new UrlEncodedFormEntity(createHttpBodyParamsWith(bodyParams)));
 		CloseableHttpResponse response = this.httpClient.execute(post);
@@ -64,10 +62,7 @@ public class HttpSession extends HttpSessionHelper {
 	}
 
 	public boolean loginWithErrorHandling(String email, String password, String errorMsg) throws IOException {
-		String content = Request
-				.Post(app.getProperty("web.baseUrl") + "index.php?controller=authentication").bodyForm(Form.form()
-						.add("email", email).add("passwd", password).add("back", "").add("SubmitLogin", "").build())
-				.execute().returnContent().asString();
+		String content = createFluentPostRequestUsingEmailWith(email, password, app.getProperty("web.baseUrl"));
 		return content.contains(errorMsg);
 
 	}
@@ -76,7 +71,7 @@ public class HttpSession extends HttpSessionHelper {
 	public boolean signUpWith(String email) throws IOException {
 		HttpPost post = new HttpPost(app.getProperty("web.baseUrl") + "index.php");
 		// Form Data
-		String[][] bodyParams = getBodyParamsForsignUpWithMethod(email);
+		String[][] bodyParams = getBodyParamsWith(email);
 		post.setEntity(new UrlEncodedFormEntity(createHttpBodyParamsWith(bodyParams)));
 		CloseableHttpResponse response = httpClient.execute(post);
 		isHttpStatusCodeOK(response);
@@ -92,9 +87,8 @@ public class HttpSession extends HttpSessionHelper {
 		// query string params
 		postRequest.setParameter("controller", "authentication").setParameter("back", "my-account#account-creation");
 		// header params
-		String[][] headerParams = getHeaderParamsForRegisterWithMethod();
-		String[][] bodyParams = getBodyParamsForRegisterWithMethod(fName, lName, password, address, city, postcode,
-				state, phone, email);
+		String[][] headerParams = getHeaderParamsWithNoProperties();
+		String[][] bodyParams = getBodyParamsWith(fName, lName, password, address, city, postcode, state, phone, email);
 		HttpPost post = createPostRequestWithParams(postRequest.toString(), headerParams);
 		post.setEntity(new UrlEncodedFormEntity(createHttpBodyParamsWith(bodyParams)));
 		CloseableHttpResponse response = httpClient.execute(post);
@@ -106,10 +100,7 @@ public class HttpSession extends HttpSessionHelper {
 	public String registerExistedAccountWithApiUsing(String email)
 			throws JsonSyntaxException, IOException, IllegalStateException {
 		// Use Fluent API
-		String pageContent = Request.Post(app.getProperty("web.baseUrl") + "index.php?controller=authentication")
-				.bodyForm(Form.form().add("controller", "authentication").add("SubmitCreate", "1").add("ajax", "true")
-						.add("email_create", email).add("back", "my-account").build())
-				.execute().returnContent().asString();
+		String pageContent = createFluentPostRequestWith(email, app.getProperty("web.baseUrl"));
 		JsonElement parsed = new JsonParser().parse(pageContent);
 		JsonElement key = parsed.getAsJsonObject().get("errors");
 		return key.getAsJsonArray().getAsString();
@@ -120,12 +111,9 @@ public class HttpSession extends HttpSessionHelper {
 		// query string params
 		postRequest.setParameter("f", "set_email_user");
 		// request header
-		String[][] headerParams = { { "Accept", "application/json, text/javascript, */*; q=0.01" },
-				{ "Authorization", app.getProperty("web.emailGeneratorApiToken") },
-				{ "Content-Type", "application/x-www-form-urlencoded; charset=UTF-8" },
-				{ "X-Requested-With", "XMLHttpRequest" } };
+		String[][] headerParams = createHeaderParamsWith(app.getProperty("web.emailGeneratorApiToken"));
 		// Form Data
-		String[][] bodyParams = getBodyParamsForCreateEmailWithMethod(email);
+		String[][] bodyParams = getBodyParamsUsingEmailNameWith(email);
 		HttpPost post = createPostRequestWithParams(postRequest.toString(), headerParams);
 		post.setEntity(new UrlEncodedFormEntity(createHttpBodyParamsWith(bodyParams)));
 		CloseableHttpResponse response = httpClient.execute(post, this.context);
@@ -148,14 +136,8 @@ public class HttpSession extends HttpSessionHelper {
 	public boolean verifyActivationLink(String email, String link) throws IOException, URISyntaxException {
 		URIBuilder getRequest = new URIBuilder(app.getProperty("web.emailGenerator") + "/ajax.php");
 		// query string params
-		getRequest.setParameter("f", "get_email_list").setParameter("offset", "0")
-				.setParameter("site", "guerrillamail.com").setParameter("in", email.split("@")[0])
-				.setParameter("_", String.valueOf(timeStamp.getTime()));
-		// request header
-		String[][] headerParams = { { "Accept", "application/json, text/javascript, */*; q=0.01" },
-				{ "Authorization", app.getProperty("web.emailGeneratorApiToken") },
-				{ "Content-Type", "application/x-www-form-urlencoded; charset=UTF-8" },
-				{ "X-Requested-With", "XMLHttpRequest" } };
+		addStringParamsUsingEmailNameWith(email, getRequest, String.valueOf(timeStamp.getTime()));
+		String[][] headerParams = createHeaderParamsWith(app.getProperty("web.emailGeneratorApiToken"));
 		HttpGet get = createGetRequestWithParams(getRequest.toString(), headerParams);
 		CloseableHttpResponse response = httpClient.execute(get, this.context);
 		isHttpStatusCodeOK(response);
@@ -182,9 +164,7 @@ public class HttpSession extends HttpSessionHelper {
 		// query string params
 		postRequest.setParameter("rand", String.valueOf(this.rand));
 		// request header
-		String[][] headerParams = { { "Accept", "application/json, text/javascript, */*; q=0.01" },
-				{ "Content-Type", "application/x-www-form-urlencoded; charset=UTF-8" },
-				{ "X-Requested-With", "XMLHttpRequest" }, { "Cookie", getCookieValue(cookieStore, this.webCookie) } };
+		String[][] headerParams = createHeaderParamsUsingCookieWith(getCookieValue(cookieStore, this.webCookie));
 		// Form Data
 		String[][] bodyParams = createBodyParamsForAddProductToCartMethod(id, quantity, token);
 		HttpPost post = createPostRequestWithParams(postRequest.toString(), headerParams);
@@ -215,18 +195,10 @@ public class HttpSession extends HttpSessionHelper {
 	public String addProductToWishListWithNoTokenUsing(PDP pdp) throws IOException, URISyntaxException {
 		URIBuilder getRequest = new URIBuilder(app.getProperty("web.baseUrl") + "modules/blockwishlist/cart.php");
 		// query string params
-		getRequest.setParameter("rand", String.valueOf(this.rand)).setParameter("action", "add")
-				.setParameter("id_product", String.valueOf(pdp.getId()))
-				.setParameter("quantity", String.valueOf(pdp.getQuantity()))
-				.setParameter("token", String.valueOf(pdp.getToken())).setParameter("id_product_attribute", "1")
-				.setParameter("_", String.valueOf((timeStamp.getTime())));
+		addStringParamsUsingPdpInfoWith(pdp, getRequest, String.valueOf(this.rand),
+				String.valueOf((timeStamp.getTime())));
 		// request header
-		String[][] headerParams = { { "Accept", "application/json, text/javascript, */*; q=0.01" },
-				{ "Content-Type", "application/x-www-form-urlencoded; charset=UTF-8" },
-				{ "Cookie", getCookieValue(cookieStore, this.webCookie) }, { "Host", "automationpractice.com" },
-				{ "Referer", "http://automationpractice.com/index.php?id_product=" + String.valueOf(pdp.getId())
-						+ "&controller=product" },
-				{ "X-Requested-With", "XMLHttpRequest" } };
+		String[][] headerParams = createHeaderParamsUsingPdpIndoWith(pdp, getCookieValue(cookieStore, this.webCookie));
 		HttpGet get = createGetRequestWithParams(getRequest.toString(), headerParams);
 		CloseableHttpResponse response = httpClient.execute(get, this.context);
 		isHttpStatusCodeOK(response);
@@ -237,10 +209,7 @@ public class HttpSession extends HttpSessionHelper {
 		URIBuilder postRequest = new URIBuilder(app.getProperty("web.baseUrl") + "index.php");
 		// query string params
 		postRequest.setParameter("rand", String.valueOf(this.rand));
-		// request header
-		String[][] headerParams = { { "Accept", "application/json, text/javascript, */*; q=0.01" },
-				{ "Content-Type", "application/x-www-form-urlencoded; charset=UTF-8" },
-				{ "X-Requested-With", "XMLHttpRequest" }, { "Cookie", getCookieValue(cookieStore, this.webCookie) } };
+		String[][] headerParams = createHeaderParamsUsingCookieWith(getCookieValue(cookieStore, this.webCookie));
 		// Form Data
 		String[][] bodyParams = { { "controller", "cart" }, { "ajax", "true" }, { "token", token } };
 		HttpPost post = createPostRequestWithParams(postRequest.toString(), headerParams);
@@ -256,15 +225,8 @@ public class HttpSession extends HttpSessionHelper {
 
 	public Products addProductToCart(Products newProduct) throws IOException {
 		// Use fluent API
-		String json = Request.Post(app.getProperty("web.baseUrl") + "index.php?rand=" + this.rand)
-				.addHeader("Accept", "application/json, text/javascript, */*; q=0.01")
-				.addHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8")
-				.addHeader("X-Requested-With", "XMLHttpRequest")
-				.addHeader("Cookie", getCookieValue(cookieStore, this.webCookie))
-				.bodyForm(Form.form().add("controller", "cart").add("add", "1").add("ajax", "true")
-						.add("qty", String.valueOf(newProduct.getQuantity()))
-						.add("id_product", String.valueOf(newProduct.getId())).build())
-				.execute().returnContent().asString();
+		String json = createFluentPostRequestUsingProductInfoWith(newProduct, app.getProperty("web.baseUrl"), this.rand,
+				getCookieValue(cookieStore, this.webCookie));
 		JsonElement parsed = new JsonParser().parse(json);
 		JsonArray jsonArray = parsed.getAsJsonObject().getAsJsonArray("products");
 		for (JsonElement jSo : jsonArray) {
@@ -279,12 +241,8 @@ public class HttpSession extends HttpSessionHelper {
 
 	public void cleanUpCart(String token) throws IOException {
 		// Use fluent API
-		String json = Request.Post(app.getProperty("web.baseUrl") + "index.php?rand=" + this.rand)
-				.addHeader("Accept", "application/json, text/javascript, */*; q=0.01")
-				.addHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8")
-				.addHeader("X-Requested-With", "XMLHttpRequest").addHeader("Cookie", this.webCookie)
-				.bodyForm(Form.form().add("controller", "cart").add("ajax", "true").add("token", token).build())
-				.execute().returnContent().asString();
+		String json = createFluentPostRequestUsingTokenWith(token, app.getProperty("web.baseUrl"), this.rand,
+				this.webCookie);
 		JsonElement parsed = new JsonParser().parse(json);
 		JsonElement key = parsed.getAsJsonObject().get("nbTotalProducts");
 		if (!key.isJsonNull() && key.isJsonPrimitive() && key.getAsInt() > 0) {
@@ -292,13 +250,8 @@ public class HttpSession extends HttpSessionHelper {
 			for (JsonElement jSo : jsonArray) {
 				String id = jSo.getAsJsonObject().get("id").getAsString();
 				String ipa = jSo.getAsJsonObject().get("idCombination").getAsString();
-				Request.Post(app.getProperty("web.baseUrl") + "index.php?rand=" + this.rand)
-						.addHeader("Accept", "application/json, text/javascript, */*; q=0.01")
-						.addHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8")
-						.addHeader("X-Requested-With", "XMLHttpRequest").addHeader("Cookie", this.webCookie)
-						.bodyForm(Form.form().add("controller", "cart").add("delete", "1").add("id_product", id)
-								.add("ipa", ipa).add("token", token).add("ajax", "true").build())
-						.execute().returnContent().asString();
+				createFluentPostRequestUsingTokenWith(token, id, ipa, app.getProperty("web.baseUrl"), this.rand,
+						this.webCookie);
 
 			}
 		}
@@ -307,9 +260,8 @@ public class HttpSession extends HttpSessionHelper {
 	public boolean searchForProduct(Products product) throws IOException {
 		// Use fluent API
 		String prod = product.getProductName();
-		String response = Request.Get(app.getProperty("web.searchUrl") + prod.replaceAll(" ", "+")
-				+ "&limit=10&timestamp=" + timeStamp.getTime() + "&ajaxSearch=1&id_lang=1").execute().returnContent()
-				.asString();
+		String response = createFluentPostUsingProductInfoWith(prod, app.getProperty("web.searchUrl"),
+				timeStamp.getTime());
 		return response.contains(prod.replaceAll("-", "").replaceAll(" ", "-").toLowerCase());
 
 	}
