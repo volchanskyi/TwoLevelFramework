@@ -1,53 +1,53 @@
 package com.automationpractice.appmanager;
 
-import java.io.IOException;
-import java.util.ArrayList;
+import com.automationpractice.model.LigalCredentials;
 
-import org.apache.http.NameValuePair;
-import org.apache.http.client.fluent.Executor;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.util.EntityUtils;
+//Helper Class with Low Level Implementations
+class HttpSessionHelper extends HttpProtocolHelper {
 
-public class HttpSessionHelper {
+	// loginWith Method
 
-	protected ArrayList<NameValuePair> createHttpBodyParamsWith(String paramPairs[][]) {
-		ArrayList<NameValuePair> params = new ArrayList<>();
-		for (int row = 0; row < paramPairs.length; row++) {
-			params.add(new BasicNameValuePair(paramPairs[row][0], paramPairs[row][1]));
-		}
-		return params;
+	protected String[][] getBodyParamsForLoginWithMethod(LigalCredentials credentials) {
+		String[][] bodyParams = { { "email", credentials.getEmail() }, { "passwd", credentials.getPassword() },
+				{ "back", "my-account" }, { "SubmitLogin", "" } };
+		return bodyParams;
 	}
 
-	protected HttpPost createPostRequestWithParams(String post, String[][] params) {
-		HttpPost postWithParams = new HttpPost(post);
-		for (int row = 0; row < params.length; row++) {
-			postWithParams.setHeader(params[row][0], params[row][1]);
-		}
-		return postWithParams;
+	// signUpWith Method
+
+	protected String[][] getBodyParamsForsignUpWithMethod(String email) {
+		String[][] bodyParams = { { "controller", "authentication" }, { "SubmitCreate", "1" }, { "ajax", "true" },
+				{ "email_create", email }, { "back", "my-account" }, { "token", "ce65cefcbafad255f0866d3b32d32058" } };
+		return bodyParams;
 	}
 
-	protected HttpGet createGetRequestWithParams(String get, String[][] params) {
-		HttpGet getWithParams = new HttpGet(get);
-		for (int row = 0; row < params.length; row++) {
-			getWithParams.setHeader(params[row][0], params[row][1]);
-		}
-		return getWithParams;
+	// registerWith Method
+
+	protected String[][] getHeaderParamsForRegisterWithMethod() {
+		String[][] headerParams = { { "Accept", "application/json, text/javascript" },
+				{ "Content-Type", "application/x-www-form-urlencoded" } };
+		return headerParams;
 	}
 
-	protected String getTextFrom(CloseableHttpResponse response) throws IOException {
-		try {
-			return EntityUtils.toString(response.getEntity());
-		} finally {
-			response.close();
-		}
+	protected String[][] getBodyParamsForRegisterWithMethod(String fName, String lName, String password, String address,
+			String city, String postcode, String state, String phone, String email) {
+		String[][] bodyParams = { { "customer_firstname", fName }, { "customer_lastname", lName },
+				{ "passwd", password }, { "firstname", fName }, { "lastname", lName }, { "email", email },
+				{ "days", "" }, { "months", "" }, { "years", "" }, { "company", "" }, { "address1", address },
+				{ "address2", "" }, { "city", city }, { "id_state", state }, { "postcode", postcode },
+				{ "id_country", "21" }, { "phone_mobile", phone }, { "alias", "My address" }, { "back", "my-account" },
+				{ "dni", "" }, { "email_create", "1" }, { "is_new_customer", "1" }, { "submitAccount", "" } };
+		return bodyParams;
 	}
 
-	protected Executor getExecutor(CloseableHttpClient httpClient) {
-		return Executor.newInstance(httpClient);
+	// createEmailWith Method
+
+	protected String[][] getBodyParamsForCreateEmailWithMethod(String email) {
+		String[][] bodyParams = { { "email_user", email.split("@")[0] }, { "lang", "en" },
+				{ "site", "guerrillamail.com" }, { "in", "Set cancel" } };
+		return bodyParams;
 	}
+
+	// addProductToCart Method
 
 }

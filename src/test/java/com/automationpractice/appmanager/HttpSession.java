@@ -54,12 +54,12 @@ public class HttpSession extends HttpSessionHelper {
 		// request header
 		String[][] headerParams = { { "Host", "automationpractice.com" } };
 		// Form Data
-		String[][] bodyParams = { { "email", credentials.getEmail() }, { "passwd", credentials.getPassword() },
-				{ "back", "my-account" }, { "SubmitLogin", "" } };
+		String[][] bodyParams = getBodyParamsForLoginWithMethod(credentials);
 		HttpPost post = createPostRequestWithParams(postRequest.toString(), headerParams);
 		post.setEntity(new UrlEncodedFormEntity(createHttpBodyParamsWith(bodyParams)));
 		CloseableHttpResponse response = this.httpClient.execute(post);
 		String body = getTextFrom(response);
+		isHttpStatusCodeOK(response);
 		return body.contains(String.format("<title>%s</title>", pageTitle));
 	}
 
@@ -76,10 +76,10 @@ public class HttpSession extends HttpSessionHelper {
 	public boolean signUpWith(String email) throws IOException {
 		HttpPost post = new HttpPost(app.getProperty("web.baseUrl") + "index.php");
 		// Form Data
-		String[][] bodyParams = { { "controller", "authentication" }, { "SubmitCreate", "1" }, { "ajax", "true" },
-				{ "email_create", email }, { "back", "my-account" }, { "token", "ce65cefcbafad255f0866d3b32d32058" } };
+		String[][] bodyParams = getBodyParamsForsignUpWithMethod(email);
 		post.setEntity(new UrlEncodedFormEntity(createHttpBodyParamsWith(bodyParams)));
 		CloseableHttpResponse response = httpClient.execute(post);
+		isHttpStatusCodeOK(response);
 		String body = getTextFrom(response);
 		return body.contains(String.format("<h1 class=\\\"page-heading\\\">%s<\\/h1>", "Create an account"));
 	}
@@ -92,17 +92,13 @@ public class HttpSession extends HttpSessionHelper {
 		// query string params
 		postRequest.setParameter("controller", "authentication").setParameter("back", "my-account#account-creation");
 		// header params
-		String[][] headerParams = { { "Accept", "application/json, text/javascript" },
-				{ "Content-Type", "application/x-www-form-urlencoded" } };
-		String[][] bodyParams = { { "customer_firstname", fName }, { "customer_lastname", lName },
-				{ "passwd", password }, { "firstname", fName }, { "lastname", lName }, { "email", email },
-				{ "days", "" }, { "months", "" }, { "years", "" }, { "company", "" }, { "address1", address },
-				{ "address2", "" }, { "city", city }, { "id_state", state }, { "postcode", postcode },
-				{ "id_country", "21" }, { "phone_mobile", phone }, { "alias", "My address" }, { "back", "my-account" },
-				{ "dni", "" }, { "email_create", "1" }, { "is_new_customer", "1" }, { "submitAccount", "" } };
+		String[][] headerParams = getHeaderParamsForRegisterWithMethod();
+		String[][] bodyParams = getBodyParamsForRegisterWithMethod(fName, lName, password, address, city, postcode,
+				state, phone, email);
 		HttpPost post = createPostRequestWithParams(postRequest.toString(), headerParams);
 		post.setEntity(new UrlEncodedFormEntity(createHttpBodyParamsWith(bodyParams)));
 		CloseableHttpResponse response = httpClient.execute(post);
+		isHttpStatusCodeOK(response);
 		String body = getTextFrom(response);
 		return body.contains(String.format("<title>%s</title>", title));
 	}
@@ -125,15 +121,15 @@ public class HttpSession extends HttpSessionHelper {
 		postRequest.setParameter("f", "set_email_user");
 		// request header
 		String[][] headerParams = { { "Accept", "application/json, text/javascript, */*; q=0.01" },
-				{ "Authorization", "ApiToken 6cecc4da415fcd63b23a6993cbf429ea620b086a0adaefe73f3143b3cdf086ef" },
+				{ "Authorization", app.getProperty("web.emailGeneratorApiToken") },
 				{ "Content-Type", "application/x-www-form-urlencoded; charset=UTF-8" },
 				{ "X-Requested-With", "XMLHttpRequest" } };
 		// Form Data
-		String[][] bodyParams = { { "email_user", email.split("@")[0] }, { "lang", "en" },
-				{ "site", "guerrillamail.com" }, { "in", "Set cancel" } };
+		String[][] bodyParams = getBodyParamsForCreateEmailWithMethod(email);
 		HttpPost post = createPostRequestWithParams(postRequest.toString(), headerParams);
 		post.setEntity(new UrlEncodedFormEntity(createHttpBodyParamsWith(bodyParams)));
 		CloseableHttpResponse response = httpClient.execute(post, this.context);
+		isHttpStatusCodeOK(response);
 		String json = getTextFrom(response);
 		JsonElement parsed = new JsonParser().parse(json);
 		String emailAddrKey = parsed.getAsJsonObject().get("email_addr").getAsString();
@@ -157,11 +153,12 @@ public class HttpSession extends HttpSessionHelper {
 				.setParameter("_", String.valueOf(timeStamp.getTime()));
 		// request header
 		String[][] headerParams = { { "Accept", "application/json, text/javascript, */*; q=0.01" },
-				{ "Authorization", "ApiToken 6cecc4da415fcd63b23a6993cbf429ea620b086a0adaefe73f3143b3cdf086ef" },
+				{ "Authorization", app.getProperty("web.emailGeneratorApiToken") },
 				{ "Content-Type", "application/x-www-form-urlencoded; charset=UTF-8" },
 				{ "X-Requested-With", "XMLHttpRequest" } };
 		HttpGet get = createGetRequestWithParams(getRequest.toString(), headerParams);
 		CloseableHttpResponse response = httpClient.execute(get, this.context);
+		isHttpStatusCodeOK(response);
 		String json = getTextFrom(response);
 		JsonElement parsed = new JsonParser().parse(json);
 		String emailAddrKey = parsed.getAsJsonObject().get("email").getAsString();
@@ -189,11 +186,11 @@ public class HttpSession extends HttpSessionHelper {
 				{ "Content-Type", "application/x-www-form-urlencoded; charset=UTF-8" },
 				{ "X-Requested-With", "XMLHttpRequest" }, { "Cookie", getCookieValue(cookieStore, this.webCookie) } };
 		// Form Data
-		String[][] bodyParams = { { "controller", "cart" }, { "add", "1" }, { "ajax", "true" }, { "qty", quantity },
-				{ "id_product", id }, { "token", token } };
+		String[][] bodyParams = createBodyParamsForAddProductToCartMethod(id, quantity, token);
 		HttpPost post = createPostRequestWithParams(postRequest.toString(), headerParams);
 		post.setEntity(new UrlEncodedFormEntity(createHttpBodyParamsWith(bodyParams)));
 		CloseableHttpResponse response = httpClient.execute(post, this.context);
+		isHttpStatusCodeOK(response);
 		String json = getTextFrom(response);
 		JsonElement parsed = new JsonParser().parse(json);
 		JsonElement key = parsed.getAsJsonObject().get("products");
@@ -210,6 +207,7 @@ public class HttpSession extends HttpSessionHelper {
 		String[][] headerParams = { { "Cookie", getCookieValue(cookieStore, this.webCookie) } };
 		HttpGet get = createGetRequestWithParams(getRequest.toString(), headerParams);
 		CloseableHttpResponse response = httpClient.execute(get, this.context);
+		isHttpStatusCodeOK(response);
 		String body = getTextFrom(response);
 		return body.toLowerCase().contains(String.format("<title>%s</title>", pdp.getProductName() + " - my store"));
 	}
@@ -231,6 +229,7 @@ public class HttpSession extends HttpSessionHelper {
 				{ "X-Requested-With", "XMLHttpRequest" } };
 		HttpGet get = createGetRequestWithParams(getRequest.toString(), headerParams);
 		CloseableHttpResponse response = httpClient.execute(get, this.context);
+		isHttpStatusCodeOK(response);
 		return getTextFrom(response);
 	}
 
@@ -247,6 +246,7 @@ public class HttpSession extends HttpSessionHelper {
 		HttpPost post = createPostRequestWithParams(postRequest.toString(), headerParams);
 		post.setEntity(new UrlEncodedFormEntity(createHttpBodyParamsWith(bodyParams)));
 		CloseableHttpResponse response = httpClient.execute(post, this.context);
+		isHttpStatusCodeOK(response);
 		String json = getTextFrom(response);
 		JsonElement parsed = new JsonParser().parse(json);
 		JsonElement key = parsed.getAsJsonObject().get("products");
@@ -322,6 +322,7 @@ public class HttpSession extends HttpSessionHelper {
 		String[][] headerParams = { { "Host", "automationpractice.com" } };
 		HttpGet get = createGetRequestWithParams(getRequest.toString(), headerParams);
 		CloseableHttpResponse response = this.httpClient.execute(get);
+		isHttpStatusCodeOK(response);
 		String body = getTextFrom(response);
 		return body.contains(String.format("<span>%s</span>", credentials.getAccountName()));
 	}
