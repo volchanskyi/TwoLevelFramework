@@ -12,8 +12,6 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 
-import okhttp3.Response;
-
 public class HttpSessionHelper {
 
 	protected ArrayList<NameValuePair> createHttpBodyParamsWith(String paramPairs[][]) {
@@ -51,4 +49,5 @@ public class HttpSessionHelper {
 	protected Executor getExecutor(CloseableHttpClient httpClient) {
 		return Executor.newInstance(httpClient);
 	}
+
 }

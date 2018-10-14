@@ -44,15 +44,21 @@ public class HttpSession extends HttpSessionHelper {
 		this.app = app;
 		this.context.setCookieStore(cookieStore);
 		// Enable following REDIRECTIONS (302) on POST
-		httpClient = HttpClients.custom().setRedirectStrategy(new LaxRedirectStrategy()).build();
+		this.httpClient = HttpClients.custom().setRedirectStrategy(new LaxRedirectStrategy()).build();
 	}
 
-	public boolean loginWith(LigalCredentials credentials, String pageTitle) throws IOException {
-		HttpPost post = new HttpPost(app.getProperty("web.baseUrl") + "index.php?controller=authentication");
+	public boolean loginWith(LigalCredentials credentials, String pageTitle) throws IOException, URISyntaxException {
+		URIBuilder postRequest = new URIBuilder(app.getProperty("web.baseUrl") + "index.php");
+		// query string params
+		postRequest.setParameter("controller", "authentication");
+		// request header
+		String[][] headerParams = { { "Host", "automationpractice.com" } };
+		// Form Data
 		String[][] bodyParams = { { "email", credentials.getEmail() }, { "passwd", credentials.getPassword() },
 				{ "back", "my-account" }, { "SubmitLogin", "" } };
+		HttpPost post = createPostRequestWithParams(postRequest.toString(), headerParams);
 		post.setEntity(new UrlEncodedFormEntity(createHttpBodyParamsWith(bodyParams)));
-		CloseableHttpResponse response = httpClient.execute(post);
+		CloseableHttpResponse response = this.httpClient.execute(post);
 		String body = getTextFrom(response);
 		return body.contains(String.format("<title>%s</title>", pageTitle));
 	}
@@ -69,6 +75,7 @@ public class HttpSession extends HttpSessionHelper {
 	// TODO refactor token
 	public boolean signUpWith(String email) throws IOException {
 		HttpPost post = new HttpPost(app.getProperty("web.baseUrl") + "index.php");
+		// Form Data
 		String[][] bodyParams = { { "controller", "authentication" }, { "SubmitCreate", "1" }, { "ajax", "true" },
 				{ "email_create", email }, { "back", "my-account" }, { "token", "ce65cefcbafad255f0866d3b32d32058" } };
 		post.setEntity(new UrlEncodedFormEntity(createHttpBodyParamsWith(bodyParams)));
@@ -77,10 +84,14 @@ public class HttpSession extends HttpSessionHelper {
 		return body.contains(String.format("<h1 class=\\\"page-heading\\\">%s<\\/h1>", "Create an account"));
 	}
 
+	// TODO refactor generated data
 	public boolean registerWith(String fName, String lName, String password, String address, String city,
-			String postcode, String state, String phone, String title, String email) throws IOException {
-		String postRequest = app.getProperty("web.baseUrl")
-				+ "index.php?controller=authentication&back=my-account#account-creation";
+			String postcode, String state, String phone, String title, String email)
+			throws IOException, URISyntaxException {
+		URIBuilder postRequest = new URIBuilder(app.getProperty("web.baseUrl") + "index.php");
+		// query string params
+		postRequest.setParameter("controller", "authentication").setParameter("back", "my-account#account-creation");
+		// header params
 		String[][] headerParams = { { "Accept", "application/json, text/javascript" },
 				{ "Content-Type", "application/x-www-form-urlencoded" } };
 		String[][] bodyParams = { { "customer_firstname", fName }, { "customer_lastname", lName },
@@ -89,7 +100,7 @@ public class HttpSession extends HttpSessionHelper {
 				{ "address2", "" }, { "city", city }, { "id_state", state }, { "postcode", postcode },
 				{ "id_country", "21" }, { "phone_mobile", phone }, { "alias", "My address" }, { "back", "my-account" },
 				{ "dni", "" }, { "email_create", "1" }, { "is_new_customer", "1" }, { "submitAccount", "" } };
-		HttpPost post = createPostRequestWithParams(postRequest, headerParams);
+		HttpPost post = createPostRequestWithParams(postRequest.toString(), headerParams);
 		post.setEntity(new UrlEncodedFormEntity(createHttpBodyParamsWith(bodyParams)));
 		CloseableHttpResponse response = httpClient.execute(post);
 		String body = getTextFrom(response);
@@ -98,6 +109,7 @@ public class HttpSession extends HttpSessionHelper {
 
 	public String registerExistedAccountWithApiUsing(String email)
 			throws JsonSyntaxException, IOException, IllegalStateException {
+		// Use Fluent API
 		String pageContent = Request.Post(app.getProperty("web.baseUrl") + "index.php?controller=authentication")
 				.bodyForm(Form.form().add("controller", "authentication").add("SubmitCreate", "1").add("ajax", "true")
 						.add("email_create", email).add("back", "my-account").build())
@@ -107,15 +119,19 @@ public class HttpSession extends HttpSessionHelper {
 		return key.getAsJsonArray().getAsString();
 	}
 
-	public boolean createEmailWith(String email) throws IOException, InterruptedException {
-		String postRequest = app.getProperty("web.emailGenerator") + "/ajax.php?f=set_email_user";
+	public boolean createEmailWith(String email) throws IOException, InterruptedException, URISyntaxException {
+		URIBuilder postRequest = new URIBuilder(app.getProperty("web.emailGenerator") + "/ajax.php");
+		// query string params
+		postRequest.setParameter("f", "set_email_user");
+		// request header
 		String[][] headerParams = { { "Accept", "application/json, text/javascript, */*; q=0.01" },
 				{ "Authorization", "ApiToken 6cecc4da415fcd63b23a6993cbf429ea620b086a0adaefe73f3143b3cdf086ef" },
 				{ "Content-Type", "application/x-www-form-urlencoded; charset=UTF-8" },
 				{ "X-Requested-With", "XMLHttpRequest" } };
+		// Form Data
 		String[][] bodyParams = { { "email_user", email.split("@")[0] }, { "lang", "en" },
 				{ "site", "guerrillamail.com" }, { "in", "Set cancel" } };
-		HttpPost post = createPostRequestWithParams(postRequest, headerParams);
+		HttpPost post = createPostRequestWithParams(postRequest.toString(), headerParams);
 		post.setEntity(new UrlEncodedFormEntity(createHttpBodyParamsWith(bodyParams)));
 		CloseableHttpResponse response = httpClient.execute(post, this.context);
 		String json = getTextFrom(response);
@@ -164,14 +180,18 @@ public class HttpSession extends HttpSessionHelper {
 	}
 
 	public Set<Products> addProductToCart(String id, String quantity, String token)
-			throws JsonSyntaxException, IOException, IllegalStateException {
-		String postRequest = app.getProperty("web.baseUrl") + "index.php?rand=" + this.rand;
+			throws JsonSyntaxException, IOException, IllegalStateException, URISyntaxException {
+		URIBuilder postRequest = new URIBuilder(app.getProperty("web.baseUrl") + "index.php");
+		// query string params
+		postRequest.setParameter("rand", String.valueOf(this.rand));
+		// request header
 		String[][] headerParams = { { "Accept", "application/json, text/javascript, */*; q=0.01" },
 				{ "Content-Type", "application/x-www-form-urlencoded; charset=UTF-8" },
 				{ "X-Requested-With", "XMLHttpRequest" }, { "Cookie", getCookieValue(cookieStore, this.webCookie) } };
+		// Form Data
 		String[][] bodyParams = { { "controller", "cart" }, { "add", "1" }, { "ajax", "true" }, { "qty", quantity },
 				{ "id_product", id }, { "token", token } };
-		HttpPost post = createPostRequestWithParams(postRequest, headerParams);
+		HttpPost post = createPostRequestWithParams(postRequest.toString(), headerParams);
 		post.setEntity(new UrlEncodedFormEntity(createHttpBodyParamsWith(bodyParams)));
 		CloseableHttpResponse response = httpClient.execute(post, this.context);
 		String json = getTextFrom(response);
@@ -181,39 +201,50 @@ public class HttpSession extends HttpSessionHelper {
 		}.getType());
 	}
 
-	public boolean navigateToPdpUsing(PDP pdp) throws JsonSyntaxException, IOException, IllegalStateException {
-		HttpGet get = new HttpGet(
-				app.getProperty("web.baseUrl") + "index.php?id_product=" + pdp.getId() + "&controller=product");
-		get.setHeader("Cookie", getCookieValue(cookieStore, this.webCookie));
+	public boolean navigateToPdpUsing(PDP pdp)
+			throws JsonSyntaxException, IOException, IllegalStateException, URISyntaxException {
+		URIBuilder getRequest = new URIBuilder(app.getProperty("web.baseUrl") + "index.php");
+		// query string params
+		getRequest.setParameter("id_product", String.valueOf(pdp.getId())).setParameter("controller", "product");
+		// request header
+		String[][] headerParams = { { "Cookie", getCookieValue(cookieStore, this.webCookie) } };
+		HttpGet get = createGetRequestWithParams(getRequest.toString(), headerParams);
 		CloseableHttpResponse response = httpClient.execute(get, this.context);
 		String body = getTextFrom(response);
 		return body.toLowerCase().contains(String.format("<title>%s</title>", pdp.getProductName() + " - my store"));
 	}
 
-	public String addProductToWishListWithNoTokenUsing(PDP pdp) throws IOException {
-		String getRequest = app.getProperty("web.baseUrl") + "modules/blockwishlist/cart.php?";
+	public String addProductToWishListWithNoTokenUsing(PDP pdp) throws IOException, URISyntaxException {
+		URIBuilder getRequest = new URIBuilder(app.getProperty("web.baseUrl") + "modules/blockwishlist/cart.php");
+		// query string params
+		getRequest.setParameter("rand", String.valueOf(this.rand)).setParameter("action", "add")
+				.setParameter("id_product", String.valueOf(pdp.getId()))
+				.setParameter("quantity", String.valueOf(pdp.getQuantity()))
+				.setParameter("token", String.valueOf(pdp.getToken())).setParameter("id_product_attribute", "1")
+				.setParameter("_", String.valueOf((timeStamp.getTime())));
+		// request header
 		String[][] headerParams = { { "Accept", "application/json, text/javascript, */*; q=0.01" },
 				{ "Content-Type", "application/x-www-form-urlencoded; charset=UTF-8" },
 				{ "Cookie", getCookieValue(cookieStore, this.webCookie) }, { "Host", "automationpractice.com" },
-				{ "Referer",
-						"http://automationpractice.com/index.php?id_product=" + String.valueOf(pdp.getId())
-								+ "&controller=product" },
-				{ "X-Requested-With", "XMLHttpRequest" }, { "rand", String.valueOf(this.rand) }, { "action", "add" },
-				{ "id_product", String.valueOf(pdp.getId()) }, { "quantity", String.valueOf(pdp.getQuantity()) },
-				{ "token", String.valueOf(pdp.getToken()) }, { "id_product_attribute", "1" },
-				{ "_", String.valueOf((timeStamp.getTime())) } };
-		HttpGet get = createGetRequestWithParams(getRequest, headerParams);
+				{ "Referer", "http://automationpractice.com/index.php?id_product=" + String.valueOf(pdp.getId())
+						+ "&controller=product" },
+				{ "X-Requested-With", "XMLHttpRequest" } };
+		HttpGet get = createGetRequestWithParams(getRequest.toString(), headerParams);
 		CloseableHttpResponse response = httpClient.execute(get, this.context);
 		return getTextFrom(response);
 	}
 
-	public Set<Products> getProductsFromCart(String token) throws IOException {
-		String postRequest = app.getProperty("web.baseUrl") + "index.php?rand=" + this.rand;
+	public Set<Products> getProductsFromCart(String token) throws IOException, URISyntaxException {
+		URIBuilder postRequest = new URIBuilder(app.getProperty("web.baseUrl") + "index.php");
+		// query string params
+		postRequest.setParameter("rand", String.valueOf(this.rand));
+		// request header
 		String[][] headerParams = { { "Accept", "application/json, text/javascript, */*; q=0.01" },
 				{ "Content-Type", "application/x-www-form-urlencoded; charset=UTF-8" },
 				{ "X-Requested-With", "XMLHttpRequest" }, { "Cookie", getCookieValue(cookieStore, this.webCookie) } };
+		// Form Data
 		String[][] bodyParams = { { "controller", "cart" }, { "ajax", "true" }, { "token", token } };
-		HttpPost post = createPostRequestWithParams(postRequest, headerParams);
+		HttpPost post = createPostRequestWithParams(postRequest.toString(), headerParams);
 		post.setEntity(new UrlEncodedFormEntity(createHttpBodyParamsWith(bodyParams)));
 		CloseableHttpResponse response = httpClient.execute(post, this.context);
 		String json = getTextFrom(response);
@@ -224,6 +255,7 @@ public class HttpSession extends HttpSessionHelper {
 	}
 
 	public Products addProductToCart(Products newProduct) throws IOException {
+		// Use fluent API
 		String json = Request.Post(app.getProperty("web.baseUrl") + "index.php?rand=" + this.rand)
 				.addHeader("Accept", "application/json, text/javascript, */*; q=0.01")
 				.addHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8")
@@ -246,6 +278,7 @@ public class HttpSession extends HttpSessionHelper {
 	}
 
 	public void cleanUpCart(String token) throws IOException {
+		// Use fluent API
 		String json = Request.Post(app.getProperty("web.baseUrl") + "index.php?rand=" + this.rand)
 				.addHeader("Accept", "application/json, text/javascript, */*; q=0.01")
 				.addHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8")
@@ -281,9 +314,14 @@ public class HttpSession extends HttpSessionHelper {
 
 	}
 
-	public boolean isLoggedInAs(LigalCredentials credentials) throws IOException {
-		HttpGet get = new HttpGet(app.getProperty("web.baseUrl") + "/index.php?controller=my-account");
-		CloseableHttpResponse response = httpClient.execute(get);
+	public boolean isLoggedInAs(LigalCredentials credentials) throws IOException, URISyntaxException {
+		URIBuilder getRequest = new URIBuilder(app.getProperty("web.baseUrl") + "/index.php");
+		// query string params
+		getRequest.setParameter("controller", "my-account");
+		// request header
+		String[][] headerParams = { { "Host", "automationpractice.com" } };
+		HttpGet get = createGetRequestWithParams(getRequest.toString(), headerParams);
+		CloseableHttpResponse response = this.httpClient.execute(get);
 		String body = getTextFrom(response);
 		return body.contains(String.format("<span>%s</span>", credentials.getAccountName()));
 	}

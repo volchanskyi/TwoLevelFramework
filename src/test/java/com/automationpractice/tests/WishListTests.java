@@ -4,6 +4,7 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 
 import org.testng.annotations.Test;
 
@@ -31,7 +32,7 @@ public class WishListTests extends TestBase {
 
 	@Test(groups = {
 			"API" }, dataProvider = "getLigalCredentialsAndProductIdsForPdpControllerFromPropertyFiles", dataProviderClass = TestDataProviders.class)
-	public void testAddProductToWishListWhileLoggedInUsingAPI(PDP pdp) throws IOException {
+	public void testAddProductToWishListWhileLoggedInUsingAPI(PDP pdp) throws IOException, URISyntaxException {
 		// Init HTTP session
 		HttpSession session = APP.newSession();
 		// read cookie PREFIX (Cookie name)

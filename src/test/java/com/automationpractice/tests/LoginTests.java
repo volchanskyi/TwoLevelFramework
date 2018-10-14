@@ -3,18 +3,19 @@ package com.automationpractice.tests;
 import static org.testng.Assert.assertTrue;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 
 import org.testng.annotations.Test;
 
 import com.automationpractice.appmanager.HttpSession;
 import com.automationpractice.model.LigalCredentials;
-import com.automationpractice.model.LigalCreds;
 
 //@Guice
 public class LoginTests extends TestBase {
 
 	@Test(dataProvider = "getLigalCredentialsForAuthenticationControllerFromPropertyFile", dataProviderClass = TestDataProviders.class)
-	public void testLoginWithExistedAccountUsingAPI(LigalCredentials credentials) throws IOException {
+	public void testLoginWithExistedAccountUsingAPI(LigalCredentials credentials)
+			throws IOException, URISyntaxException {
 		HttpSession session = APP.newSession();
 		String pageTitle = "My account - My Store";
 		assertTrue(session.loginWith(credentials, pageTitle));

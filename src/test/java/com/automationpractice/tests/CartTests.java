@@ -23,7 +23,7 @@ public class CartTests extends TestBase {
 		// CONTEXT
 		session.initCookie(cookieName);
 		// add sample item to the cart
-		session.addProductToCart("1", "99", token);
+		session.addProductToCart("6", "99", token);
 		// get items from the cart and save them to the init value
 		Set<Products> oldCart = session.getProductsFromCart(token);
 		// add the product to the cart and save it to var
