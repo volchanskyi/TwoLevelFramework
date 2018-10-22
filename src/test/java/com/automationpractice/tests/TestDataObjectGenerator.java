@@ -91,7 +91,7 @@ public class TestDataObjectGenerator extends TestDataObjectGeneratorHelper {
 				InputStreamReader reader2 = new InputStreamReader(fileInputStream2, Charset.forName("UTF-8"));
 				// open a BufferedReader to read line-by-line
 				BufferedReader br2 = new BufferedReader(reader2);) {
-			while ((line = br.readLine()) != null && (line2 = br2.readLine()) != null) {
+			while ((line2 = br2.readLine()) != null && (line = br.readLine()) != null) {
 				// split objects by ","
 				String[] objects = line.split(",");
 				String[] objects2 = line2.split(",");

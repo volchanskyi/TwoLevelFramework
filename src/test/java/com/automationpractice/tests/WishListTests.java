@@ -9,7 +9,9 @@ import java.net.URISyntaxException;
 import org.testng.annotations.Test;
 
 import com.automationpractice.appmanager.HttpSession;
+import com.automationpractice.model.LigalCredentials;
 import com.automationpractice.model.PDP;
+import com.automationpractice.model.Products;
 
 public class WishListTests extends TestBase {
 
@@ -31,8 +33,10 @@ public class WishListTests extends TestBase {
 //	}
 
 	@Test(groups = {
-			"API" }, dataProvider = "getLigalCredentialsAndProductIdsForPdpControllerFromPropertyFiles", dataProviderClass = TestDataProviders.class)
-	public void testAddProductToWishListWhileLoggedInUsingAPI(PDP pdp) throws IOException, URISyntaxException {
+			"API" }, dataProvider = "dp2", dataProviderClass = TestDataProviders.class)
+//	@Test(groups = {
+//	"API" }, dataProvider = "getLigalCredentialsAndProductIdsForPdpControllerFromPropertyFiles", dataProviderClass = TestDataProviders.class)
+	public void testAddProductToWishListWhileLoggedInUsingAPI(Products prods, LigalCredentials creds) throws IOException, URISyntaxException {
 		// Init HTTP session
 		HttpSession session = APP.newSession();
 		// read cookie PREFIX (Cookie name)
@@ -41,8 +45,8 @@ public class WishListTests extends TestBase {
 		// pass cookie name to make Server Side generate cookie and pass them to
 		// CONTEXT
 		session.initCookie(cookieName);
-		assertTrue(session.navigateToPdpUsing(pdp));
-		assertEquals(session.addProductToWishListWithNoTokenUsing(pdp), errMsg);
+//		assertTrue(session.navigateToPdpUsing(pdp[0]));
+//		assertEquals(session.addProductToWishListWithNoTokenUsing(pdp), errMsg);
 	}
 
 //	@Test(groups = {

@@ -94,4 +94,14 @@ public class TestDataProviders extends TestDataGenerator {
 
 	}
 
+	@DataProvider(name = "dp2")
+	protected static Object[][] generatePdpDataForWishListController() throws InterruptedException, IOException {
+		Object[][] generatedTestData = new Object[1][2];
+		// loop over 2D array
+		for (int row = 0; row < generatedTestData.length; row++) {
+			generatedTestData[row][0] = readProductList().iterator().next();
+			generatedTestData[row][1] = readLigalCredentialsList().iterator().next();
+		}
+		return generatedTestData;
+	}
 }
