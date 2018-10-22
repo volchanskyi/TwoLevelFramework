@@ -8,7 +8,6 @@ import org.apache.http.client.fluent.Request;
 import org.apache.http.client.utils.URIBuilder;
 
 import com.automationpractice.model.LigalCredentials;
-import com.automationpractice.model.PDP;
 import com.automationpractice.model.Products;
 
 //Helper Class with Low Level Implementations
@@ -38,8 +37,8 @@ class HttpSessionHelper extends HttpProtocolHelper {
 		return headerParams;
 	}
 
-	protected String[][] getBodyParamsWith(String fName, String lName, String password, String address,
-			String city, String postcode, String state, String phone, String email) {
+	protected String[][] getBodyParamsWith(String fName, String lName, String password, String address, String city,
+			String postcode, String state, String phone, String email) {
 		String[][] bodyParams = { { "customer_firstname", fName }, { "customer_lastname", lName },
 				{ "passwd", password }, { "firstname", fName }, { "lastname", lName }, { "email", email },
 				{ "days", "" }, { "months", "" }, { "years", "" }, { "company", "" }, { "address1", address },
@@ -104,34 +103,33 @@ class HttpSessionHelper extends HttpProtocolHelper {
 
 	// verifyActivationLink Method and createEmailWith Method
 
-	protected void addStringParamsUsingEmailNameWith(String email, URIBuilder getRequest,
-			String timestamp) {
+	protected void addStringParamsUsingEmailNameWith(String email, URIBuilder getRequest, String timestamp) {
 		getRequest.setParameter("f", "get_email_list").setParameter("offset", "0")
 				.setParameter("site", "guerrillamail.com").setParameter("in", email.split("@")[0])
 				.setParameter("_", timestamp);
 	}
 
 	// addProductToWishListWithNoTokenUsing Method and getProductsFromCart Method
-	protected void addStringParamsUsingPdpInfoWith(PDP pdp,
+	protected void addStringParamsUsingPdpInfoWith(Products products, LigalCredentials credentials,
 			URIBuilder getRequest, String rand, String timestamp) {
 		getRequest.setParameter("rand", rand).setParameter("action", "add")
-				.setParameter("id_product", String.valueOf(pdp.getId()))
-				.setParameter("quantity", String.valueOf(pdp.getQuantity()))
-				.setParameter("token", String.valueOf(pdp.getToken())).setParameter("id_product_attribute", "1")
+				.setParameter("id_product", String.valueOf(products.getId()))
+				.setParameter("quantity", String.valueOf(products.getQuantity()))
+				.setParameter("token", String.valueOf(credentials.getToken())).setParameter("id_product_attribute", "1")
 				.setParameter("_", timestamp);
 	}
 
-	protected String[][] createHeaderParamsUsingPdpIndoWith(PDP pdp, String cookieValue) {
+	protected String[][] createHeaderParamsUsingPdpIndoWith(Products products, String cookieValue) {
 		String[][] headerParams = { { "Accept", "application/json, text/javascript, */*; q=0.01" },
 				{ "Content-Type", "application/x-www-form-urlencoded; charset=UTF-8" }, { "Cookie", cookieValue },
 				{ "Host", "automationpractice.com" }, { "Referer", "http://automationpractice.com/index.php?id_product="
-						+ String.valueOf(pdp.getId()) + "&controller=product" },
+						+ String.valueOf(products.getId()) + "&controller=product" },
 				{ "X-Requested-With", "XMLHttpRequest" } };
 		return headerParams;
 	}
 
-	protected String createFluentPostRequestUsingProductInfoWith(Products newProduct, String property, int rand, String cookieValue)
-			throws ClientProtocolException, IOException {
+	protected String createFluentPostRequestUsingProductInfoWith(Products newProduct, String property, int rand,
+			String cookieValue) throws ClientProtocolException, IOException {
 		String json = Request.Post(property + "index.php?rand=" + rand)
 				.addHeader("Accept", "application/json, text/javascript, */*; q=0.01")
 				.addHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8")

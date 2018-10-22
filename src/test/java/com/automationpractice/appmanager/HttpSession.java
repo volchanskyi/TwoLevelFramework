@@ -20,7 +20,6 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.client.LaxRedirectStrategy;
 
 import com.automationpractice.model.LigalCredentials;
-import com.automationpractice.model.PDP;
 import com.automationpractice.model.Products;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -178,27 +177,30 @@ public class HttpSession extends HttpSessionHelper {
 		}.getType());
 	}
 
-	public boolean navigateToPdpUsing(PDP pdp)
+	public boolean navigateToPdpUsing(Products products)
 			throws JsonSyntaxException, IOException, IllegalStateException, URISyntaxException {
 		URIBuilder getRequest = new URIBuilder(app.getProperty("web.baseUrl") + "index.php");
 		// query string params
-		getRequest.setParameter("id_product", String.valueOf(pdp.getId())).setParameter("controller", "product");
+		getRequest.setParameter("id_product", String.valueOf(products.getId())).setParameter("controller", "product");
 		// request header
 		String[][] headerParams = { { "Cookie", getCookieValue(cookieStore, this.webCookie) } };
 		HttpGet get = createGetRequestWithParams(getRequest.toString(), headerParams);
 		CloseableHttpResponse response = httpClient.execute(get, this.context);
 		isHttpStatusCodeOK(response);
 		String body = getTextFrom(response);
-		return body.toLowerCase().contains(String.format("<title>%s</title>", pdp.getProductName() + " - my store"));
+		return body.toLowerCase()
+				.contains(String.format("<title>%s</title>", products.getProductName() + " - my store"));
 	}
 
-	public String addProductToWishListWithNoTokenUsing(PDP pdp) throws IOException, URISyntaxException {
+	public String addProductToWishListWithNoTokenUsing(Products products, LigalCredentials credentials)
+			throws IOException, URISyntaxException {
 		URIBuilder getRequest = new URIBuilder(app.getProperty("web.baseUrl") + "modules/blockwishlist/cart.php");
 		// query string params
-		addStringParamsUsingPdpInfoWith(pdp, getRequest, String.valueOf(this.rand),
+		addStringParamsUsingPdpInfoWith(products, credentials, getRequest, String.valueOf(this.rand),
 				String.valueOf((timeStamp.getTime())));
 		// request header
-		String[][] headerParams = createHeaderParamsUsingPdpIndoWith(pdp, getCookieValue(cookieStore, this.webCookie));
+		String[][] headerParams = createHeaderParamsUsingPdpIndoWith(products,
+				getCookieValue(cookieStore, this.webCookie));
 		HttpGet get = createGetRequestWithParams(getRequest.toString(), headerParams);
 		CloseableHttpResponse response = httpClient.execute(get, this.context);
 		isHttpStatusCodeOK(response);
