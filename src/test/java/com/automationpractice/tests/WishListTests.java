@@ -31,9 +31,8 @@ public class WishListTests extends TestBase {
 //		assertEquals(session.addProductToWishListWithNoTokenUsing(pdp), errMsg);
 //	}
 
-	@Test(groups = { "API" }, dataProvider = "dp2", dataProviderClass = TestDataProviders.class)
-//	@Test(groups = {
-//	"API" }, dataProvider = "getLigalCredentialsAndProductIdsForPdpControllerFromPropertyFiles", dataProviderClass = TestDataProviders.class)
+	@Test(groups = {
+			"API" }, dataProvider = "getLigalCredentialsAndProductIdsForPdpControllerFromPropertyFiles", dataProviderClass = TestDataProviders.class)
 	public void testAddProductToWishListWhileLoggedInUsingAPI(Products products, LigalCredentials credentials)
 			throws IOException, URISyntaxException {
 		// Init HTTP session
