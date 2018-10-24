@@ -33,7 +33,7 @@ public class WishListTests extends TestBase {
 
 	@Test(groups = {
 			"API" }, dataProvider = "getLigalCredentialsAndProductIdsForPdpControllerFromPropertyFiles", dataProviderClass = TestDataProviders.class)
-	public void testAddProductToWishListWhileLoggedInUsingAPI(Products products, LigalCredentials credentials)
+	public void testAddProductToWishListWhileLoggedInUsingAPI(LigalCredentials credentials, Products products)
 			throws IOException, URISyntaxException {
 		// Init HTTP session
 		HttpSession session = APP.newSession();

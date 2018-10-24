@@ -1,7 +1,9 @@
 package com.automationpractice.tests;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import org.testng.annotations.DataProvider;
 
@@ -86,20 +88,17 @@ public class TestDataProviders extends TestDataGenerator {
 		return readLigalCredentialsList().iterator();
 	}
 
-	//TODO try multidimensional SET
 	@DataProvider(name = "getLigalCredentialsAndProductIdsForPdpControllerFromPropertyFiles")
 	protected static Object[][] generatePdpDataForWishListController() throws InterruptedException, IOException {
-		Object[][] generatedTestData = new Object[3][2];
-		Iterator<Products> productList = readProductList().iterator();
-		Iterator<LigalCredentials> ligalCredentialsList = readLigalCredentialsList().iterator();
-		while (ligalCredentialsList.hasNext()) {
-			// loop over 2D array
-			for (int row = 0; row < generatedTestData.length; row++) {
-				generatedTestData[row][0] = productList.next();
-				generatedTestData[row][1] = ligalCredentialsList.next();
-			}
+		Object[][] generatedTestData = new Object[readLigalCredentialsList().size()][2];
+		List<LigalCredentials> ligalCredentialsList = new ArrayList<LigalCredentials>();
+		List<Products> productList = new ArrayList<Products>();
+		ligalCredentialsList.addAll(readLigalCredentialsList());
+		productList.addAll(readProductList());
+		for (int i = 0; i < ligalCredentialsList.size(); i++) {
+			generatedTestData[i][0] = ligalCredentialsList.get(i);
+			generatedTestData[i][1] = productList.get(i);
 		}
-
 		return generatedTestData;
 	}
 }
