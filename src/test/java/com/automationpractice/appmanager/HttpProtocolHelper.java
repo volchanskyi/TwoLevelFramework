@@ -2,6 +2,8 @@ package com.automationpractice.appmanager;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.client.fluent.Executor;
@@ -23,6 +25,23 @@ class HttpProtocolHelper {
 		} finally {
 			response.close();
 		}
+	}
+
+	// RegEX parser for pure HTML
+	protected String parsePureHtmlWithRegExUsing(String regex, String stringToApplyRegexOn) {
+		try {
+			// Generate pattern to catch the string
+			Pattern pattern = Pattern.compile(regex, Pattern.MULTILINE);
+			// Apply pattern to the string
+			Matcher matcher = pattern.matcher(stringToApplyRegexOn);
+			matcher.find();
+			return matcher.group(1);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return "Couldn`t find RegEx";
+
 	}
 
 	protected Executor getExecutor(CloseableHttpClient httpClient) {
@@ -53,12 +72,6 @@ class HttpProtocolHelper {
 		return getWithParams;
 	}
 
-	protected String[][] createBodyParamsForAddProductToCartMethod(String id, String quantity, String token) {
-		String[][] bodyParams = { { "controller", "cart" }, { "add", "1" }, { "ajax", "true" }, { "qty", quantity },
-				{ "id_product", id }, { "token", token } };
-		return bodyParams;
-	}
-
 	protected boolean isHttpStatusCodeOK(CloseableHttpResponse response) {
 		try {
 			httpResponse = response;
@@ -69,5 +82,7 @@ class HttpProtocolHelper {
 		}
 		return false;
 	}
+	
+
 
 }

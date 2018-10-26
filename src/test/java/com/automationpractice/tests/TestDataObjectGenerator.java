@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
+import java.util.HashSet;
 import java.util.LinkedHashSet;
 
 import com.automationpractice.model.LigalCredentials;
@@ -14,8 +15,7 @@ import com.automationpractice.model.Products;
 public class TestDataObjectGenerator extends TestDataObjectGeneratorHelper {
 
 	// Credentials
-	protected static LinkedHashSet<LigalCredentials> readLigalCredentialsList()
-			throws InterruptedException, IOException {
+	protected static HashSet<LigalCredentials> readLigalCredentialsList() throws InterruptedException, IOException {
 		String accountListFile = "src/test/resources/validAccounts.csv";
 		LinkedHashSet<LigalCredentials> set = new LinkedHashSet<LigalCredentials>();
 		String line;
@@ -36,7 +36,6 @@ public class TestDataObjectGenerator extends TestDataObjectGeneratorHelper {
 				// create a model object (new product item with real email, name and password)
 				set.add(new LigalCredentials().withEmail(email).withPassword(password).withAccountName(name)
 						.withToken(token));
-
 			}
 		}
 		return set;
@@ -44,12 +43,11 @@ public class TestDataObjectGenerator extends TestDataObjectGeneratorHelper {
 	}
 
 	// Products
-	protected static LinkedHashSet<Products> readProductList() throws InterruptedException, IOException {
+	protected static HashSet<Products> readProductList() throws InterruptedException, IOException {
 		String productListFile = "src/test/resources/validProducts.csv";
 		LinkedHashSet<Products> set = new LinkedHashSet<Products>();
 		String line;
 		try (
-
 				// open an input stream
 				InputStream fileInputStream = new FileInputStream(productListFile);
 				// read file as UTF-8

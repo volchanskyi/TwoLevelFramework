@@ -1,6 +1,6 @@
 package com.automationpractice.tests;
 
-import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertNotEquals;
 import static org.testng.Assert.assertTrue;
 
 import java.io.IOException;
@@ -39,12 +39,15 @@ public class WishListTests extends TestBase {
 		HttpSession session = APP.newSession();
 		// read cookie PREFIX (Cookie name)
 		String cookieName = session.getCookieName();
-		String errMsg = "expected message";
+		String errMsg = "You must be logged in to manage your wishlist.";
+		String pageTitle = "My account - My Store";
 		// pass cookie name to make Server Side generate cookie and pass them to
 		// CONTEXT
 		session.initCookie(cookieName);
-		assertTrue(session.navigateToPdpUsing(products));
-		assertEquals(session.addProductToWishListWithNoTokenUsing(products, credentials), errMsg);
+		session.loginWith(credentials, pageTitle);
+		session.navigateToPdpUsing(products);
+		assertNotEquals(session.addProductToWishListUsing(products, credentials), errMsg);
+		assertTrue(session.addedToWishListAs(products));
 	}
 
 //	@Test(groups = {

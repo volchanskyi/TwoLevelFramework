@@ -32,16 +32,25 @@ public class LigalCredentials implements LigalCreds {
 		if (getClass() != obj.getClass())
 			return false;
 		LigalCredentials other = (LigalCredentials) obj;
-		if (email != other.email)
+		if (email == null) {
+			if (other.email != null)
+				return false;
+		} else if (!email.equals(other.email))
 			return false;
 		if (accountName == null) {
 			if (other.accountName != null)
 				return false;
 		} else if (!accountName.equals(other.accountName))
 			return false;
-		if (password != other.password)
+		if (password == null) {
+			if (other.password != null)
+				return false;
+		} else if (!password.equals(other.password))
 			return false;
-		if (token != other.token)
+		if (token == null) {
+			if (other.token != null)
+				return false;
+		} else if (!token.equals(other.token))
 			return false;
 		return true;
 	}

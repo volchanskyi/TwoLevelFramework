@@ -6,6 +6,7 @@ import java.sql.Timestamp;
 import java.util.Random;
 import java.util.Set;
 
+import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.CookieStore;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -54,7 +55,7 @@ public class HttpSession extends HttpSessionHelper {
 		String[][] bodyParams = getBodyParamsWith(credentials);
 		HttpPost post = createPostRequestWithParams(postRequest.toString(), headerParams);
 		post.setEntity(new UrlEncodedFormEntity(createHttpBodyParamsWith(bodyParams)));
-		CloseableHttpResponse response = this.httpClient.execute(post);
+		CloseableHttpResponse response = this.httpClient.execute(post, this.context);
 		String body = getTextFrom(response);
 		isHttpStatusCodeOK(response);
 		return body.contains(String.format("<title>%s</title>", pageTitle));
@@ -146,15 +147,7 @@ public class HttpSession extends HttpSessionHelper {
 		JsonElement authKey = parsed.getAsJsonObject().get("auth");
 		boolean statusKey = authKey.getAsJsonObject().get("success").getAsBoolean();
 		JsonArray errorCodeKey = authKey.getAsJsonObject().get("error_codes").getAsJsonArray();
-		if (statusKey == true & errorCodeKey.size() == 0) {
-			JsonArray inbox = parsed.getAsJsonObject().get("list").getAsJsonArray();
-			for (JsonElement jSo : inbox) {
-				if (jSo.getAsJsonObject().get("mail_body").getAsString().contains(link)) {
-					return emailAddrKey.equals(email);
-				}
-			}
-		}
-		return false;
+		return isContained(email, link, parsed, emailAddrKey, statusKey, errorCodeKey);
 	}
 
 	public Set<Products> addProductToCart(String id, String quantity, String token)
@@ -192,7 +185,7 @@ public class HttpSession extends HttpSessionHelper {
 				.contains(String.format("<title>%s</title>", products.getProductName() + " - my store"));
 	}
 
-	public String addProductToWishListWithNoTokenUsing(Products products, LigalCredentials credentials)
+	public String addProductToWishListUsing(Products products, LigalCredentials credentials)
 			throws IOException, URISyntaxException {
 		URIBuilder getRequest = new URIBuilder(app.getProperty("web.baseUrl") + "modules/blockwishlist/cart.php");
 		// query string params
@@ -205,6 +198,21 @@ public class HttpSession extends HttpSessionHelper {
 		CloseableHttpResponse response = httpClient.execute(get, this.context);
 		isHttpStatusCodeOK(response);
 		return getTextFrom(response);
+	}
+
+	public boolean addedToWishListAs(Products products)
+			throws ClientProtocolException, IOException, URISyntaxException {
+		URIBuilder getRequest = new URIBuilder(app.getProperty("web.baseUrl"));
+		// query string params
+		addStringParamsUsingWishListInfoWith(getRequest);
+		// request header
+		String[][] headerParams = createHeaderParamsUsingCookieWith(getCookieValue(cookieStore, this.webCookie));
+		HttpGet get = createGetRequestWithParams(getRequest.toString(), headerParams);
+		CloseableHttpResponse response = httpClient.execute(get, this.context);
+		isHttpStatusCodeOK(response);
+		String json = getTextFrom(response);
+		JsonElement parsed = new JsonParser().parse(parsePureHtmlWithRegExUsing("^.*(\\[.*\\])\\;$", json));
+		return isAdded(products, parsed);
 	}
 
 	public Set<Products> getProductsFromCart(String token) throws IOException, URISyntaxException {
@@ -231,14 +239,7 @@ public class HttpSession extends HttpSessionHelper {
 				getCookieValue(cookieStore, this.webCookie));
 		JsonElement parsed = new JsonParser().parse(json);
 		JsonArray jsonArray = parsed.getAsJsonObject().getAsJsonArray("products");
-		for (JsonElement jSo : jsonArray) {
-			if (jSo.getAsJsonObject().get("id").getAsInt() == newProduct.getId()) {
-				return new Gson().fromJson(jSo.getAsJsonObject(), new TypeToken<Products>() {
-				}.getType());
-			}
-		}
-		return null;
-
+		return isAdded(newProduct, jsonArray);
 	}
 
 	public void cleanUpCart(String token) throws IOException {
@@ -247,16 +248,7 @@ public class HttpSession extends HttpSessionHelper {
 				this.webCookie);
 		JsonElement parsed = new JsonParser().parse(json);
 		JsonElement key = parsed.getAsJsonObject().get("nbTotalProducts");
-		if (!key.isJsonNull() && key.isJsonPrimitive() && key.getAsInt() > 0) {
-			JsonArray jsonArray = parsed.getAsJsonObject().getAsJsonArray("products");
-			for (JsonElement jSo : jsonArray) {
-				String id = jSo.getAsJsonObject().get("id").getAsString();
-				String ipa = jSo.getAsJsonObject().get("idCombination").getAsString();
-				createFluentPostRequestUsingTokenWith(token, id, ipa, app.getProperty("web.baseUrl"), this.rand,
-						this.webCookie);
-
-			}
-		}
+		cleanUpUsing(token, parsed, key, app.getProperty("web.baseUrl"), this.rand, this.webCookie);
 	}
 
 	public boolean searchForProduct(Products product) throws IOException {
@@ -275,7 +267,7 @@ public class HttpSession extends HttpSessionHelper {
 		// request header
 		String[][] headerParams = { { "Host", "automationpractice.com" } };
 		HttpGet get = createGetRequestWithParams(getRequest.toString(), headerParams);
-		CloseableHttpResponse response = this.httpClient.execute(get);
+		CloseableHttpResponse response = this.httpClient.execute(get, this.context);
 		isHttpStatusCodeOK(response);
 		String body = getTextFrom(response);
 		return body.contains(String.format("<span>%s</span>", credentials.getAccountName()));

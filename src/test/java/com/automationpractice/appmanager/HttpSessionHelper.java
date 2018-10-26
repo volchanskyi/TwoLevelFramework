@@ -9,6 +9,11 @@ import org.apache.http.client.utils.URIBuilder;
 
 import com.automationpractice.model.LigalCredentials;
 import com.automationpractice.model.Products;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonSyntaxException;
+import com.google.gson.reflect.TypeToken;
 
 //Helper Class with Low Level Implementations
 class HttpSessionHelper extends HttpProtocolHelper {
@@ -119,6 +124,11 @@ class HttpSessionHelper extends HttpProtocolHelper {
 				.setParameter("_", timestamp);
 	}
 
+	protected void addStringParamsUsingWishListInfoWith(URIBuilder getRequest) {
+		getRequest.setParameter("fc", "module").setParameter("module", "blockwishlist").setParameter("controller",
+				"view");
+	}
+
 	protected String[][] createHeaderParamsUsingPdpIndoWith(Products products, String cookieValue) {
 		String[][] headerParams = { { "Accept", "application/json, text/javascript, */*; q=0.01" },
 				{ "Content-Type", "application/x-www-form-urlencoded; charset=UTF-8" }, { "Cookie", cookieValue },
@@ -161,6 +171,80 @@ class HttpSessionHelper extends HttpProtocolHelper {
 				.bodyForm(Form.form().add("controller", "cart").add("delete", "1").add("id_product", id).add("ipa", ipa)
 						.add("token", token).add("ajax", "true").build())
 				.execute().returnContent().asString();
+	}
+
+	protected String[][] createBodyParamsForAddProductToCartMethod(String id, String quantity, String token) {
+		String[][] bodyParams = { { "controller", "cart" }, { "add", "1" }, { "ajax", "true" }, { "qty", quantity },
+				{ "id_product", id }, { "token", token } };
+		return bodyParams;
+	}
+
+	protected boolean isAdded(Products products, JsonElement parsed) {
+		try {
+			for (JsonElement jSo : parsed.getAsJsonArray()) {
+				if (jSo.getAsJsonObject().get("id_product").getAsString().equals(String.valueOf(products.getId()))
+						& jSo.getAsJsonObject().get("quantity").getAsString()
+								.equals(String.valueOf(products.getQuantity()))) {
+					return jSo.getAsJsonObject().get("name").getAsString().toLowerCase()
+							.equals(String.valueOf(products.getProductName()));
+				}
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	protected boolean isContained(String email, String link, JsonElement parsed, String emailAddrKey, boolean statusKey,
+			JsonArray errorCodeKey) {
+		try {
+			if (statusKey == true & errorCodeKey.size() == 0) {
+				JsonArray inbox = parsed.getAsJsonObject().get("list").getAsJsonArray();
+				for (JsonElement jSo : inbox) {
+					if (jSo.getAsJsonObject().get("mail_body").getAsString().contains(link)) {
+						return emailAddrKey.equals(email);
+					}
+				}
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	protected Products isAdded(Products newProduct, JsonArray jsonArray) {
+		try {
+			for (JsonElement jSo : jsonArray) {
+				if (jSo.getAsJsonObject().get("id").getAsInt() == newProduct.getId()) {
+					return new Gson().fromJson(jSo.getAsJsonObject(), new TypeToken<Products>() {
+					}.getType());
+				}
+			}
+		} catch (JsonSyntaxException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	protected void cleanUpUsing(String token, JsonElement parsed, JsonElement key, String property, int rand,
+			String webCookie) {
+		try {
+			if (!key.isJsonNull() && key.isJsonPrimitive() && key.getAsInt() > 0) {
+				JsonArray jsonArray = parsed.getAsJsonObject().getAsJsonArray("products");
+				for (JsonElement jSo : jsonArray) {
+					String id = jSo.getAsJsonObject().get("id").getAsString();
+					String ipa = jSo.getAsJsonObject().get("idCombination").getAsString();
+					createFluentPostRequestUsingTokenWith(token, id, ipa, property, rand, webCookie);
+
+				}
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }

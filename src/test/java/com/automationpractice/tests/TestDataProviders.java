@@ -90,11 +90,14 @@ public class TestDataProviders extends TestDataGenerator {
 
 	@DataProvider(name = "getLigalCredentialsAndProductIdsForPdpControllerFromPropertyFiles")
 	protected static Object[][] generatePdpDataForWishListController() throws InterruptedException, IOException {
+		//Create a dynamic 2D array with the size of the validCredentials entries(accounts)
 		Object[][] generatedTestData = new Object[readLigalCredentialsList().size()][2];
 		List<LigalCredentials> ligalCredentialsList = new ArrayList<LigalCredentials>();
 		List<Products> productList = new ArrayList<Products>();
+		//convert sets to lists
 		ligalCredentialsList.addAll(readLigalCredentialsList());
 		productList.addAll(readProductList());
+		//fill out the array with the lists values (sets values)
 		for (int i = 0; i < ligalCredentialsList.size(); i++) {
 			generatedTestData[i][0] = ligalCredentialsList.get(i);
 			generatedTestData[i][1] = productList.get(i);
