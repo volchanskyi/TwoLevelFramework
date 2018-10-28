@@ -1,6 +1,7 @@
 package com.automationpractice.appmanager;
 
 import java.io.IOException;
+import java.sql.Timestamp;
 
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.fluent.Form;
@@ -72,7 +73,7 @@ class HttpSessionHelper extends HttpProtocolHelper {
 
 	protected String[][] createHeaderParamsUsingCookieWith(String cookieValue) {
 		String[][] headerParams = { { "Accept", "application/json, text/javascript, */*; q=0.01" },
-				{ "Content-Type", "application/x-www-form-urlencoded; charset=UTF-8" },
+				{ "Content-Type", "application/x-www-form-urlencoded; charset=UTF-8" }, { "cache-control", "no-cache" },
 				{ "X-Requested-With", "XMLHttpRequest" }, { "Cookie", cookieValue } };
 		return headerParams;
 	}
@@ -126,7 +127,23 @@ class HttpSessionHelper extends HttpProtocolHelper {
 
 	protected void addStringParamsUsingWishListInfoWith(URIBuilder getRequest) {
 		getRequest.setParameter("fc", "module").setParameter("module", "blockwishlist").setParameter("controller",
-				"view");
+				"mywishlist");
+	}
+
+	protected void addStringParamsUsingWishListWithAddedProductInfoWith(URIBuilder getRequest, int rand,
+			String wishListId, Timestamp timeStamp) {
+		try {
+			if (!wishListId.isEmpty() & wishListId.length() != 0) {
+				getRequest.setParameter("fc", "module").setParameter("module", "blockwishlist")
+						.setParameter("controller", "mywishlist").setParameter("rand", String.valueOf(rand))
+						.setParameter("deleted", "1").setParameter("id_wishlist", wishListId)
+						.setParameter("_", String.valueOf(timeStamp));
+				return;
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	protected String[][] createHeaderParamsUsingPdpIndoWith(Products products, String cookieValue) {
@@ -179,16 +196,31 @@ class HttpSessionHelper extends HttpProtocolHelper {
 		return bodyParams;
 	}
 
+	protected boolean isWishListEmpty(JsonElement addedProducts) {
+		try {
+			boolean wishlistProductsIds = !addedProducts.isJsonArray() ? addedProducts.getAsJsonObject().getAsBoolean()
+					: false;
+			return !wishlistProductsIds;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
+	}
+
 	protected boolean isAdded(Products products, JsonElement parsed) {
 		try {
-			for (JsonElement jSo : parsed.getAsJsonArray()) {
-				if (jSo.getAsJsonObject().get("id_product").getAsString().equals(String.valueOf(products.getId()))
-						& jSo.getAsJsonObject().get("quantity").getAsString()
-								.equals(String.valueOf(products.getQuantity()))) {
-					return jSo.getAsJsonObject().get("name").getAsString().toLowerCase()
-							.equals(String.valueOf(products.getProductName()));
+			if (!parsed.getAsJsonArray().isJsonNull() & parsed.getAsJsonArray().size() != 0) {
+				for (JsonElement jSo : parsed.getAsJsonArray()) {
+					if (jSo.getAsJsonObject().get("id_product").getAsString().equals(String.valueOf(products.getId()))
+							& jSo.getAsJsonObject().get("quantity").getAsString()
+									.equals(String.valueOf(products.getQuantity()))) {
+						return jSo.getAsJsonObject().get("name").getAsString().toLowerCase()
+								.equals(String.valueOf(products.getProductName()));
+					}
 				}
-			}
+			} else
+				return false;
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

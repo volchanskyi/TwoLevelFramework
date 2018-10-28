@@ -1,6 +1,7 @@
 package com.automationpractice.appmanager;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.sql.Timestamp;
 import java.util.Random;
@@ -211,8 +212,25 @@ public class HttpSession extends HttpSessionHelper {
 		CloseableHttpResponse response = httpClient.execute(get, this.context);
 		isHttpStatusCodeOK(response);
 		String json = getTextFrom(response);
-		JsonElement parsed = new JsonParser().parse(parsePureHtmlWithRegExUsing("^.*(\\[.*\\])\\;$", json));
-		return isAdded(products, parsed);
+		JsonElement addedProducts = new JsonParser().parse(parsePureHtmlWithRegExUsing("^.*(\\[.*\\])\\;$", json));
+		String wishListId = parsePureHtmlWithRegExUsing("^.*\\('block-order-detail'\\,\\s\\'(\\d{4}).*$", json);
+		boolean bool = isAdded(products, addedProducts) ? deleteWishListWith(wishListId) : false;
+		return bool;
+	}
+
+	private boolean deleteWishListWith(String wishListId)
+			throws URISyntaxException, ClientProtocolException, IOException {
+		URIBuilder getRequest = new URIBuilder(app.getProperty("web.baseUrl"));
+		// query string params
+		addStringParamsUsingWishListWithAddedProductInfoWith(getRequest, this.rand, wishListId, timeStamp);
+		// request header
+		String[][] headerParams = createHeaderParamsUsingCookieWith(getCookieValue(cookieStore, this.webCookie));
+		HttpGet get = createGetRequestWithParams(getRequest.toString(), headerParams);
+		CloseableHttpResponse response = httpClient.execute(get, this.context);
+		isHttpStatusCodeOK(response);
+		String json = getTextFrom(response);
+		JsonElement addedProducts = new JsonParser().parse(parsePureHtmlWithRegExUsing("^.*(\\[.*\\])\\;$", json));
+		return isWishListEmpty(addedProducts);
 	}
 
 	public Set<Products> getProductsFromCart(String token) throws IOException, URISyntaxException {

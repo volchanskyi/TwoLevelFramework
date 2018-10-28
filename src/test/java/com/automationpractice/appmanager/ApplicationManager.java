@@ -28,7 +28,6 @@ public class ApplicationManager {
 
 	private String browser;
 	private RegistrationHelper registrationHelper;
-	private PdpHelper pdpHelper;
 
 	public ApplicationManager(String browser) {
 		this.browser = browser;
@@ -38,7 +37,7 @@ public class ApplicationManager {
 
 	// Refactor (add params to choose browser types)
 	public void init() throws IOException {
-		String target = System.getProperty("target", "local");		
+		String target = System.getProperty("target", "local");
 		properties.load(new FileReader(new File(String.format("src/test/resources/%s.properties", target))));
 		System.setProperty("ui", "enabled");
 		if (System.getProperty("ui").equalsIgnoreCase("enabled")) {
@@ -69,14 +68,6 @@ public class ApplicationManager {
 			registrationHelper = new RegistrationHelper(this);
 		}
 		return registrationHelper;
-	}
-	
-	public PdpHelper pdp() throws MalformedURLException {
-		// Lazy init
-		if (pdpHelper == null) {
-			pdpHelper = new PdpHelper(this);
-		}
-		return pdpHelper;
 	}
 
 	public WebDriver getDriver() throws MalformedURLException {
