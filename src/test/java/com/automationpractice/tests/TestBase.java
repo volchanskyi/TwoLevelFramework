@@ -14,10 +14,9 @@ import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Listeners;
 
 import com.automationpractice.appmanager.ApplicationManager;
-import com.automationpractice.matchers.MatcherBase;
 
 @Listeners(TestListener.class)
-public class TestBase extends MatcherBase {
+public class TestBase {
 
 	final private Logger logger = LoggerFactory.getLogger(TestBase.class);
 
@@ -32,19 +31,22 @@ public class TestBase extends MatcherBase {
 	}
 
 	@BeforeMethod(alwaysRun = true)
-	private void beforeMethod(Method method, Object[] parameters) {
+	public void logTestStart(Method method, Object[] parameters) {
 		logger.debug("Start test " + method.getName() + " with params " + Arrays.asList(parameters));
 
 	}
 
 	@AfterMethod(alwaysRun = true)
-	private void logTestStop(Method method, Object[] parameters) {
+	public void logTestStop(Method method, Object[] parameters) {
 		logger.debug("Stop test " + method.getName());
 
 	}
 
 	@AfterSuite(alwaysRun = true)
-	public void tearDown() {
+	public void tearDown(ITestContext context) {
+		logger.error("Failed tests " + Arrays.asList(context.getFailedTests()));
+		logger.warn("Retrieves information about the failed configuration method invocations " + Arrays.asList(context.getFailedConfigurations()));
+		logger.info("The host where this test was run, or null if it was run locally. " + Arrays.asList(context.getHost()));
 		APP.stop();
 	}
 

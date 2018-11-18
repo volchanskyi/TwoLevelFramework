@@ -1,6 +1,7 @@
 package com.automationpractice.appmanager;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -35,14 +36,9 @@ public class ApplicationManager {
 
 	}
 
-	// Refactor (add params to choose browser types)
 	public void init() throws IOException {
 		String target = System.getProperty("target", "local");
 		properties.load(new FileReader(new File(String.format("src/test/resources/%s.properties", target))));
-		System.setProperty("ui", "enabled");
-		if (System.getProperty("ui").equalsIgnoreCase("enabled")) {
-			properties.load(new FileReader(new File(String.format("src/test/resources/locator.properties"))));
-		}
 	}
 
 	public void stop() {
@@ -71,11 +67,22 @@ public class ApplicationManager {
 	}
 
 	public WebDriver getDriver() throws MalformedURLException {
+		// Load locators
+		try {
+			properties.load(new FileReader(new File(String.format("src/test/resources/locator.properties"))));
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		// Set path to the drivers
 		System.setProperty("webdriver.chrome.driver", "src/test/resources/webdrivers/pc/chromedriver.exe");
 		System.setProperty("webdriver.gecko.driver", "src/test/resources/webdrivers/pc/geckodriver.exe");
 		System.setProperty("webdriver.edge.driver", "src/test/resources/webdrivers/pc/MicrosoftWebDriver.exe");
 		System.setProperty("webdriver.ie.driver", "src/test/resources/webdrivers/pc/IEDriverServer.exe");
+
 		// If we dont use selenium server then run local browser
 		if ("".equals(properties.getProperty("selenium.server"))) {
 			// Lazy init

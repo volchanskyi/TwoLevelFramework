@@ -62,27 +62,8 @@ public class HelperBase {
 		Select choose = new Select(wait.until(ExpectedConditions.presenceOfElementLocated(locator)));
 		// Selecting value
 		choose.selectByVisibleText(value);
-		// // Create instance of Javascript executor
-		// js = (JavascriptExecutor) driver;
-		// // Check if Ajax is still working
-		// if ((Boolean) js.executeScript("return jQuery.active == 1")) {
-		// // Wait here to give time for async filtering script to finish
-		// // if we don`t wait here, DOM refreshes while the program continues working
-		// wait.until(ExpectedConditions.jsReturnsValue("return jQuery.active == 0"));
-		// }
-		// String chosen = choose.getFirstSelectedOption().getText();
-		// if (chosen.equals(value)) {
-		// // Return the text that was inserted for verification
-		// return chosen;
-		// } else
-		// return "The value hasn`t been selected";
-	}
 
-	// Get title by using locator
-	// protected String getPageTitle(By locator) {
-	// wait.until(ExpectedConditions.presenceOfElementLocated(locator));
-	// return wd.getTitle();
-	// }
+	}
 
 	// Get title by using embedded method
 	protected String getPageTitle(String title) {

@@ -1,7 +1,6 @@
 package com.automationpractice.appmanager;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.sql.Timestamp;
 import java.util.Random;
