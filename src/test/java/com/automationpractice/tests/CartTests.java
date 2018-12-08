@@ -11,7 +11,8 @@ import com.automationpractice.model.Products;
 
 public class CartTests extends TestBase {
 
-	@Test(dataProvider = "getValidProductsFromPropertyFile", dataProviderClass = TestDataProviders.class)
+	@Test(groups = { "API",
+	"CART" }, priority = 1, dataProvider = "getValidProductsFromPropertyFile", dataProviderClass = TestDataProviders.class)
 	public void testAddProductToCart(Products product) throws Exception {
 		// Init HTTP session
 		HttpSession session = APP.newSession();

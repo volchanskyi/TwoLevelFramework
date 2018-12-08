@@ -6,7 +6,7 @@
 	<appender name="htmlAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
 	<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
 			<!-- file name in the root dir -->
-			<!-- each file should be at most 3MB, keep 7 days worth of history, but at most 1GB -->
+			<!-- each file should be at most 3MB, keep 7 days worth of history, but 1GB at most  -->
 			<fileNamePattern>log-%d{yyyy-MM-dd 'at' hh-mm-ss z}.html</fileNamePattern>
 			<maxHistory>7</maxHistory> 
 			<totalSizeCap>1GB</totalSizeCap>

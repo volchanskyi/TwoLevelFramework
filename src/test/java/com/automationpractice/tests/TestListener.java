@@ -24,7 +24,7 @@ public class TestListener implements ITestListener {
 
     @Override
     public void onTestFailure(ITestResult result) {
-	// TODO Auto-generated method stub
+	// Take screenshots of the failing step. Stack trace is logged in case of API test
 	ApplicationManager app = (ApplicationManager) result.getTestContext().getAttribute("app");
 	saveScreenshot(app.takeScreenshot());
     }

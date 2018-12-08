@@ -11,7 +11,8 @@ import com.automationpractice.model.Products;
 
 public class SearchProductTests extends TestBase {
 
-	@Test(dataProvider = "getValidProductsFromPropertyFile", dataProviderClass = TestDataProviders.class)
+	@Test(groups = { "API",
+	"SEARCH" }, priority = 1, dataProvider = "getValidProductsFromPropertyFile", dataProviderClass = TestDataProviders.class)
 	public void testProductSearchForValidProductsUsingAPI(Products product) throws IOException {
 		HttpSession session = APP.newSession();
 		Products newProduct = new Products();

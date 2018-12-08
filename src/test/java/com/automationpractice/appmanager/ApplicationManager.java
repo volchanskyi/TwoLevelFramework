@@ -71,10 +71,10 @@ public class ApplicationManager {
 		try {
 			properties.load(new FileReader(new File(String.format("src/test/resources/locator.properties"))));
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
+			// If the the property file cant be found
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			// FS access error
 			e.printStackTrace();
 		}
 		// Set path to the drivers

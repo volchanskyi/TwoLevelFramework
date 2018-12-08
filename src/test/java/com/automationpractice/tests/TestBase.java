@@ -33,20 +33,20 @@ public class TestBase {
 	@BeforeMethod(alwaysRun = true)
 	public void logTestStart(Method method, Object[] parameters) {
 		logger.debug("Start test " + method.getName() + " with params " + Arrays.asList(parameters));
-
 	}
 
 	@AfterMethod(alwaysRun = true)
 	public void logTestStop(Method method, Object[] parameters) {
 		logger.debug("Stop test " + method.getName());
-
 	}
 
 	@AfterSuite(alwaysRun = true)
 	public void tearDown(ITestContext context) {
 		logger.error("Failed tests " + Arrays.asList(context.getFailedTests()));
-		logger.warn("Retrieves information about the failed configuration method invocations " + Arrays.asList(context.getFailedConfigurations()));
-		logger.info("The host where this test was run, or null if it was run locally. " + Arrays.asList(context.getHost()));
+		logger.warn("Retrieves information about the failed configuration method invocations "
+				+ Arrays.asList(context.getFailedConfigurations()));
+		logger.info(
+				"The host where this test was run, or null if it was run locally. " + Arrays.asList(context.getHost()));
 		APP.stop();
 	}
 
