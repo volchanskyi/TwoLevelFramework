@@ -26,7 +26,6 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 public class ApplicationManager {
 	private final Properties properties;
 	private WebDriver wd;
-
 	private String browser;
 	private RegistrationHelper registrationHelper;
 

@@ -32,12 +32,16 @@ public class TestBase {
 
 	@BeforeMethod(alwaysRun = true)
 	public void logTestStart(Method method, Object[] parameters) {
-		logger.debug("Start test " + method.getName() + " with params " + Arrays.asList(parameters));
+		if (isDebugEnabled() == true) {
+			logger.debug("Start test " + method.getName() + " with params " + Arrays.asList(parameters));
+		}
 	}
 
 	@AfterMethod(alwaysRun = true)
 	public void logTestStop(Method method, Object[] parameters) {
-		logger.debug("Stop test " + method.getName());
+		if (isDebugEnabled() == true) {
+			logger.debug("Stop test " + method.getName());
+		}
 	}
 
 	@AfterSuite(alwaysRun = true)
@@ -48,6 +52,23 @@ public class TestBase {
 		logger.info(
 				"The host where this test was run, or null if it was run locally. " + Arrays.asList(context.getHost()));
 		APP.stop();
+	}
+
+	private boolean isDebugEnabled() {
+		try {
+			if (System.getProperty("debug") == null || System.getProperty("debug").isEmpty()
+					|| System.getProperty("debug").contains("disabled")) {
+				return false;
+			} else if (System.getProperty("debug").equalsIgnoreCase("enabled"))
+				return true;
+			else
+				return false;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
+
 	}
 
 }

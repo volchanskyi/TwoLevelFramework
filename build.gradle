@@ -90,6 +90,9 @@ test {
 	if (project.hasProperty('target')) {
 	systemProperty 'target', "${target}"
 	}
+	if (project.hasProperty('debug')) {
+	systemProperty 'debug', findProperty("debug")
+	}
 
 }
 

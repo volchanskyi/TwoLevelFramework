@@ -2,7 +2,10 @@
 <!-- pass conf params -->
 <configuration debug="false" scan="true"> 
 	
-	<!-- add appender -->
+	<!-- add appender (an output destination)
+	appenders exist for the console, files, remote socket servers, 
+	to databases, JMS, and remote UNIX Syslog daemons
+	-->
 	<appender name="htmlAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
 	<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
 			<!-- file name in the root dir -->
@@ -24,7 +27,8 @@
 	</appender>
 
 
-	<!-- enable appender + assign minimum log level(to see in the report)-->
+	<!-- enable appender + assign minimum log level(to see in the report)
+	More than one appender can be attached to a logger -->
 	<root level="DEBUG">
 		<appender-ref ref="htmlAppender" />
 	</root>
