@@ -2,11 +2,13 @@ package com.automationpractice.tests;
 
 import java.lang.reflect.Method;
 import java.util.Arrays;
+import java.util.Collection;
 
 import org.openqa.selenium.remote.BrowserType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.ITestContext;
+import org.testng.ITestNGMethod;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeMethod;
@@ -16,7 +18,7 @@ import org.testng.annotations.Listeners;
 import com.automationpractice.appmanager.ApplicationManager;
 
 @Listeners(TestListener.class)
-public class TestBase {
+public class TestBase extends TestBaseHelper {
 
 	final private Logger logger = LoggerFactory.getLogger(TestBase.class);
 
@@ -42,33 +44,18 @@ public class TestBase {
 		if (isDebugEnabled() == true) {
 			logger.debug("Stop test " + method.getName());
 		}
+		return;
 	}
 
 	@AfterSuite(alwaysRun = true)
 	public void tearDown(ITestContext context) {
-		logger.error("Failed tests " + Arrays.asList(context.getFailedTests()));
+		Collection<ITestNGMethod> result = context.getFailedTests().getAllMethods();
+		logger.error(result.size() + " Failed tests " + result);
 		logger.warn("Retrieves information about the failed configuration method invocations "
 				+ Arrays.asList(context.getFailedConfigurations()));
 		logger.info(
 				"The host where this test was run, or null if it was run locally. " + Arrays.asList(context.getHost()));
 		APP.stop();
-	}
-
-	private boolean isDebugEnabled() {
-		try {
-			if (System.getProperty("debug") == null || System.getProperty("debug").isEmpty()
-					|| System.getProperty("debug").contains("disabled")) {
-				return false;
-			} else if (System.getProperty("debug").equalsIgnoreCase("enabled"))
-				return true;
-			else
-				return false;
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return false;
-
 	}
 
 }
