@@ -2,6 +2,7 @@ package com.automationpractice.tests;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -15,7 +16,7 @@ import com.automationpractice.model.Products;
 public class TestDataObjectGenerator extends TestDataObjectGeneratorHelper {
 
 	// Credentials
-	protected static HashSet<LigalCredentials> readLigalCredentialsList() throws InterruptedException, IOException {
+	protected static HashSet<LigalCredentials> readLigalCredentialsList() {
 		String accountListFile = "src/test/resources/validAccounts.csv";
 		LinkedHashSet<LigalCredentials> set = new LinkedHashSet<LigalCredentials>();
 		String line;
@@ -37,13 +38,17 @@ public class TestDataObjectGenerator extends TestDataObjectGeneratorHelper {
 				set.add(new LigalCredentials().withEmail(email).withPassword(password).withAccountName(name)
 						.withToken(token));
 			}
+		} catch (FileNotFoundException e) {
+			dataGenLogger.error(e.toString());
+		} catch (IOException e) {
+			dataGenLogger.error(e.toString());
 		}
 		return set;
 
 	}
 
 	// Products
-	protected static HashSet<Products> readProductList() throws InterruptedException, IOException {
+	protected static HashSet<Products> readProductList() {
 		String productListFile = "src/test/resources/validProducts.csv";
 		LinkedHashSet<Products> set = new LinkedHashSet<Products>();
 		String line;
@@ -63,6 +68,10 @@ public class TestDataObjectGenerator extends TestDataObjectGeneratorHelper {
 				// create a model object (new product item with real ID nad QTY)
 				set.add(new Products().withId(id).withQuantity(qty).withProductName(name));
 			}
+		} catch (FileNotFoundException e) {
+			dataGenLogger.error(e.toString());
+		} catch (IOException e) {
+			dataGenLogger.error(e.toString());
 		}
 		return set;
 

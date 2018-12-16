@@ -22,6 +22,8 @@ import org.openqa.selenium.remote.BrowserType;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ApplicationManager {
 	private final Properties properties;
@@ -29,15 +31,24 @@ public class ApplicationManager {
 	private String browser;
 	private RegistrationHelper registrationHelper;
 
+	// Init Logger for ApplicationManager.class
+	final private Logger appManagerlogger = LoggerFactory.getLogger(ApplicationManager.class);
+
 	public ApplicationManager(String browser) {
 		this.browser = browser;
 		properties = new Properties();
 
 	}
 
-	public void init() throws IOException {
+	public void init() {
 		String target = System.getProperty("target", "local");
-		properties.load(new FileReader(new File(String.format("src/test/resources/%s.properties", target))));
+		try {
+			properties.load(new FileReader(new File(String.format("src/test/resources/%s.properties", target))));
+		} catch (FileNotFoundException e) {
+			appManagerlogger.error(e.toString());
+		} catch (IOException e) {
+			appManagerlogger.error(e.toString());
+		}
 	}
 
 	public void stop() {
@@ -65,18 +76,18 @@ public class ApplicationManager {
 		return registrationHelper;
 	}
 
-	public WebDriver getDriver() throws MalformedURLException {
+	public WebDriver getDriver() {
 		// Load locators
 		try {
 			properties.load(new FileReader(new File(String.format("src/test/resources/locator.properties"))));
 		} catch (FileNotFoundException e) {
 			// If the the property file cant be found
-			e.printStackTrace();
+			appManagerlogger.error(e.toString());
 		} catch (IOException e) {
 			// FS access error
-			e.printStackTrace();
+			appManagerlogger.error(e.toString());
 		}
-		// Set path to the drivers
+
 		System.setProperty("webdriver.chrome.driver", "src/test/resources/webdrivers/pc/chromedriver.exe");
 		System.setProperty("webdriver.gecko.driver", "src/test/resources/webdrivers/pc/geckodriver.exe");
 		System.setProperty("webdriver.edge.driver", "src/test/resources/webdrivers/pc/MicrosoftWebDriver.exe");
@@ -111,7 +122,12 @@ public class ApplicationManager {
 			DesiredCapabilities capabilities = new DesiredCapabilities();
 			capabilities.setBrowserName(browser);
 			capabilities.setPlatform(Platform.fromString(System.getProperty("platform", "win10")));
-			wd = new RemoteWebDriver(new URL(properties.getProperty("selenium.server")), capabilities);
+			try {
+				wd = new RemoteWebDriver(new URL(properties.getProperty("selenium.server")), capabilities);
+			} catch (MalformedURLException e) {
+				// If loading property failed
+				appManagerlogger.error(e.toString());
+			}
 		}
 		return wd;
 	}

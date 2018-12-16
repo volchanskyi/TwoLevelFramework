@@ -140,9 +140,8 @@ class HttpSessionHelper extends HttpProtocolHelper {
 						.setParameter("_", String.valueOf(timeStamp));
 				return;
 			}
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (IllegalArgumentException e) {
+			httpSessionlogger.error(e.toString());
 		}
 	}
 
@@ -201,9 +200,8 @@ class HttpSessionHelper extends HttpProtocolHelper {
 			boolean wishlistProductsIds = !addedProducts.isJsonArray() ? addedProducts.getAsJsonObject().getAsBoolean()
 					: false;
 			return !wishlistProductsIds;
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (JsonSyntaxException e) {
+			httpSessionlogger.error(e.toString());
 		}
 		return false;
 	}
@@ -221,9 +219,8 @@ class HttpSessionHelper extends HttpProtocolHelper {
 				}
 			} else
 				return false;
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (JsonSyntaxException e) {
+			httpSessionlogger.error(e.toString());
 		}
 		return false;
 	}
@@ -239,9 +236,10 @@ class HttpSessionHelper extends HttpProtocolHelper {
 					}
 				}
 			}
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (JsonSyntaxException e) {
+			httpSessionlogger.error(e.toString());
+		} catch (IllegalArgumentException e) {
+			httpSessionlogger.error(e.toString());
 		}
 		return false;
 	}
@@ -255,8 +253,9 @@ class HttpSessionHelper extends HttpProtocolHelper {
 				}
 			}
 		} catch (JsonSyntaxException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			httpSessionlogger.error(e.toString());
+		} catch (IllegalArgumentException e) {
+			httpSessionlogger.error(e.toString());
 		}
 		return null;
 	}
@@ -273,9 +272,14 @@ class HttpSessionHelper extends HttpProtocolHelper {
 
 				}
 			}
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (JsonSyntaxException e) {
+			httpSessionlogger.error(e.toString());
+		} catch (ClientProtocolException e) {
+			httpSessionlogger.error(e.toString());
+		} catch (IllegalArgumentException e) {
+			httpSessionlogger.error(e.toString());
+		} catch (IOException e) {
+			httpSessionlogger.error(e.toString());
 		}
 	}
 

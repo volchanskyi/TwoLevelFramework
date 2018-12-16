@@ -17,7 +17,7 @@ import com.google.gson.JsonSyntaxException;
 public class WishListTests extends TestBase {
 
 	@Test(groups = {
-			"API" }, dataProvider = "getLigalCredentialsAndProductIdsForPdpControllerFromPropertyFiles", dataProviderClass = TestDataProviders.class)
+			"API", "WISHLIST" }, dataProvider = "getLigalCredentialsAndProductIdsForPdpControllerFromPropertyFiles", dataProviderClass = TestDataProviders.class)
 	public void testAddProductToWishListWithOutLoggingInUsingAPI(LigalCredentials credentials, Products products)
 			throws IOException, JsonSyntaxException, IllegalStateException, URISyntaxException {
 		// Init HTTP session
@@ -35,7 +35,7 @@ public class WishListTests extends TestBase {
 	}
 
 	@Test(groups = {
-			"API" }, dataProvider = "getLigalCredentialsAndProductIdsForPdpControllerFromPropertyFiles", dataProviderClass = TestDataProviders.class)
+			"API", "WISHLIST" }, dataProvider = "getLigalCredentialsAndProductIdsForPdpControllerFromPropertyFiles", dataProviderClass = TestDataProviders.class)
 	public void testAddProductToWishListWhileLoggedInUsingAPI(LigalCredentials credentials, Products products)
 			throws IOException, URISyntaxException {
 		// Init HTTP session

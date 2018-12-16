@@ -13,11 +13,16 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 class HttpProtocolHelper {
 
 	protected CloseableHttpResponse httpResponse;
 	private int statusCodeOK = 200;
+
+	// Init Logger for TestBase.class
+	final protected Logger httpSessionlogger = LoggerFactory.getLogger(HttpProtocolHelper.class);
 
 	protected String getTextFrom(CloseableHttpResponse response) throws IOException {
 		try {
@@ -26,7 +31,7 @@ class HttpProtocolHelper {
 			response.close();
 		}
 	}
-	
+
 	// RegEX parser for pure HTML
 	protected String parsePureHtmlWithRegExUsing(String regex, String stringToApplyRegexOn) {
 		try {
@@ -36,9 +41,8 @@ class HttpProtocolHelper {
 			Matcher matcher = pattern.matcher(stringToApplyRegexOn);
 			matcher.find();
 			return matcher.group(1);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (IllegalStateException e) {
+			httpSessionlogger.error(e.toString());
 		}
 		return "Couldn`t find RegEx pattern";
 
@@ -78,7 +82,7 @@ class HttpProtocolHelper {
 			int statusCode = response.getStatusLine().getStatusCode();
 			return statusCode == statusCodeOK;
 		} catch (Exception e) {
-			e.printStackTrace();
+			httpSessionlogger.error(e.toString());
 		}
 		return false;
 	}
