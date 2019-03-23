@@ -68,10 +68,14 @@ public class ApplicationManager {
 
 	}
 
-	public RegistrationHelper registration() throws MalformedURLException {
+	public RegistrationHelper registration() {
 		// Lazy init
 		if (registrationHelper == null) {
-			registrationHelper = new RegistrationHelper(this);
+			try {
+				registrationHelper = new RegistrationHelper(this);
+			} catch (MalformedURLException e) {
+				appManagerlogger.error(e.toString());
+			}
 		}
 		return registrationHelper;
 	}

@@ -9,6 +9,7 @@ import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
+import java.util.Random;
 
 import com.automationpractice.model.LigalCredentials;
 import com.automationpractice.model.Products;
@@ -75,6 +76,13 @@ public class TestDataObjectGenerator extends TestDataObjectGeneratorHelper {
 		}
 		return set;
 
+	}
+
+	protected static String getRandomValidEmail() {
+		String[] emailDomains = {"@guerrillamailblock.com"};
+		Random randomEmailDomain = new Random();
+		int randomSelection = randomEmailDomain.nextInt(emailDomains.length);
+		return emailDomains[randomSelection];
 	}
 
 }

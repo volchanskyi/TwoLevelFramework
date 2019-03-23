@@ -55,7 +55,7 @@ public abstract class TestDataGenerator extends TestDataObjectGenerator {
 
 	// Emails
 	protected static String generateValidFormatEmails() {
-		return generateAlphaNumeric(5, 15) + "@guerrillamailblock.com";
+		return generateAlphaNumeric(5, 15) + getRandomValidEmail();
 	}
 
 	protected static String generateInvalidFormatEmails() {
