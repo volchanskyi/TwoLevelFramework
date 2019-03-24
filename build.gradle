@@ -99,7 +99,7 @@ task downloadResources(type: Download) {
 
 //Clean up webdrivers folder
 task cleanUp(type: Delete) {
-	def webdriversFolderPath = "src/test/resources/webdrivers/pc"
+	def webdriversFolderPath = "src/test/resources/webdrivers"
     delete webdriversFolderPath
 }
 
@@ -146,9 +146,10 @@ test {
 
 defaultTasks 'test'
 //download latest resource files from the github repo after the project`s clean up
-clean.finalizedBy cleanUp
-cleanUp.finalizedBy downloadDrivers
+clean.finalizedBy downloadDrivers
 //download resources to compile
-cleanUp.finalizedBy downloadResources
-//Skip task if using CI
+clean.finalizedBy downloadResources
+//Skip downloading webdrivers if using CI
 downloadDrivers.onlyIf {project.getProperty('target') == "local"}
+//CleanUp drivers after the test
+test.finalizedBy cleanUp
