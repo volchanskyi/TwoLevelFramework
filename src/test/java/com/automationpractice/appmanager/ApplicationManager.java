@@ -23,6 +23,7 @@ import org.openqa.selenium.remote.BrowserType;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.remote.UnreachableBrowserException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -81,7 +82,7 @@ public class ApplicationManager {
 		return registrationHelper;
 	}
 
-	public WebDriver getDriver() throws SessionNotCreatedException {
+	public WebDriver getDriver() throws SessionNotCreatedException, UnreachableBrowserException{
 		// Load locators
 		try {
 			properties.load(new FileReader(new File(String.format("src/test/resources/locator.properties"))));

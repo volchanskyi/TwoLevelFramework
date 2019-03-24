@@ -7,7 +7,6 @@
  * user guide available at https://docs.gradle.org/2.14.1/userguide/tutorial_java_projects.html
  */
 
-
 plugins {
     id 'de.undercouch.download' version '3.4.3'
     // Apply the java plugin to add support for Java
@@ -73,24 +72,47 @@ dependencies {
 /**
  * Sequentially download a list of files to a directory
  */
+ //Download updated drivers (for no CI environments)
 task downloadDrivers(type: Download) {
+	def webdriversFolderPath = "src/test/resources/webdrivers/pc"
     src([
         'https://github.com/volchanskyi/extras-two-level-framework-drivers/raw/master/chromedriver.exe',
-        'https://github.com/volchanskyi/extras-two-level-framework-drivers/raw/master/geckodriver.exe'
+        'https://github.com/volchanskyi/extras-two-level-framework-drivers/raw/master/geckodriver.exe',
+        'https://github.com/volchanskyi/extras-two-level-framework-drivers/raw/master/MicrosoftWebDriver.exe',
+        'https://github.com/volchanskyi/extras-two-level-framework-drivers/raw/master/IEDriverServer.exe'
     ])
-    dest buildDir
+    dest webdriversFolderPath
     onlyIfModified true
     overwrite true
 }
 
+// Download updated property files
+task downloadResources(type: Download) {
+	def resourceFolderPath = "src/test/resources"
+    src([
+        'https://github.com/volchanskyi/extras-two-level-framework-locators/raw/master/locator.properties'
+    ])
+    dest resourceFolderPath
+    onlyIfModified true
+    overwrite true
+}
+
+//Clean up webdrivers folder
+task cleanUp(type: Delete) {
+	def webdriversFolderPath = "src/test/resources/webdrivers/pc"
+    delete webdriversFolderPath
+}
+
+
+/*
 //copy drivers to the webdrivers folder to compile
-task moveDrivers (type: Copy){
+task copyDrivers (type: Copy){
 	from('build') {
         include '*.exe'
     }
     into 'src/test/resources/webdrivers/pc'
 }
-
+*/
 
 test {
 
@@ -123,7 +145,10 @@ test {
 }
 
 defaultTasks 'test'
-//download latest werdrivers from github repo after the project clean up
-clean.finalizedBy downloadDrivers
-//download drivers before copying them to the webdrivers folder to compile
-downloadDrivers.finalizedBy moveDrivers
+//download latest resource files from the github repo after the project`s clean up
+clean.finalizedBy cleanUp
+cleanUp.finalizedBy downloadDrivers
+//download resources to compile
+cleanUp.finalizedBy downloadResources
+//Skip task if using CI
+downloadDrivers.onlyIf {project.getProperty('target') == "local"}
