@@ -10,6 +10,7 @@ import java.util.Properties;
 
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.Platform;
+import org.openqa.selenium.SessionNotCreatedException;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -80,7 +81,7 @@ public class ApplicationManager {
 		return registrationHelper;
 	}
 
-	public WebDriver getDriver() {
+	public WebDriver getDriver() throws SessionNotCreatedException {
 		// Load locators
 		try {
 			properties.load(new FileReader(new File(String.format("src/test/resources/locator.properties"))));

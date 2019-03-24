@@ -8,11 +8,11 @@
  */
 
 
-// Apply the java plugin to add support for Java
-apply plugin: 'java'
-//apply plugin: 'aspectj'
-
-//apply plugin: "io.qameta.allure"
+plugins {
+    id 'de.undercouch.download' version '3.4.3'
+    // Apply the java plugin to add support for Java
+    id 'java'
+}
 
 sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
@@ -70,8 +70,34 @@ dependencies {
 	
 }
 
+/**
+ * Sequentially download a list of files to a directory
+ */
+task downloadDrivers(type: Download) {
+    src([
+        'https://github.com/volchanskyi/extras-two-level-framework-drivers/raw/master/chromedriver.exe',
+        'https://github.com/volchanskyi/extras-two-level-framework-drivers/raw/master/geckodriver.exe'
+    ])
+    dest buildDir
+    onlyIfModified true
+    overwrite true
+}
+
+//copy drivers to the webdrivers folder to compile
+task moveDrivers (type: Copy){
+	from('build') {
+        include '*.exe'
+    }
+    into 'src/test/resources/webdrivers/pc'
+}
+
 
 test {
+
+	doFirst {
+    jvmArgs "-javaagent:${configurations.agent.singleFile}"
+	}
+	
 	//Run all tests
 	ignoreFailures = true
 
@@ -96,21 +122,8 @@ test {
 
 }
 
-
-
-test.doFirst {
-    jvmArgs "-javaagent:${configurations.agent.singleFile}"
-}
-
-/*
-gradle.buildFinished { buildResult ->
-    if (buildResult.failure) {
-        exec {
-            executable "generateReport.bat"
-        }
-    }
-}
-
-*/
-
-
+defaultTasks 'test'
+//download latest werdrivers from github repo after the project clean up
+clean.finalizedBy downloadDrivers
+//download drivers before copying them to the webdrivers folder to compile
+downloadDrivers.finalizedBy moveDrivers
