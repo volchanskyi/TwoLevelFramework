@@ -37,32 +37,34 @@ dependencies {
     compile 'org.slf4j:slf4j-api:1.7.21'
     
 	// This dependency is used internally, and not exposed to consumers on their own compile classpath.
+    //Guava is a suite of core and expanded libraries that include utility classes, google's collections, io classes, and much much more.
     implementation 'com.google.guava:guava:22.0'
     
     // Declare the dependency for your favourite test framework you want to use in your tests.
     // TestNG is also supported by the Gradle Test task. Just change the
     // testCompile dependency to testCompile 'org.testng:testng:6.8.1' and add
     // 'test.useTestNG()' to your build script.
-    //testCompile 'junit:junit:4.12'
-    compile 'org.testng:testng:6.14.2'
-    compile 'org.seleniumhq.selenium:selenium-java:3.10.0'
-    compile 'org.hamcrest:java-hamcrest:2.0.0.0'
+    //https://search.maven.org/artifact/org.testng/testng
+    implementation 'org.testng:testng:6.14.3'
+    //https://search.maven.org/artifact/org.seleniumhq.selenium/selenium-java
+    implementation 'org.seleniumhq.selenium:selenium-java:3.141.59'
     //compile 'com.beust:jcommander:1.72'
-    compile 'org.subethamail:subethasmtp:3.1.7'
-    compile 'ru.lanwen.verbalregex:java-verbal-expressions:1.5'
-    compile 'ch.qos.logback:logback-classic:1.2.3'
-    compile 'com.google.code.gson:gson:2.8.2'
-    compile 'org.apache.httpcomponents:httpclient:4.5.3'
-    compile 'org.apache.httpcomponents:fluent-hc:4.5.3'
-    compile 'org.apache.commons:commons-lang3:3.7'
-    //adding Allure
- 	agent "org.aspectj:aspectjweaver:1.9.1"
-// 	compile "org.aspectj:aspectjweaver:1.9.1"
-    compile 'ru.yandex.qatools.allure:allure-testng-adaptor:1.5.4'
-    // https://mvnrepository.com/artifact/com.google.inject/guice
-    //compile group: 'com.google.inject', name: 'guice', version: '4.2.0'
-    // https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-surefire-plugin
-	//compile group: 'org.apache.maven.plugins', name: 'maven-surefire-plugin', version: '2.22.0'
+    implementation 'org.subethamail:subethasmtp:3.1.7'
+    implementation 'ru.lanwen.verbalregex:java-verbal-expressions:1.5'
+    implementation 'ch.qos.logback:logback-classic:1.2.3'
+    //https://mvnrepository.com/artifact/com.google.code.gson/gson
+    implementation 'com.google.code.gson:gson:2.8.5'
+    //https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient
+    implementation 'org.apache.httpcomponents:httpclient:4.5.7'
+    //https://mvnrepository.com/artifact/org.apache.httpcomponents/fluent-hc
+    implementation 'org.apache.httpcomponents:fluent-hc:4.5.7'
+    //https://mvnrepository.com/artifact/org.apache.commons/commons-lang3
+    implementation 'org.apache.commons:commons-lang3:3.8.1'
+    //The AspectJ weaver introduces advices to java classes
+ 	agent 'org.aspectj:aspectjweaver:1.9.2'
+	// 	implementation "org.aspectj:aspectjweaver:1.9.2"
+	//adding Allure
+    implementation 'ru.yandex.qatools.allure:allure-testng-adaptor:1.5.4'
 	//Adding HamCrest assertions
 	// https://mvnrepository.com/artifact/org.hamcrest/hamcrest-all
 	testCompile group: 'org.hamcrest', name: 'hamcrest-all', version: '1.3'
@@ -86,18 +88,20 @@ task downloadDrivers(type: Download) {
     overwrite true
 }
 
-// Download updated property files
+// Download updated property files and test data
 task downloadResources(type: Download) {
 	def resourceFolderPath = "src/test/resources"
     src([
-        'https://github.com/volchanskyi/extras-two-level-framework-locators/raw/master/locator.properties'
+        'https://github.com/volchanskyi/extras-two-level-framework-locators/raw/master/locator.properties',
+    	'https://github.com/volchanskyi/extras-two-level-framework-valid-test-data/raw/master/validAccounts.csv',
+    	'https://github.com/volchanskyi/extras-two-level-framework-valid-test-data/raw/master/validProducts.csv'
     ])
     dest resourceFolderPath
     onlyIfModified true
     overwrite true
 }
 
-//Clean up webdrivers folder
+//Clean up the project
 task cleanUp(type: Delete) {
 	def webdriversFolderPath = "src/test/resources/webdrivers"
     delete webdriversFolderPath
@@ -114,6 +118,7 @@ task copyDrivers (type: Copy){
 }
 */
 
+//main Test task
 test {
 
 	doFirst {
@@ -145,11 +150,11 @@ test {
 }
 
 defaultTasks 'test'
-//download latest resource files from the github repo after the project`s clean up
+//download the webdrivers from the github repo after the project`s clean up
 clean.finalizedBy downloadDrivers
 //download resources to compile
 clean.finalizedBy downloadResources
 //Skip downloading webdrivers if using CI
 downloadDrivers.onlyIf {project.getProperty('target') == "local"}
-//CleanUp drivers after the test
+//CleanUp webdrivers after the test
 test.finalizedBy cleanUp
