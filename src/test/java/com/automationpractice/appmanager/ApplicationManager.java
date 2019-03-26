@@ -82,13 +82,14 @@ public class ApplicationManager {
 		return registrationHelper;
 	}
 
-	public WebDriver getDriver() throws SessionNotCreatedException, UnreachableBrowserException{
+	public WebDriver getDriver() throws SessionNotCreatedException, UnreachableBrowserException {
 		// Load locators
 		try {
 			properties.load(new FileReader(new File(String.format("src/test/resources/locator.properties"))));
 		} catch (FileNotFoundException e) {
 			// If the the property file cant be found
-			appManagerlogger.error(e.toString());
+			appManagerlogger
+					.error(e.toString() + " Check *.property file in the source folder. Was the build option passed?");
 		} catch (IOException e) {
 			// FS access error
 			appManagerlogger.error(e.toString());
@@ -102,37 +103,53 @@ public class ApplicationManager {
 		// If we dont use selenium server then run local browser
 		if ("".equals(properties.getProperty("selenium.server"))) {
 			// Lazy init
-			if (wd == null) {
-				if (browser.equals(BrowserType.FIREFOX)) {
-					wd = new FirefoxDriver();
-				} else if (browser.equals(BrowserType.CHROME)) {
-					wd = new ChromeDriver();
-				} else if (browser.equals(BrowserType.IE)) {
-					InternetExplorerOptions options = new InternetExplorerOptions();
-					options.ignoreZoomSettings();
-					options.destructivelyEnsureCleanSession();
-					options.introduceFlakinessByIgnoringSecurityDomains();
-					wd = new InternetExplorerDriver(options);
-				} else if (browser.equals(BrowserType.EDGE)) {
-					EdgeOptions options = new EdgeOptions();
-					options.setCapability(CapabilityType.SUPPORTS_JAVASCRIPT, true);
-					options.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
-					options.setCapability(CapabilityType.SUPPORTS_ALERTS, true);
-					options.setCapability("InPrivate", true);
-					wd = new EdgeDriver(options);
+			try {
+				if (wd == null) {
+					if (browser.equals(BrowserType.FIREFOX)) {
+						wd = new FirefoxDriver();
+					} else if (browser.equals(BrowserType.CHROME)) {
+						wd = new ChromeDriver();
+					} else if (browser.equals(BrowserType.IE)) {
+						InternetExplorerOptions options = new InternetExplorerOptions();
+						options.ignoreZoomSettings();
+						options.destructivelyEnsureCleanSession();
+						options.introduceFlakinessByIgnoringSecurityDomains();
+						wd = new InternetExplorerDriver(options);
+					} else if (browser.equals(BrowserType.EDGE)) {
+						EdgeOptions options = new EdgeOptions();
+						options.setCapability(CapabilityType.SUPPORTS_JAVASCRIPT, true);
+						options.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
+						options.setCapability(CapabilityType.SUPPORTS_ALERTS, true);
+						options.setCapability("InPrivate", true);
+						wd = new EdgeDriver(options);
+					}
+					wd.get(properties.getProperty("web.baseUrl"));
 				}
-				wd.get(properties.getProperty("web.baseUrl"));
+			} catch (NullPointerException e) {
+				// If no/wrong option passed
+				appManagerlogger
+						.error(e.toString() + " | The browser wasn`t initialized. Check the build option presented");
+			} catch (IllegalStateException e) {
+				// the webdriver binary issue
+				appManagerlogger
+						.error(e.toString() + " | The browser wasn`t initialized. Check the webdriver presented");
+			} catch (Exception e) {
+				appManagerlogger.error(e.toString());
 			}
 		} else {
 			// Run tests remotely
-			DesiredCapabilities capabilities = new DesiredCapabilities();
-			capabilities.setBrowserName(browser);
-			capabilities.setPlatform(Platform.fromString(System.getProperty("platform", "win10")));
 			try {
+				DesiredCapabilities capabilities = new DesiredCapabilities();
+				capabilities.setBrowserName(browser);
+				capabilities.setPlatform(Platform.fromString(System.getProperty("platform", "win10")));
 				wd = new RemoteWebDriver(new URL(properties.getProperty("selenium.server")), capabilities);
+			} catch (UnreachableBrowserException e) {
+				// If can`t start the remote webdriver
+				appManagerlogger.error(e.toString() + " | Are you trying to run the build locally?");
 			} catch (MalformedURLException e) {
 				// If loading property failed
-				appManagerlogger.error(e.toString());
+				appManagerlogger.error(
+						e.toString() + " | Most likely loading property file has failed. Was the build option passed?");
 			}
 		}
 		return wd;
