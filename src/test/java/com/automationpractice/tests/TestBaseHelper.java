@@ -16,10 +16,10 @@ public class TestBaseHelper {
 			System.getProperty("browser", BrowserType.CHROME));
 
 	// Init Logger for TestBase.class
-	final protected Logger logger = LoggerFactory.getLogger(TestBase.class);
+	final protected Logger testBaseLogger = LoggerFactory.getLogger(TestBase.class);
 
 	// Check "Debug" property value
-	protected boolean isDebugEnabled() {
+	protected boolean isDebugTestsEnabled() {
 		try {
 			if (System.getProperty("debug") == null || System.getProperty("debug").isEmpty()
 					|| System.getProperty("debug").contains("disabled")) {
@@ -29,9 +29,9 @@ public class TestBaseHelper {
 			else
 				return false;
 		} catch (InvalidParameterException e) {
-			logger.error(e.toString());
+			testBaseLogger.error(e.toString());
 		} catch (IllegalArgumentException e) {
-			logger.error(e.toString());
+			testBaseLogger.error(e.toString());
 		}
 		return false;
 
