@@ -13,6 +13,7 @@ import org.openqa.selenium.Platform;
 import org.openqa.selenium.SessionNotCreatedException;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.edge.EdgeOptions;
@@ -23,7 +24,6 @@ import org.openqa.selenium.remote.BrowserType;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
-import org.openqa.selenium.remote.UnreachableBrowserException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -82,7 +82,7 @@ public class ApplicationManager {
 		return registrationHelper;
 	}
 
-	public WebDriver getDriver() throws SessionNotCreatedException, UnreachableBrowserException {
+	public WebDriver getDriver() throws SessionNotCreatedException {
 		// Load locators
 		try {
 			properties.load(new FileReader(new File(String.format("src/test/resources/locator.properties"))));
@@ -126,15 +126,16 @@ public class ApplicationManager {
 					wd.get(properties.getProperty("web.baseUrl"));
 				}
 			} catch (NullPointerException e) {
-				// If no/wrong option passed
+				// If no/wrong build option passed
 				appManagerlogger
 						.error(e.toString() + " | The browser wasn`t initialized. Check the build option presented");
 			} catch (IllegalStateException e) {
 				// the webdriver binary issue
 				appManagerlogger
 						.error(e.toString() + " | The browser wasn`t initialized. Check the webdriver presented");
-			} catch (Exception e) {
-				appManagerlogger.error(e.toString());
+			} catch (WebDriverException e) {
+				appManagerlogger.error(e.toString()
+						+ " | Are you trying to run the build on the currently available platform/configuration?");
 			}
 		} else {
 			// Run tests remotely
@@ -143,11 +144,13 @@ public class ApplicationManager {
 				capabilities.setBrowserName(browser);
 				capabilities.setPlatform(Platform.fromString(System.getProperty("platform", "win10")));
 				wd = new RemoteWebDriver(new URL(properties.getProperty("selenium.server")), capabilities);
-			} catch (UnreachableBrowserException e) {
-				// If can`t start the remote webdriver
-				appManagerlogger.error(e.toString() + " | Are you trying to run the build locally?");
+			} catch (WebDriverException e) {
+				// If there`s capability issue. Can`t start the remote webdriver
+				appManagerlogger.error(e.toString()
+						+ " | Are you trying to run the build on the currently available platform/configuration?"
+						+ "| Are you trying to run the build locally? Was the build option passed?");
 			} catch (MalformedURLException e) {
-				// If loading property failed
+				// If loading property failed or no build option passed
 				appManagerlogger.error(
 						e.toString() + " | Most likely loading property file has failed. Was the build option passed?");
 			}
