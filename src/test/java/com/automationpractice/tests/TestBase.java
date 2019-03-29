@@ -22,14 +22,14 @@ public class TestBase extends TestBaseHelper {
 	}
 
 	@BeforeMethod(alwaysRun = true)
-	public void logTestStart(Method method, Object[] parameters) {
+	public void logTestStart(Method method, Object[] parameters) throws Exception {
 		if (isDebugTestsEnabled() == true) {
 			testBaseLogger.debug("Start test {} with params {}", method.getName(), Arrays.asList(parameters));
 		}
 	}
 
 	@AfterMethod(alwaysRun = true)
-	public void logTestStop(Method method, Object[] parameters) {
+	public void logTestStop(Method method, Object[] parameters) throws Exception {
 		if (isDebugTestsEnabled() == true) {
 			testBaseLogger.debug("Stop test {}", method.getName());
 		}
@@ -37,7 +37,7 @@ public class TestBase extends TestBaseHelper {
 	}
 
 	@AfterSuite(alwaysRun = true)
-	public void tearDown(ITestContext context) {
+	public void tearDown(ITestContext context) throws Exception {
 		Collection<ITestNGMethod> result = context.getFailedTests().getAllMethods();
 		testBaseLogger.error("{} Failed tests {}", result.size(), result);
 		testBaseLogger.warn("Retrieves information about the failed configuration method invocations  {}",

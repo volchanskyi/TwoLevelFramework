@@ -62,16 +62,25 @@ public class ApplicationManager {
 
 	}
 
-	public HttpSession newSession() {
-		return new HttpSession(this);
+	// HTTP session management section
+	public HttpSearchProductSession newSearchProductSession() {
+		return new HttpSearchProductSession(this);
 	}
 
 	public HttpRegistrationSession newRegistrationSession() {
 		return new HttpRegistrationSession(this);
 	}
-	
+
 	public HttpLoginSession newLoginSession() {
 		return new HttpLoginSession(this);
+	}
+
+	public HttpWishListSession newWishListSession() {
+		return new HttpWishListSession(this);
+	}
+
+	public HttpCartSession newCartSession() {
+		return new HttpCartSession(this);
 	}
 
 	public String getProperty(String key) {

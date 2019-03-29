@@ -6,16 +6,16 @@ import java.util.Set;
 
 import org.testng.annotations.Test;
 
-import com.automationpractice.appmanager.HttpSession;
+import com.automationpractice.appmanager.HttpCartSession;
 import com.automationpractice.model.Products;
 
 public class CartTests extends TestBase {
 
 	@Test(groups = { "API",
-	"CART" }, priority = 1, dataProvider = "getValidProductsFromPropertyFile", dataProviderClass = TestDataProviders.class)
+			"CART" }, priority = 1, dataProvider = "getValidProductsFromPropertyFile", dataProviderClass = TestDataProviders.class)
 	public void testAddProductToCart(Products product) throws Exception {
 		// Init HTTP session
-		HttpSession session = APP.newSession();
+		HttpCartSession session = APP.newCartSession();
 		// read token
 		String token = session.getToken();
 		// read cookie PREFIX (Cookie name)
@@ -37,7 +37,6 @@ public class CartTests extends TestBase {
 		// verify the init and new cart values are equal
 		assertEquals(newCart, oldCart);
 	}
-	
-	
-	//TODO same test but for registered users
+
+	// TODO same test but for registered users
 }

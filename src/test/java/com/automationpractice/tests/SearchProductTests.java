@@ -6,15 +6,15 @@ import java.io.IOException;
 
 import org.testng.annotations.Test;
 
-import com.automationpractice.appmanager.HttpSession;
+import com.automationpractice.appmanager.HttpSearchProductSession;
 import com.automationpractice.model.Products;
 
 public class SearchProductTests extends TestBase {
 
 	@Test(groups = { "API",
-	"SEARCH" }, priority = 1, dataProvider = "getValidProductsFromPropertyFile", dataProviderClass = TestDataProviders.class)
+			"SEARCH" }, priority = 1, dataProvider = "getValidProductsFromPropertyFile", dataProviderClass = TestDataProviders.class)
 	public void testProductSearchForValidProductsUsingAPI(Products product) throws IOException {
-		HttpSession session = APP.newSession();
+		HttpSearchProductSession session = APP.newSearchProductSession();
 		Products newProduct = new Products();
 		assertTrue(session.searchForProduct(newProduct.withProductName(product.getProductName())));
 	}
