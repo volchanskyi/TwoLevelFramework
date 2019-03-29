@@ -112,56 +112,36 @@ public class ApplicationManager {
 			// FS access error
 			appManagerlogger.error(e.toString());
 		}
-
 		// If we dont use selenium server then run local browser
 		if ("".equals(properties.getProperty("selenium.server"))) {
 			// Lazy init
 			try {
 				if (wd == null) {
 					if (browser.equals(BrowserType.FIREFOX)) {
-//						if (isPlatform("WINDOWS")) {
-//							setSystemProperty("webdriver.gecko.driver",
-//									"src/test/resources/webdrivers/pc/geckodriver.exe");
-//						} else {
-//							setSystemProperty("webdriver.gecko.driver",
-//									"src/test/resources/webdrivers/mac/geckodriver");
-//						}
-						System.setProperty("webdriver.gecko.driver",
-								"src/test/resources/webdrivers/pc/geckodriver.exe");
+						setWebDriverPath("gecko");
 						wd = new FirefoxDriver();
 					} else if (browser.equals(BrowserType.CHROME)) {
-//						if (isPlatform("WINDOWS")) {
-//							setSystemProperty("webdriver.chrome.driver",
-//									"src/test/resources/webdrivers/pc/chromedriver.exe");
-//						} else {
-//							setSystemProperty("webdriver.chrome.driver",
-//									"src/test/resources/webdrivers/mac/chromedriver");
-//						}
-						System.setProperty("webdriver.chrome.driver",
-								"src/test/resources/webdrivers/pc/chromedriver.exe");
+						setWebDriverPath("chrome");
 						wd = new ChromeDriver();
 					} else if (browser.equals(BrowserType.SAFARI)) {
 						System.setProperty("webdriver.safari.driver", "/usr/bin/safaridriver");
 						wd = new SafariDriver();
 					} else if (browser.equals(BrowserType.IE)) {
-						System.setProperty("webdriver.ie.driver",
-								"src/test/resources/webdrivers/pc/IEDriverServer.exe");
+						setWebDriverPath("ie");
 						InternetExplorerOptions options = new InternetExplorerOptions();
 						options.ignoreZoomSettings();
 						options.destructivelyEnsureCleanSession();
 						options.introduceFlakinessByIgnoringSecurityDomains();
 						wd = new InternetExplorerDriver(options);
 					} else if (browser.equals(BrowserType.EDGE)) {
-						System.setProperty("webdriver.edge.driver",
-								"src/test/resources/webdrivers/pc/MicrosoftWebDriver.exe");
+						setWebDriverPath("edge");
 						EdgeOptions options = new EdgeOptions();
 						options.setCapability(CapabilityType.SUPPORTS_JAVASCRIPT, true);
 						options.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
 						options.setCapability(CapabilityType.SUPPORTS_ALERTS, true);
 						options.setCapability("InPrivate", true);
 						wd = new EdgeDriver(options);
-					} else
-						throw new IllegalArgumentException("Unknown OS");
+					}
 					wd.get(properties.getProperty("web.baseUrl"));
 				}
 			} catch (NullPointerException e) {
@@ -206,14 +186,16 @@ public class ApplicationManager {
 			return null;
 	}
 
-//	// Distinguish OS
-//	private boolean isPlatform(String platform) {
-//		return System.getProperty("platform").toUpperCase().contains(platform);
-//	}
-//
-//	// Set system property
-//	private String setSystemProperty(String webDriver, String webDriverPath) {
-//		return System.setProperty(webDriver, webDriverPath);
-//	}
+	// Set webdriver path for local tests
+	private String setWebDriverPath(String browser) {
+		String path;
+		if (System.getProperty("platform").toUpperCase().contains("WINDOWS")) {
+			path = "src/test/resources/webdriver/webdriver.exe";
+		} else if (System.getProperty("platform").toUpperCase().contains("MAC")) {
+			path = "src/test/resources/webdriver/webdriver";
+		} else
+			throw new IllegalArgumentException("Unknown OS");
+		return System.setProperty("webdriver." + browser + ".driver", path);
+	}
 
 }

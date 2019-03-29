@@ -8,6 +8,7 @@
  */
 
 plugins {
+	//Adds a download task to Gradle that displays progress information
     id 'de.undercouch.download' version '3.4.3'
     // Apply the java plugin to add support for Java
     id 'java'
@@ -79,28 +80,31 @@ dependencies {
 task downloadDrivers(type: Download) {
 	
 	if (project.getProperty('platform').toUpperCase().contains("WINDOWS")) {
-	def webdriversFolderPath = "src/test/resources/webdrivers/pc"
-	src([
-        'https://github.com/volchanskyi/extras-two-level-framework-drivers/raw/master/chromedriver.exe',
-        'https://github.com/volchanskyi/extras-two-level-framework-drivers/raw/master/geckodriver.exe',
-        'https://github.com/volchanskyi/extras-two-level-framework-drivers/raw/master/MicrosoftWebDriver.exe',
-        'https://github.com/volchanskyi/extras-two-level-framework-drivers/raw/master/IEDriverServer.exe'
-    	])
+	def webdriversFolderPath = "src/test/resources/webdriver/webdriver.exe"
+	if (project.getProperty('browser').toUpperCase().contains("CHROME")) {
+        src 'https://github.com/volchanskyi/extras-two-level-framework-drivers/raw/master/chromedriver.exe'
+        } else if (project.getProperty('browser').toUpperCase().contains("FIREFOX")) {
+        src 'https://github.com/volchanskyi/extras-two-level-framework-drivers/raw/master/geckodriver.exe'
+        } else if (project.getProperty('browser').toUpperCase().contains("MICROSOFTEDGE")) {
+        src 'https://github.com/volchanskyi/extras-two-level-framework-drivers/raw/master/MicrosoftWebDriver.exe'
+        } else if (project.getProperty('browser').toUpperCase().contains("INTERNET EXPLORER")) {
+        src 'https://github.com/volchanskyi/extras-two-level-framework-drivers/raw/master/IEDriverServer.exe'
+    		}
+    		dest webdriversFolderPath
+    		onlyIfModified true
+    		overwrite true
+	} else if (project.getProperty('platform').toUpperCase().contains("MAC")) {
+	def webdriversFolderPath = "src/test/resources/webdriver/webdriver"
+	if (project.getProperty('browser').toUpperCase().contains("CHROME")) {
+        src 'https://github.com/volchanskyi/extras-two-level-framework-drivers/raw/master/chromedriver'
+        } else if (project.getProperty('browser').toUpperCase().contains("FIREFOX")) {
+        src 'https://github.com/volchanskyi/extras-two-level-framework-drivers/raw/master/geckodriver'
+        }
     		dest webdriversFolderPath
     		onlyIfModified true
     		overwrite true
 	}
 	
-	if (project.getProperty('platform').toUpperCase().contains("MAC")) {
-	def webdriversFolderPath = "src/test/resources/webdrivers/mac"
-	src([
-        'https://github.com/volchanskyi/extras-two-level-framework-drivers/raw/master/chromedriver',
-        'https://github.com/volchanskyi/extras-two-level-framework-drivers/raw/master/geckodriver'
-    	])
-    		dest webdriversFolderPath
-    		onlyIfModified true
-    		overwrite true
-	}
 }
 
 // Download updated property files and test data
@@ -118,7 +122,7 @@ task downloadResources(type: Download) {
 
 //Clean up the project
 task cleanUp(type: Delete) {
-	def webdriversFolderPath = "src/test/resources/webdrivers"
+	def webdriversFolderPath = "src/test/resources/webdriver"
     delete webdriversFolderPath
 }
 
