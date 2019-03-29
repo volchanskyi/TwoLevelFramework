@@ -77,16 +77,30 @@ dependencies {
  */
  //Download updated drivers (for no CI environments)
 task downloadDrivers(type: Download) {
+	
+	if (project.getProperty('platform').toUpperCase().contains("WINDOWS")) {
 	def webdriversFolderPath = "src/test/resources/webdrivers/pc"
-    src([
+	src([
         'https://github.com/volchanskyi/extras-two-level-framework-drivers/raw/master/chromedriver.exe',
         'https://github.com/volchanskyi/extras-two-level-framework-drivers/raw/master/geckodriver.exe',
         'https://github.com/volchanskyi/extras-two-level-framework-drivers/raw/master/MicrosoftWebDriver.exe',
         'https://github.com/volchanskyi/extras-two-level-framework-drivers/raw/master/IEDriverServer.exe'
-    ])
-    dest webdriversFolderPath
-    onlyIfModified true
-    overwrite true
+    	])
+    		dest webdriversFolderPath
+    		onlyIfModified true
+    		overwrite true
+	}
+	
+	if (project.getProperty('platform').toUpperCase().contains("MAC")) {
+	def webdriversFolderPath = "src/test/resources/webdrivers/mac"
+	src([
+        'https://github.com/volchanskyi/extras-two-level-framework-drivers/raw/master/chromedriver',
+        'https://github.com/volchanskyi/extras-two-level-framework-drivers/raw/master/geckodriver'
+    	])
+    		dest webdriversFolderPath
+    		onlyIfModified true
+    		overwrite true
+	}
 }
 
 // Download updated property files and test data
@@ -96,7 +110,7 @@ task downloadResources(type: Download) {
         'https://github.com/volchanskyi/extras-two-level-framework-locators/raw/master/locator.properties',
     	'https://github.com/volchanskyi/extras-two-level-framework-valid-test-data/raw/master/validAccounts.csv',
     	'https://github.com/volchanskyi/extras-two-level-framework-valid-test-data/raw/master/validProducts.csv'
-    ])
+    	])
     dest resourceFolderPath
     onlyIfModified true
     overwrite true
@@ -138,14 +152,14 @@ test {
 	if (project.hasProperty('browser')) {
 	systemProperty 'browser', "${browser}"
 	}
-	if (project.hasProperty('platform')) {
-	systemProperty 'platform', "${platform}"
-	}
 	if (project.hasProperty('target')) {
 	systemProperty 'target', "${target}"
 	}
 	if (project.hasProperty('debug')) {
 	systemProperty 'debug', findProperty("debug")
+	}
+	if (project.hasProperty('platform')) {
+	systemProperty 'platform', "${platform}"
 	}
 
 }

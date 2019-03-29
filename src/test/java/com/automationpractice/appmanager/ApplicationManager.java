@@ -24,6 +24,7 @@ import org.openqa.selenium.remote.BrowserType;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.safari.SafariDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -95,34 +96,55 @@ public class ApplicationManager {
 			appManagerlogger.error(e.toString());
 		}
 
-		System.setProperty("webdriver.chrome.driver", "src/test/resources/webdrivers/pc/chromedriver.exe");
-		System.setProperty("webdriver.gecko.driver", "src/test/resources/webdrivers/pc/geckodriver.exe");
-		System.setProperty("webdriver.edge.driver", "src/test/resources/webdrivers/pc/MicrosoftWebDriver.exe");
-		System.setProperty("webdriver.ie.driver", "src/test/resources/webdrivers/pc/IEDriverServer.exe");
-
 		// If we dont use selenium server then run local browser
 		if ("".equals(properties.getProperty("selenium.server"))) {
 			// Lazy init
 			try {
 				if (wd == null) {
 					if (browser.equals(BrowserType.FIREFOX)) {
+//						if (isPlatform("WINDOWS")) {
+//							setSystemProperty("webdriver.gecko.driver",
+//									"src/test/resources/webdrivers/pc/geckodriver.exe");
+//						} else {
+//							setSystemProperty("webdriver.gecko.driver",
+//									"src/test/resources/webdrivers/mac/geckodriver");
+//						}
+						System.setProperty("webdriver.gecko.driver",
+								"src/test/resources/webdrivers/pc/geckodriver.exe");
 						wd = new FirefoxDriver();
 					} else if (browser.equals(BrowserType.CHROME)) {
+//						if (isPlatform("WINDOWS")) {
+//							setSystemProperty("webdriver.chrome.driver",
+//									"src/test/resources/webdrivers/pc/chromedriver.exe");
+//						} else {
+//							setSystemProperty("webdriver.chrome.driver",
+//									"src/test/resources/webdrivers/mac/chromedriver");
+//						}
+						System.setProperty("webdriver.chrome.driver",
+								"src/test/resources/webdrivers/pc/chromedriver.exe");
 						wd = new ChromeDriver();
+					} else if (browser.equals(BrowserType.SAFARI)) {
+						System.setProperty("webdriver.safari.driver", "/usr/bin/safaridriver");
+						wd = new SafariDriver();
 					} else if (browser.equals(BrowserType.IE)) {
+						System.setProperty("webdriver.ie.driver",
+								"src/test/resources/webdrivers/pc/IEDriverServer.exe");
 						InternetExplorerOptions options = new InternetExplorerOptions();
 						options.ignoreZoomSettings();
 						options.destructivelyEnsureCleanSession();
 						options.introduceFlakinessByIgnoringSecurityDomains();
 						wd = new InternetExplorerDriver(options);
 					} else if (browser.equals(BrowserType.EDGE)) {
+						System.setProperty("webdriver.edge.driver",
+								"src/test/resources/webdrivers/pc/MicrosoftWebDriver.exe");
 						EdgeOptions options = new EdgeOptions();
 						options.setCapability(CapabilityType.SUPPORTS_JAVASCRIPT, true);
 						options.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
 						options.setCapability(CapabilityType.SUPPORTS_ALERTS, true);
 						options.setCapability("InPrivate", true);
 						wd = new EdgeDriver(options);
-					}
+					} else
+						throw new IllegalArgumentException("Unknown OS");
 					wd.get(properties.getProperty("web.baseUrl"));
 				}
 			} catch (NullPointerException e) {
@@ -131,8 +153,8 @@ public class ApplicationManager {
 						.error(e.toString() + " | The browser wasn`t initialized. Check the build option presented");
 			} catch (IllegalStateException e) {
 				// the webdriver binary issue
-				appManagerlogger
-						.error(e.toString() + " | The browser wasn`t initialized. Check the webdriver presented");
+				appManagerlogger.error(e.toString()
+						+ " | The browser wasn`t initialized. Check the webdriver presented / valid build option passed");
 			} catch (WebDriverException e) {
 				appManagerlogger.error(e.toString()
 						+ " | Are you trying to run the build on the currently available platform/configuration?");
@@ -166,5 +188,15 @@ public class ApplicationManager {
 		} else
 			return null;
 	}
+
+//	// Distinguish OS
+//	private boolean isPlatform(String platform) {
+//		return System.getProperty("platform").toUpperCase().contains(platform);
+//	}
+//
+//	// Set system property
+//	private String setSystemProperty(String webDriver, String webDriverPath) {
+//		return System.setProperty(webDriver, webDriverPath);
+//	}
 
 }
