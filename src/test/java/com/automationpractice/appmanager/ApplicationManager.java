@@ -69,6 +69,10 @@ public class ApplicationManager {
 	public HttpRegistrationSession newRegistrationSession() {
 		return new HttpRegistrationSession(this);
 	}
+	
+	public HttpLoginSession newLoginSession() {
+		return new HttpLoginSession(this);
+	}
 
 	public String getProperty(String key) {
 		return properties.getProperty(key);

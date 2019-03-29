@@ -45,28 +45,6 @@ public class HttpSession extends HttpSessionHelper {
 		this.httpClient = HttpClients.custom().setRedirectStrategy(new LaxRedirectStrategy()).build();
 	}
 
-	public boolean loginWith(LigalCredentials credentials, String pageTitle) throws IOException, URISyntaxException {
-		URIBuilder postRequest = new URIBuilder(app.getProperty("web.baseUrl") + "index.php");
-		// query string params
-		postRequest.setParameter("controller", "authentication");
-		// request header
-		String[][] headerParams = { { "Host", "automationpractice.com" } };
-		// Form Data
-		String[][] bodyParams = getBodyParamsWith(credentials);
-		HttpPost post = createPostRequestWithParams(postRequest.toString(), headerParams);
-		post.setEntity(new UrlEncodedFormEntity(createHttpBodyParamsWith(bodyParams)));
-		CloseableHttpResponse response = this.httpClient.execute(post, this.context);
-		String body = getTextFrom(response);
-		isHttpStatusCodeOK(response);
-		return body.contains(String.format("<title>%s</title>", pageTitle));
-	}
-
-	public boolean loginWithErrorHandling(String email, String password, String errorMsg) throws IOException {
-		String content = createFluentPostRequestUsingEmailWith(email, password, app.getProperty("web.baseUrl"));
-		return content.contains(errorMsg);
-
-	}
-
 	public Set<Products> addProductToCart(String id, String quantity, String token)
 			throws JsonSyntaxException, IOException, IllegalStateException, URISyntaxException {
 		URIBuilder postRequest = new URIBuilder(app.getProperty("web.baseUrl") + "index.php");
@@ -192,19 +170,6 @@ public class HttpSession extends HttpSessionHelper {
 				timeStamp.getTime());
 		return response.contains(prod.replaceAll("-", "").replaceAll(" ", "-").toLowerCase());
 
-	}
-
-	public boolean isLoggedInAs(LigalCredentials credentials) throws IOException, URISyntaxException {
-		URIBuilder getRequest = new URIBuilder(app.getProperty("web.baseUrl") + "/index.php");
-		// query string params
-		getRequest.setParameter("controller", "my-account");
-		// request header
-		String[][] headerParams = { { "Host", "automationpractice.com" } };
-		HttpGet get = createGetRequestWithParams(getRequest.toString(), headerParams);
-		CloseableHttpResponse response = this.httpClient.execute(get, this.context);
-		isHttpStatusCodeOK(response);
-		String body = getTextFrom(response);
-		return body.contains(String.format("<span>%s</span>", credentials.getAccountName()));
 	}
 
 	// Cookie management section
