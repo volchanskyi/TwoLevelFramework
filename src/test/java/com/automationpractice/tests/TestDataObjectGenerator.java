@@ -9,10 +9,10 @@ import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
-import java.util.Random;
 
 import com.automationpractice.model.LigalCredentials;
 import com.automationpractice.model.Products;
+import com.automationpractice.model.RegistrationFormData;
 
 public class TestDataObjectGenerator extends TestDataObjectGeneratorHelper {
 
@@ -45,7 +45,6 @@ public class TestDataObjectGenerator extends TestDataObjectGeneratorHelper {
 			dataGenLogger.error(e.toString());
 		}
 		return set;
-
 	}
 
 	// Products
@@ -75,14 +74,19 @@ public class TestDataObjectGenerator extends TestDataObjectGeneratorHelper {
 			dataGenLogger.error(e.toString());
 		}
 		return set;
-
 	}
 
-	protected static String getRandomValidEmail() {
-		String[] emailDomains = {"@guerrillamailblock.com"};
-		Random randomEmailDomain = new Random();
-		int randomSelection = randomEmailDomain.nextInt(emailDomains.length);
-		return emailDomains[randomSelection];
+	// Registration Form Data
+	protected static HashSet<RegistrationFormData> generateRegistrationFormData() {
+		LinkedHashSet<RegistrationFormData> set = new LinkedHashSet<RegistrationFormData>();
+		for (int i = 10; i > 0; --i) {
+			set.add(new RegistrationFormData().withEmail(generateValidFormatEmails())
+					.withFirstName(generateValidFormatName()).withLastName(generateValidFormatLastName())
+					.withPassword(generateValidFormatPasswords()).withAddress(generateValidFormatAddress())
+					.withCityName("San Francisco").withPostCode(generateValidFormatPostalCode()).withState("California")
+					.withPhoneNumber(generateValidFormatPhoneNumber()));
+		}
+		return set;
 	}
 
 }

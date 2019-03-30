@@ -9,8 +9,9 @@ import org.testng.annotations.DataProvider;
 
 import com.automationpractice.model.LigalCredentials;
 import com.automationpractice.model.Products;
+import com.automationpractice.model.RegistrationFormData;
 
-public class TestDataProviders extends TestDataGenerator {
+public class TestDataProviders extends TestDataObjectGenerator {
 
 	// **************INVALID/ILLEGAL TEST DATA********************//
 
@@ -58,24 +59,29 @@ public class TestDataProviders extends TestDataGenerator {
 
 	// **************VALID/LEGAL TEST DATA********************//
 
-	@DataProvider(name = "validCredentialsForRegistrationPage")
-	public static Object[][] generateligalCredentialsForRegistrationPage() {
-		Object[][] generatedTestData = new Object[1][9];
-		for (int row = 0; row < generatedTestData.length; row++) {
-			generatedTestData[row] = generateValidFormatCredentialsForRegistrationPage();
-		}
-		return generatedTestData;
+//	@DataProvider(name = "validCredentialsForRegistrationPage")
+//	public static Object[][] generateligalCredentialsForRegistrationPage() {
+//		Object[][] generatedTestData = new Object[1][9];
+//		for (int row = 0; row < generatedTestData.length; row++) {
+//			generatedTestData[row] = generateValidFormatCredentialsForRegistrationPage();
+//		}
+//		return generatedTestData;
+//	}
+	@DataProvider(name = "validCredentialsForRegistrationController")
+	public static Iterator<RegistrationFormData> generateRegistrationFormDataForRegistratonPage()
+			throws InterruptedException, IOException {
+		return generateRegistrationFormData().iterator();
 	}
 
-	@DataProvider(name = "validCredentialsForRegistrationController")
-	public static Object[][] generateLigalCredentialsForController() {
-		Object[][] generatedTestData = new Object[10][9];
-		// loop over 2D array
-		for (int row = 0; row < generatedTestData.length; row++) {
-			generatedTestData[row] = generateValidFormatCredentialsForRegistrationController();
-		}
-		return generatedTestData;
-	}
+//	@DataProvider(name = "validCredentialsForRegistrationController")
+//	public static Object[][] generateLigalCredentialsForController() {
+//		Object[][] generatedTestData = new Object[10][9];
+//		// loop over 2D array
+//		for (int row = 0; row < generatedTestData.length; row++) {
+//			generatedTestData[row] = generateValidFormatCredentialsForRegistrationController();
+//		}
+//		return generatedTestData;
+//	}
 
 	@DataProvider(name = "getValidProductsFromPropertyFile")
 	public static Iterator<Products> generateValidProducts() throws InterruptedException, IOException {
@@ -90,14 +96,15 @@ public class TestDataProviders extends TestDataGenerator {
 
 	@DataProvider(name = "getLigalCredentialsAndProductIdsForPdpControllerFromPropertyFiles")
 	protected static Object[][] generatePdpDataForWishListController() throws InterruptedException, IOException {
-		//Create a dynamic 2D array with the size of the validCredentials entries(accounts)
+		// Create a dynamic 2D array with the size of the validCredentials
+		// entries(accounts)
 		Object[][] generatedTestData = new Object[readLigalCredentialsList().size()][2];
 		List<LigalCredentials> ligalCredentialsList = new ArrayList<LigalCredentials>();
 		List<Products> productList = new ArrayList<Products>();
-		//convert sets to lists
+		// convert sets to lists
 		ligalCredentialsList.addAll(readLigalCredentialsList());
 		productList.addAll(readProductList());
-		//fill out the array with the lists values (sets values)
+		// fill out the array with the lists values (sets values)
 		for (int i = 0; i < ligalCredentialsList.size(); i++) {
 			generatedTestData[i][0] = ligalCredentialsList.get(i);
 			generatedTestData[i][1] = productList.get(i);

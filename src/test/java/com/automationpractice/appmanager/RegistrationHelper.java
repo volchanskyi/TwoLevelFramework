@@ -4,6 +4,8 @@ import java.net.MalformedURLException;
 
 import org.openqa.selenium.By;
 
+import com.automationpractice.model.RegistrationFormData;
+
 public class RegistrationHelper extends HelperBase {
 
 	public RegistrationHelper(ApplicationManager app) throws MalformedURLException {
@@ -19,21 +21,20 @@ public class RegistrationHelper extends HelperBase {
 
 	}
 
-	public HelperBase fillOutRegistrationFormWith(String fName, String lName, String password, String address,
-			String city, String postcode, String state, String phone) {
+	public HelperBase fillOutRegistrationFormWith(RegistrationFormData registrationFormData) {
 		// wd.get(app.getProperty("web.baseUrl") +
 		// "index.php?controller=authentication&back=my-account#account-creation");
-		type(By.name(useProperty("locator.fNameTxtFld(RP)")), fName);
-		type(By.name(useProperty("locator.lastNameTextField")), lName);
-		type(By.cssSelector(useProperty("locator.newPasswordTextField")), password);
-		type(By.cssSelector("#firstname"), fName);
-		type(By.cssSelector("#lastname"), lName);
-		type(By.cssSelector(useProperty("locator.newAddressTextField")), address);
-		type(By.cssSelector(useProperty("locator.newCityTextField")), city);
-		type(By.cssSelector(useProperty("locator.newPostCodeTextField")), postcode);
-		selectFromDDM(By.cssSelector(useProperty("locator.stateDropDownMenu")), state);
-		type(By.cssSelector(useProperty("locator.newMobilePhoneTextField")), phone);
-		type(By.cssSelector("#alias"), address);
+		type(By.name(useProperty("locator.fNameTxtFld(RP)")), registrationFormData.getFirstName());
+		type(By.name(useProperty("locator.lastNameTextField")), registrationFormData.getFirstName());
+		type(By.cssSelector(useProperty("locator.newPasswordTextField")), registrationFormData.getPassword());
+		type(By.cssSelector("#firstname"), registrationFormData.getFirstName());
+		type(By.cssSelector("#lastname"), registrationFormData.getFirstName());
+		type(By.cssSelector(useProperty("locator.newAddressTextField")), registrationFormData.getAddress());
+		type(By.cssSelector(useProperty("locator.newCityTextField")), registrationFormData.getCityName());
+		type(By.cssSelector(useProperty("locator.newPostCodeTextField")), registrationFormData.getPostCode());
+		selectFromDDM(By.cssSelector(useProperty("locator.stateDropDownMenu")), registrationFormData.getState());
+		type(By.cssSelector(useProperty("locator.newMobilePhoneTextField")), registrationFormData.getPhoneNumber());
+		type(By.cssSelector("#alias"), registrationFormData.getAddress());
 		click(By.cssSelector(useProperty("locator.registerAccountButton")));
 		return this;
 	}

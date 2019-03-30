@@ -10,6 +10,7 @@ import org.apache.http.client.utils.URIBuilder;
 
 import com.automationpractice.model.LigalCredentials;
 import com.automationpractice.model.Products;
+import com.automationpractice.model.RegistrationFormData;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -43,13 +44,14 @@ class HttpSessionHelper extends HttpProtocolHelper {
 		return headerParams;
 	}
 
-	protected String[][] getBodyParamsWith(String fName, String lName, String password, String address, String city,
-			String postcode, String state, String phone, String email) {
-		String[][] bodyParams = { { "customer_firstname", fName }, { "customer_lastname", lName },
-				{ "passwd", password }, { "firstname", fName }, { "lastname", lName }, { "email", email },
-				{ "days", "" }, { "months", "" }, { "years", "" }, { "company", "" }, { "address1", address },
-				{ "address2", "" }, { "city", city }, { "id_state", state }, { "postcode", postcode },
-				{ "id_country", "21" }, { "phone_mobile", phone }, { "alias", "My address" }, { "back", "my-account" },
+	protected String[][] getBodyParamsWith(RegistrationFormData formData) {
+		String[][] bodyParams = { { "customer_firstname", formData.getFirstName() },
+				{ "customer_lastname", formData.getLastName() }, { "passwd", formData.getPassword() },
+				{ "firstname", formData.getFirstName() }, { "lastname", formData.getLastName() },
+				{ "email", formData.getEmail() }, { "days", "" }, { "months", "" }, { "years", "" }, { "company", "" },
+				{ "address1", formData.getAddress() }, { "address2", "" }, { "city", formData.getCityName() },
+				{ "id_state", formData.getState() }, { "postcode", formData.getPostCode() }, { "id_country", "21" },
+				{ "phone_mobile", formData.getPhoneNumber() }, { "alias", "My address" }, { "back", "my-account" },
 				{ "dni", "" }, { "email_create", "1" }, { "is_new_customer", "1" }, { "submitAccount", "" } };
 		return bodyParams;
 	}

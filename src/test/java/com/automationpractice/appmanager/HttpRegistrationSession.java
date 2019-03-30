@@ -16,6 +16,7 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.client.LaxRedirectStrategy;
 
+import com.automationpractice.model.RegistrationFormData;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
@@ -48,15 +49,14 @@ public class HttpRegistrationSession extends HttpSessionHelper {
 	}
 
 	// TODO refactor generated data
-	public boolean registerWith(String fName, String lName, String password, String address, String city,
-			String postcode, String state, String phone, String title, String email)
+	public boolean registerWith(RegistrationFormData registrationFormData, String title)
 			throws IOException, URISyntaxException {
 		URIBuilder postRequest = new URIBuilder(app.getProperty("web.baseUrl") + "index.php");
 		// query string params
 		postRequest.setParameter("controller", "authentication").setParameter("back", "my-account#account-creation");
 		// header params
 		String[][] headerParams = getHeaderParamsWithNoProperties();
-		String[][] bodyParams = getBodyParamsWith(fName, lName, password, address, city, postcode, state, phone, email);
+		String[][] bodyParams = getBodyParamsWith(registrationFormData);
 		HttpPost post = createPostRequestWithParams(postRequest.toString(), headerParams);
 		post.setEntity(new UrlEncodedFormEntity(createHttpBodyParamsWith(bodyParams)));
 		CloseableHttpResponse response = httpClient.execute(post);
