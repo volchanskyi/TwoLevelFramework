@@ -1,6 +1,7 @@
 package com.automationpractice.tests;
 
 import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertNotEquals;
 import static org.testng.Assert.assertTrue;
 
 import java.io.IOException;
@@ -24,7 +25,7 @@ public class WishListTests extends TestBase {
 		// read token
 //		String token = session.getToken();
 		String errMsg = "You must be logged in to manage your wishlist.";
-		// read cookie PREFIX (Cookie name)
+	// read cookie PREFIX (Cookie name)
 		String cookieName = session.getCookieName();
 		// pass cookie name to make Server Side generate cookie and pass them to
 		// CONTEXT
@@ -38,7 +39,7 @@ public class WishListTests extends TestBase {
 //	public void testAddProductToWishListWhileLoggedInUsingAPI(LigalCredentials credentials, Products products)
 //			throws IOException, URISyntaxException {
 //		// Init HTTP session
-//		HttpSession session = APP.newSession();
+//		HttpWishListSession session = APP.newWishListSession();
 //		// read cookie PREFIX (Cookie name)
 //		String cookieName = session.getCookieName();
 //		String errMsg = "You must be logged in to manage your wishlist.";

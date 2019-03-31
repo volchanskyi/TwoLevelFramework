@@ -83,6 +83,7 @@ public class ApplicationManager {
 		return new HttpCartSession(this);
 	}
 
+	//Get property key from the file
 	public String getProperty(String key) {
 		return properties.getProperty(key);
 

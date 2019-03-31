@@ -2,11 +2,18 @@ package com.automationpractice.appmanager;
 
 import java.io.IOException;
 import java.sql.Timestamp;
+import java.util.Random;
 
 import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.CookieStore;
 import org.apache.http.client.fluent.Form;
 import org.apache.http.client.fluent.Request;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.protocol.HttpClientContext;
 import org.apache.http.client.utils.URIBuilder;
+import org.apache.http.cookie.Cookie;
+import org.apache.http.impl.client.BasicCookieStore;
+import org.apache.http.impl.client.CloseableHttpClient;
 
 import com.automationpractice.model.LigalCredentials;
 import com.automationpractice.model.Products;
@@ -18,10 +25,18 @@ import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 
 //Helper Class with Low Level Implementations
-class HttpSessionHelper extends HttpProtocolHelper {
+public class HttpSessionHelper extends HttpProtocolHelper {
+
+	// HttpSession classes use this fields
+	private ApplicationManager app;
+	private CloseableHttpClient httpClient;
+	private HttpClientContext context = HttpClientContext.create();
+	private CookieStore cookieStore = new BasicCookieStore();
+	private String webCookie;
+	private Timestamp timeStamp = new Timestamp(System.currentTimeMillis());
+	private int rand = new Random().nextInt(99999998) + 1;
 
 	// loginWith Method
-
 	protected String[][] getBodyParamsWith(LigalCredentials credentials) {
 		String[][] bodyParams = { { "email", credentials.getEmail() }, { "passwd", credentials.getPassword() },
 				{ "back", "my-account" }, { "SubmitLogin", "" } };
@@ -38,21 +53,29 @@ class HttpSessionHelper extends HttpProtocolHelper {
 
 	// registerWith Method
 
-	protected String[][] getHeaderParamsWithNoProperties() {
-		String[][] headerParams = { { "Accept", "application/json, text/javascript" },
-				{ "Content-Type", "application/x-www-form-urlencoded" } };
+	protected String[][] createHeaderParamsWithReferer() {
+		String[][] headerParams = { { "Accept",
+				"text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3" },
+				{ "Host", "automationpractice.com" }, { "Cache-Control", "max-age=0" },
+				{ "Origin", "http://automationpractice.com" }, { "Upgrade-Insecure-Requests", "1" },
+				{ "Content-Type", "application/x-www-form-urlencoded" },
+				{ "User-Agent",
+						"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36" },
+				{ "Referer", "http://automationpractice.com/index.php?controller=authentication&back=my-account" } };
 		return headerParams;
 	}
 
 	protected String[][] getBodyParamsWith(RegistrationFormData formData) {
 		String[][] bodyParams = { { "customer_firstname", formData.getFirstName() },
-				{ "customer_lastname", formData.getLastName() }, { "passwd", formData.getPassword() },
-				{ "firstname", formData.getFirstName() }, { "lastname", formData.getLastName() },
-				{ "email", formData.getEmail() }, { "days", "" }, { "months", "" }, { "years", "" }, { "company", "" },
-				{ "address1", formData.getAddress() }, { "address2", "" }, { "city", formData.getCityName() },
-				{ "id_state", formData.getState() }, { "postcode", formData.getPostCode() }, { "id_country", "21" },
-				{ "phone_mobile", formData.getPhoneNumber() }, { "alias", "My address" }, { "back", "my-account" },
-				{ "dni", "" }, { "email_create", "1" }, { "is_new_customer", "1" }, { "submitAccount", "" } };
+				{ "customer_lastname", formData.getLastName() }, { "email", formData.getEmail() },
+				{ "passwd", formData.getPassword() }, { "firstname", formData.getFirstName() },
+				{ "lastname", formData.getLastName() }, { "days", "" }, { "months", "" }, { "years", "" },
+				{ "company", "" }, { "address1", formData.getAddress() }, { "address2", "" },
+				{ "city", formData.getCityName() }, { "id_state", formData.getState() },
+				{ "postcode", formData.getPostCode() }, { "id_country", "21" },
+				{ "phone_mobile", formData.getPhoneNumber() }, { "alias", "My address" }, { "dni", "" },
+				{ "email_create", "1" }, { "is_new_customer", "1" }, { "back", "my-account" },
+				{ "submitAccount", "" } };
 		return bodyParams;
 	}
 
@@ -64,7 +87,7 @@ class HttpSessionHelper extends HttpProtocolHelper {
 		return bodyParams;
 	}
 
-	protected String[][] createHeaderParamsWith(String property) {
+	protected String[][] createHeaderParamsWithAuthorizationUsing(String property) {
 		String[][] headerParams = { { "Accept", "application/json, text/javascript, */*; q=0.01" },
 				{ "Authorization", property }, { "Content-Type", "application/x-www-form-urlencoded; charset=UTF-8" },
 				{ "X-Requested-With", "XMLHttpRequest" } };
@@ -283,6 +306,94 @@ class HttpSessionHelper extends HttpProtocolHelper {
 		} catch (IOException e) {
 			httpSessionlogger.error(e.toString());
 		}
+	}
+
+	// Cookie management section
+	public void insertCookie(String cookie) {
+		this.setWebCookie(cookie);
+	}
+
+	public String getCookieValue(CookieStore cookieStore, String cookieName) {
+		String value = null;
+		for (Cookie cookie : cookieStore.getCookies()) {
+			if (cookie.getName().equals(cookieName)) {
+				value = cookie.getName() + "=" + cookie.getValue();
+				break;
+			}
+		}
+		return value;
+	}
+
+	public void initCookie(String cookieName) throws IOException {
+		HttpGet get = new HttpGet(getApp().getProperty("web.baseUrl"));
+		get.setHeader("Upgrade-Insecure-Requests", "1");
+		get.setHeader("Host", "automationpractice.com");
+		getHttpClient().execute(get, getContext());
+		this.setWebCookie(cookieName);
+	}
+
+	public String getToken() {
+		return getApp().getProperty("web.token");
+	}
+
+	public String getCookieName() {
+		return getApp().getProperty("web.cookies");
+	}
+
+	public CloseableHttpClient getHttpClient() {
+		return httpClient;
+	}
+
+	public void setHttpClient(CloseableHttpClient httpClient) {
+		this.httpClient = httpClient;
+	}
+
+	public HttpClientContext getContext() {
+		return context;
+	}
+
+	public void setContext(HttpClientContext context) {
+		this.context = context;
+	}
+
+	public CookieStore getCookieStore() {
+		return cookieStore;
+	}
+
+	public void setCookieStore(CookieStore cookieStore) {
+		this.cookieStore = cookieStore;
+	}
+
+	public ApplicationManager getApp() {
+		return app;
+	}
+
+	public void setApp(ApplicationManager app) {
+		this.app = app;
+	}
+
+	public Timestamp getTimeStamp() {
+		return timeStamp;
+	}
+
+	public void setTimeStamp(Timestamp timeStamp) {
+		this.timeStamp = timeStamp;
+	}
+
+	public String getWebCookie() {
+		return webCookie;
+	}
+
+	public void setWebCookie(String webCookie) {
+		this.webCookie = webCookie;
+	}
+
+	public int getRand() {
+		return rand;
+	}
+
+	public void setRand(int rand) {
+		this.rand = rand;
 	}
 
 }

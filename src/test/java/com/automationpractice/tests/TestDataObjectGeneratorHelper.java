@@ -81,15 +81,6 @@ public class TestDataObjectGeneratorHelper {
 		return validFormatEmailAndPassword;
 	}
 
-	
-	protected static String[] generateValidFormatCredentialsForRegistrationController() {
-		String[] validFormatCredentialsForRegistrationController = { generateValidFormatEmails(),
-				generateValidFormatName(), generateValidFormatLastName(), generateValidFormatPasswords(),
-				generateValidFormatAddress(), "San Francisco", generateValidFormatPostalCode(), "5",
-				generateValidFormatPhoneNumber() };
-		return validFormatCredentialsForRegistrationController;
-	}
-
 	//
 	protected static String getRandomValidEmailDomain() {
 		String[] emailDomains = { "@guerrillamailblock.com" };

@@ -20,6 +20,7 @@ class HttpProtocolHelper {
 
 	protected CloseableHttpResponse httpResponse;
 	private int statusCodeOK = 200;
+	private int statusCodeMoved = 302;
 
 	// Init Logger for TestBase.class
 	final protected Logger httpSessionlogger = LoggerFactory.getLogger(HttpProtocolHelper.class);
@@ -81,6 +82,17 @@ class HttpProtocolHelper {
 			httpResponse = response;
 			int statusCode = response.getStatusLine().getStatusCode();
 			return statusCode == statusCodeOK;
+		} catch (Exception e) {
+			httpSessionlogger.error(e.toString());
+		}
+		return false;
+	}
+
+	protected boolean isHttpStatusCodeMoved(CloseableHttpResponse response) {
+		try {
+			httpResponse = response;
+			int statusCode = response.getStatusLine().getStatusCode();
+			return statusCode == statusCodeMoved;
 		} catch (Exception e) {
 			httpSessionlogger.error(e.toString());
 		}

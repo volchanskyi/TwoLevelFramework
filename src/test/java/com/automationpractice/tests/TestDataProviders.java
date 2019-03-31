@@ -59,29 +59,11 @@ public class TestDataProviders extends TestDataObjectGenerator {
 
 	// **************VALID/LEGAL TEST DATA********************//
 
-//	@DataProvider(name = "validCredentialsForRegistrationPage")
-//	public static Object[][] generateligalCredentialsForRegistrationPage() {
-//		Object[][] generatedTestData = new Object[1][9];
-//		for (int row = 0; row < generatedTestData.length; row++) {
-//			generatedTestData[row] = generateValidFormatCredentialsForRegistrationPage();
-//		}
-//		return generatedTestData;
-//	}
 	@DataProvider(name = "validCredentialsForRegistrationController")
 	public static Iterator<RegistrationFormData> generateRegistrationFormDataForRegistratonPage()
 			throws InterruptedException, IOException {
 		return generateRegistrationFormData().iterator();
 	}
-
-//	@DataProvider(name = "validCredentialsForRegistrationController")
-//	public static Object[][] generateLigalCredentialsForController() {
-//		Object[][] generatedTestData = new Object[10][9];
-//		// loop over 2D array
-//		for (int row = 0; row < generatedTestData.length; row++) {
-//			generatedTestData[row] = generateValidFormatCredentialsForRegistrationController();
-//		}
-//		return generatedTestData;
-//	}
 
 	@DataProvider(name = "getValidProductsFromPropertyFile")
 	public static Iterator<Products> generateValidProducts() throws InterruptedException, IOException {

@@ -79,7 +79,7 @@ public class TestDataObjectGenerator extends TestDataObjectGeneratorHelper {
 	// Registration Form Data
 	protected static HashSet<RegistrationFormData> generateRegistrationFormData() {
 		LinkedHashSet<RegistrationFormData> set = new LinkedHashSet<RegistrationFormData>();
-		for (int i = 10; i > 0; --i) {
+		for (int i = 1; i > 0; --i) {
 			set.add(new RegistrationFormData().withEmail(generateValidFormatEmails())
 					.withFirstName(generateValidFormatName()).withLastName(generateValidFormatLastName())
 					.withPassword(generateValidFormatPasswords()).withAddress(generateValidFormatAddress())
