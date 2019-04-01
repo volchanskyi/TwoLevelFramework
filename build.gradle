@@ -8,18 +8,30 @@
  */
 
 plugins {
-	//Adds a download task to Gradle that displays progress information
+	//Add a download task to Gradle that displays progress information
     id 'de.undercouch.download' version '3.4.3'
+    //Provide insights into problems with the build environment, dependencies, performance
+    id 'com.gradle.build-scan' version '2.2.1'
     // Apply the java plugin to add support for Java
     id 'java'
     
-    id 'com.gradle.build-scan' version '2.2.1'
+    
 }
 
 
 buildScan {
+	def vcsBranch = "https://github.com/volchanskyi/TwoLevelFramework" 
     termsOfServiceUrl = 'https://gradle.com/terms-of-service'
     termsOfServiceAgree = 'yes'
+
+    if (System.getenv('CI')) {
+        tag 'CI'
+    } else {
+        tag 'Local'
+    }
+    publishAlways()
+    tag System.getProperty('os.name')
+    link 'VCS', vcsBranch
 }
 
 
