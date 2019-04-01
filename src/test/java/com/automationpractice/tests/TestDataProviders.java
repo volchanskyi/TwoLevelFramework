@@ -16,7 +16,7 @@ public class TestDataProviders extends TestDataObjectGenerator {
 	// **************INVALID/ILLEGAL TEST DATA********************//
 
 	@DataProvider(name = "illegalCredentials")
-	public static Object[][] getIlligalCredentials() {
+	protected static Object[][] getIlligalCredentials() {
 		Object[][] generatedTestData = new Object[20][2];
 		// loop over 2D array
 		for (int row = 0; row < generatedTestData.length; row++) {
@@ -26,7 +26,7 @@ public class TestDataProviders extends TestDataObjectGenerator {
 	}
 
 	@DataProvider(name = "invalidEmail")
-	public static Object[] generateInvalidEmail() {
+	protected static Object[] generateInvalidEmail() {
 		Object[] generatedTestData = new Object[40];
 		// loop over 2D array
 		for (int row = 0; row < generatedTestData.length; row++) {
@@ -36,7 +36,7 @@ public class TestDataProviders extends TestDataObjectGenerator {
 	}
 
 	@DataProvider(name = "invalidPasswordAndValidEmail")
-	public static Object[][] generateInvalidPasswordAndValidEmail() {
+	protected static Object[][] generateInvalidPasswordAndValidEmail() {
 		Object[][] generatedTestData = new Object[20][2];
 		// loop over 2D array
 		for (int row = 0; row < generatedTestData.length; row++) {
@@ -47,7 +47,7 @@ public class TestDataProviders extends TestDataObjectGenerator {
 	}
 
 	@DataProvider(name = "invalidEmailAndValidPassword")
-	public static Object[][] generateInvalidEmailAndValidPassword() {
+	protected static Object[][] generateInvalidEmailAndValidPassword() {
 		Object[][] generatedTestData = new Object[20][2];
 		// loop over 2D array
 		for (int row = 0; row < generatedTestData.length; row++) {
@@ -60,18 +60,18 @@ public class TestDataProviders extends TestDataObjectGenerator {
 	// **************VALID/LEGAL TEST DATA********************//
 
 	@DataProvider(name = "validCredentialsForRegistrationController")
-	public static Iterator<RegistrationFormData> generateRegistrationFormDataForRegistratonPage()
+	protected static Iterator<RegistrationFormData> generateRegistrationFormDataForRegistratonPage()
 			throws InterruptedException, IOException {
 		return generateRegistrationFormData().iterator();
 	}
 
 	@DataProvider(name = "getValidProductsFromPropertyFile")
-	public static Iterator<Products> generateValidProducts() throws InterruptedException, IOException {
+	protected static Iterator<Products> generateValidProducts() throws InterruptedException, IOException {
 		return readProductList().iterator();
 	}
 
 	@DataProvider(name = "getLigalCredentialsForAuthenticationControllerFromPropertyFile")
-	public static Iterator<LigalCredentials> generateValidCredentialsForController()
+	protected static Iterator<LigalCredentials> generateValidCredentialsForController()
 			throws InterruptedException, IOException {
 		return readLigalCredentialsList().iterator();
 	}

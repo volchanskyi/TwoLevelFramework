@@ -13,26 +13,26 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class HelperBase {
 
-	protected ApplicationManager app;
-	protected WebDriver wd;
-	protected WebDriverWait wait;
+	private ApplicationManager app;
+	private WebDriver wd;
+	private WebDriverWait wait;
 
 	public HelperBase(ApplicationManager app) throws MalformedURLException {
 		this.app = app;
-		this.wd = app.getDriver();
+		this.setWd(app.getDriver());
 		// Assure all browsers have the same screen resolution and starting point (for
 		// GUI tests)
-		this.wd.manage().window().setPosition(new Point(0, 0));
-		this.wd.manage().window().setSize(new Dimension(1280, 1024));
+		this.getWd().manage().window().setPosition(new Point(0, 0));
+		this.getWd().manage().window().setSize(new Dimension(1280, 1024));
 		// set EXPLICIT timeouts
-		this.wait = new WebDriverWait(this.wd, 15);
+		this.wait = new WebDriverWait(this.getWd(), 15);
 		// Set timeout for Async Java Script
-		this.wd.manage().timeouts().setScriptTimeout(20, TimeUnit.SECONDS);
-		this.wd.manage().timeouts().pageLoadTimeout(15, TimeUnit.SECONDS);
+		this.getWd().manage().timeouts().setScriptTimeout(20, TimeUnit.SECONDS);
+		this.getWd().manage().timeouts().pageLoadTimeout(15, TimeUnit.SECONDS);
 	}
 
 	protected void navigateTo(String url) {
-		this.wd.navigate().to(url);
+		this.getWd().navigate().to(url);
 		wait.until(ExpectedConditions.urlToBe(url));
 	}
 
@@ -68,7 +68,7 @@ public class HelperBase {
 	// Get title by using embedded method
 	protected String getPageTitle(String title) {
 		wait.until(ExpectedConditions.titleIs(title));
-		return wd.getTitle();
+		return getWd().getTitle();
 	}
 
 	protected String getActiveOverlay(By locator, String overlay) {
@@ -78,6 +78,14 @@ public class HelperBase {
 
 	public String useProperty(String property) {
 		return app.getProperty(property);
+	}
+
+	public WebDriver getWd() {
+		return wd;
+	}
+
+	public void setWd(WebDriver wd) {
+		this.wd = wd;
 	}
 
 }

@@ -14,7 +14,7 @@ public class RegistrationHelper extends HelperBase {
 	}
 
 	public RegistrationHelper initRegistrationUsingEmailWith(String email) {
-		wd.get(useProperty("web.baseUrl") + "index.php?controller=authentication&back=my-account#account-creation");
+		getWd().get(useProperty("web.baseUrl") + "index.php?controller=authentication&back=my-account#account-creation");
 		type(By.cssSelector(useProperty("locator.newUserNameField")), email);
 		click(By.cssSelector(useProperty("locator.createAccBtn(RP)")));
 		return this;
@@ -41,7 +41,7 @@ public class RegistrationHelper extends HelperBase {
 
 	// TODO Method is not finished!
 	public void finishWith(String confirmationLink, String password) {
-		wd.get(confirmationLink);
+		getWd().get(confirmationLink);
 		type(By.name("password"), password);
 		type(By.name("password_confirm"), password);
 		click(By.xpath(useProperty("locator.createAccBtn(RP)")));
