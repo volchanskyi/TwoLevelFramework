@@ -31,7 +31,7 @@ buildScan {
     }
     publishAlways()
     tag System.getProperty('os.name')
-    link 'VCS', vcsBranch
+    link 'Source', vcsBranch
 }
 
 
