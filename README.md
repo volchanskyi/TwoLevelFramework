@@ -1,1 +1,2 @@
-Two-level-architecture framework that implements API and UI testing layers
+Two-level-architecture framework that implements API and UI testing layers. Optimized for running on Local, GRID and/or CI environments supporting multiple platforms and configuratio s. Uses extensive application logging(logback), test reporting(Allure) and build publishing(Gradle scan) features. 
+Comes with a docker-compose configuration file to play with the framework. Enjoy!:)

@@ -7,7 +7,7 @@ import org.apache.http.impl.client.LaxRedirectStrategy;
 
 import com.automationpractice.model.Products;
 
-public class HttpSearchProductSession extends HttpSessionHelper {
+public class HttpSearchProductSession extends HttpSearchSessionHelper {
 
 	public HttpSearchProductSession(ApplicationManager app) {
 		this.setApp(app);

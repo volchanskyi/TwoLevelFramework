@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.http.HttpException;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.fluent.Executor;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -19,8 +20,6 @@ import org.slf4j.LoggerFactory;
 class HttpProtocolHelper {
 
 	protected CloseableHttpResponse httpResponse;
-	private int statusCodeOK = 200;
-	private int statusCodeMoved = 302;
 
 	// Init Logger for TestBase.class
 	final protected Logger httpSessionlogger = LoggerFactory.getLogger(HttpProtocolHelper.class);
@@ -77,22 +76,14 @@ class HttpProtocolHelper {
 		return getWithParams;
 	}
 
-	protected boolean isHttpStatusCodeOK(CloseableHttpResponse response) {
+	protected boolean isHttpStatusCode(int statusCode, CloseableHttpResponse response) {
 		try {
 			httpResponse = response;
-			int statusCode = response.getStatusLine().getStatusCode();
-			return statusCode == statusCodeOK;
-		} catch (Exception e) {
-			httpSessionlogger.error(e.toString());
-		}
-		return false;
-	}
-
-	protected boolean isHttpStatusCodeMoved(CloseableHttpResponse response) {
-		try {
-			httpResponse = response;
-			int statusCode = response.getStatusLine().getStatusCode();
-			return statusCode == statusCodeMoved;
+			if (statusCode != response.getStatusLine().getStatusCode()) {
+				throw new HttpException(
+						statusCode + " doesnt match the response code " + response.getStatusLine().getStatusCode());
+			} else
+				return statusCode == response.getStatusLine().getStatusCode();
 		} catch (Exception e) {
 			httpSessionlogger.error(e.toString());
 		}

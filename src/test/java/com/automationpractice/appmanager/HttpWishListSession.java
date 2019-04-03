@@ -16,7 +16,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
 
-public class HttpWishListSession extends HttpSessionHelper {
+public class HttpWishListSession extends HttpWishSessionHelper {
 
 	public HttpWishListSession(ApplicationManager app) {
 		this.setApp(app);
@@ -34,7 +34,7 @@ public class HttpWishListSession extends HttpSessionHelper {
 		String[][] headerParams = { { "Cookie", getCookieValue(getCookieStore(), this.getWebCookie()) } };
 		HttpGet get = createGetRequestWithParams(getRequest.toString(), headerParams);
 		CloseableHttpResponse response = getHttpClient().execute(get, this.getContext());
-		isHttpStatusCodeOK(response);
+		isHttpStatusCode(200, response);
 		String body = getTextFrom(response);
 		return body.toLowerCase()
 				.contains(String.format("<title>%s</title>", products.getProductName() + " - my store"));
@@ -51,7 +51,7 @@ public class HttpWishListSession extends HttpSessionHelper {
 				getCookieValue(getCookieStore(), this.getWebCookie()));
 		HttpGet get = createGetRequestWithParams(getRequest.toString(), headerParams);
 		CloseableHttpResponse response = getHttpClient().execute(get, this.getContext());
-		isHttpStatusCodeOK(response);
+		isHttpStatusCode(200, response);
 		return getTextFrom(response);
 	}
 
@@ -65,7 +65,7 @@ public class HttpWishListSession extends HttpSessionHelper {
 				getCookieValue(getCookieStore(), this.getWebCookie()));
 		HttpGet get = createGetRequestWithParams(getRequest.toString(), headerParams);
 		CloseableHttpResponse response = getHttpClient().execute(get, this.getContext());
-		isHttpStatusCodeOK(response);
+		isHttpStatusCode(200, response);
 		String json = getTextFrom(response);
 		JsonElement addedProducts = new JsonParser().parse(parsePureHtmlWithRegExUsing("^.*(\\[.*\\])\\;$", json));
 		String wishListId = parsePureHtmlWithRegExUsing("^.*\\('block-order-detail'\\,\\s\\'(\\d{4}).*$", json);
@@ -83,7 +83,7 @@ public class HttpWishListSession extends HttpSessionHelper {
 				getCookieValue(getCookieStore(), this.getWebCookie()));
 		HttpGet get = createGetRequestWithParams(getRequest.toString(), headerParams);
 		CloseableHttpResponse response = getHttpClient().execute(get, this.getContext());
-		isHttpStatusCodeOK(response);
+		isHttpStatusCode(200, response);
 		String json = getTextFrom(response);
 		JsonElement addedProducts = new JsonParser().parse(parsePureHtmlWithRegExUsing("^.*(\\[.*\\])\\;$", json));
 		return isWishListEmpty(addedProducts);

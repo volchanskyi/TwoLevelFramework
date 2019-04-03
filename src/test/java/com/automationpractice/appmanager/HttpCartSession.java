@@ -19,7 +19,7 @@ import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 
-public class HttpCartSession extends HttpSessionHelper {
+public class HttpCartSession extends HttpCartSessionHelper {
 
 	public HttpCartSession(ApplicationManager app) {
 		this.setApp(app);
@@ -41,7 +41,7 @@ public class HttpCartSession extends HttpSessionHelper {
 		HttpPost post = createPostRequestWithParams(postRequest.toString(), headerParams);
 		post.setEntity(new UrlEncodedFormEntity(createHttpBodyParamsWith(bodyParams)));
 		CloseableHttpResponse response = getHttpClient().execute(post, this.getContext());
-		isHttpStatusCodeOK(response);
+		isHttpStatusCode(200, response);
 		String json = getTextFrom(response);
 		JsonElement parsed = new JsonParser().parse(json);
 		JsonElement key = parsed.getAsJsonObject().get("products");
@@ -60,7 +60,7 @@ public class HttpCartSession extends HttpSessionHelper {
 		HttpPost post = createPostRequestWithParams(postRequest.toString(), headerParams);
 		post.setEntity(new UrlEncodedFormEntity(createHttpBodyParamsWith(bodyParams)));
 		CloseableHttpResponse response = getHttpClient().execute(post, this.getContext());
-		isHttpStatusCodeOK(response);
+		isHttpStatusCode(200, response);
 		String json = getTextFrom(response);
 		JsonElement parsed = new JsonParser().parse(json);
 		JsonElement key = parsed.getAsJsonObject().get("products");

@@ -17,7 +17,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
 
-public class HttpRegistrationSession extends HttpSessionHelper {
+public class HttpRegistrationSession extends HttpRegistrationSessionHelper {
 
 	public HttpRegistrationSession(ApplicationManager app) {
 		this.setApp(app);
@@ -33,7 +33,7 @@ public class HttpRegistrationSession extends HttpSessionHelper {
 		String[][] bodyParams = getBodyParamsWith(email);
 		post.setEntity(new UrlEncodedFormEntity(createHttpBodyParamsWith(bodyParams)));
 		CloseableHttpResponse response = this.getHttpClient().execute(post, this.getContext());
-		isHttpStatusCodeOK(response);
+		isHttpStatusCode(200, response);
 		String body = getTextFrom(response);
 		return body.contains(String.format("<h1 class=\\\"page-heading\\\">%s<\\/h1>", "Create an account"));
 	}
@@ -51,7 +51,7 @@ public class HttpRegistrationSession extends HttpSessionHelper {
 		HttpPost post = createPostRequestWithParams(postRequest.toString(), headerParams);
 		post.setEntity(new UrlEncodedFormEntity(createHttpBodyParamsWith(bodyParams)));
 		CloseableHttpResponse response = this.getHttpClient().execute(post, this.getContext());
-		isHttpStatusCodeMoved(response);
+		isHttpStatusCode(302, response);
 		String body = getTextFrom(response);
 		return body.contains(String.format("<title>%s</title>", title));
 	}
@@ -77,7 +77,7 @@ public class HttpRegistrationSession extends HttpSessionHelper {
 		HttpPost post = createPostRequestWithParams(postRequest.toString(), headerParams);
 		post.setEntity(new UrlEncodedFormEntity(createHttpBodyParamsWith(bodyParams)));
 		CloseableHttpResponse response = this.getHttpClient().execute(post, this.getContext());
-		isHttpStatusCodeOK(response);
+		isHttpStatusCode(200, response);
 		String json = getTextFrom(response);
 		JsonElement parsed = new JsonParser().parse(json);
 		String emailAddrKey = parsed.getAsJsonObject().get("email_addr").getAsString();
@@ -101,7 +101,7 @@ public class HttpRegistrationSession extends HttpSessionHelper {
 				getApp().getProperty("web.emailGeneratorApiToken"));
 		HttpGet get = createGetRequestWithParams(getRequest.toString(), headerParams);
 		CloseableHttpResponse response = this.getHttpClient().execute(get, this.getContext());
-		isHttpStatusCodeOK(response);
+		isHttpStatusCode(200, response);
 		String json = getTextFrom(response);
 		JsonElement parsed = new JsonParser().parse(json);
 		String emailAddrKey = parsed.getAsJsonObject().get("email").getAsString();

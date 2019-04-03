@@ -13,7 +13,7 @@ import org.apache.http.impl.client.LaxRedirectStrategy;
 
 import com.automationpractice.model.LigalCredentials;
 
-public class HttpLoginSession extends HttpSessionHelper {
+public class HttpLoginSession extends HttpLoginSessionHelper {
 
 	public HttpLoginSession(ApplicationManager app) {
 		this.setApp(app);
@@ -34,7 +34,7 @@ public class HttpLoginSession extends HttpSessionHelper {
 		post.setEntity(new UrlEncodedFormEntity(createHttpBodyParamsWith(bodyParams)));
 		CloseableHttpResponse response = this.getHttpClient().execute(post, this.getContext());
 		String body = getTextFrom(response);
-		isHttpStatusCodeOK(response);
+		isHttpStatusCode(200, response);
 		return body.contains(String.format("<title>%s</title>", pageTitle));
 	}
 
@@ -52,7 +52,7 @@ public class HttpLoginSession extends HttpSessionHelper {
 		String[][] headerParams = { { "Host", "automationpractice.com" } };
 		HttpGet get = createGetRequestWithParams(getRequest.toString(), headerParams);
 		CloseableHttpResponse response = this.getHttpClient().execute(get, this.getContext());
-		isHttpStatusCodeOK(response);
+		isHttpStatusCode(200, response);
 		String body = getTextFrom(response);
 		return body.contains(String.format("<span>%s</span>", credentials.getAccountName()));
 	}
