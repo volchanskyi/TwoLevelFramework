@@ -12,6 +12,7 @@
 target/
 # Gradle
 #settings.gradle
+gradle-scan-journal.log
 .gradle/
 build/
 build
