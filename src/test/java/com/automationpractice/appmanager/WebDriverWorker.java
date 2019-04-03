@@ -25,9 +25,9 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.safari.SafariDriver;
 
-public class ApplicationManagerDriverWorker extends ApplicationManagerHelper {
+public class WebDriverWorker extends ApplicationManagerHelper {
 
-	public WebDriver getDriver() throws SessionNotCreatedException {
+	public WebDriver initWebDriver() throws SessionNotCreatedException {
 		// Load locators
 		try {
 			getProperties().load(new FileReader(new File(String.format("src/test/resources/locator.properties"))));

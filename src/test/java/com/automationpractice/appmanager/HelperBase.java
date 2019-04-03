@@ -19,7 +19,7 @@ public class HelperBase {
 
 	public HelperBase(ApplicationManager app) throws MalformedURLException {
 		this.app = app;
-		this.setWd(app.getDriver());
+		this.setWd(app.initWebDriver());
 		// Assure all browsers have the same screen resolution and starting point (for
 		// GUI tests)
 		this.getWd().manage().window().setPosition(new Point(0, 0));

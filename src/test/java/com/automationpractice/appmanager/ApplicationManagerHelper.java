@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class ApplicationManagerHelper {
+	private ApplicationManager app;
 	private Properties properties;
 	private WebDriver wd;
 	private String browser;
@@ -63,5 +64,13 @@ public class ApplicationManagerHelper {
 
 	public void setBrowser(String browser) {
 		this.browser = browser;
+	}
+	
+	public ApplicationManager getApp() {
+		return app;
+	}
+
+	public void setApp(ApplicationManager app) {
+		this.app = app;
 	}
 }
