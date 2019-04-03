@@ -6,6 +6,8 @@
  * For more details take a look at the Java Quickstart chapter in the Gradle
  * user guide available at https://docs.gradle.org/2.14.1/userguide/tutorial_java_projects.html
  */
+ //Creating a log of published build scans
+import com.gradle.scan.plugin.PublishedBuildScan
 
 plugins {
 	//Add a download task to Gradle that displays progress information
@@ -32,6 +34,11 @@ buildScan {
     publishAlways()
     tag System.getProperty('os.name')
     link 'Source', vcsBranch
+    	//Maintain a journal of created build scans
+      buildScanPublished { PublishedBuildScan scan ->
+        file('gradle-scan-journal.log') << "${new Date()} - ${scan.buildScanId} - ${scan.buildScanUri}\n"
+    }
+     
 }
 
 
