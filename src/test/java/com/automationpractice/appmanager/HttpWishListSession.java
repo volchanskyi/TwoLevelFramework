@@ -16,7 +16,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
 
-public class HttpWishListSession extends HttpWishSessionHelper {
+public class HttpWishListSession extends HttpWishListSessionHelper {
 
 	public HttpWishListSession(ApplicationManager app) {
 		this.setApp(app);
@@ -61,7 +61,7 @@ public class HttpWishListSession extends HttpWishSessionHelper {
 		// query string params
 		addStringParamsUsingWishListInfoWith(getRequest);
 		// request header
-		String[][] headerParams = createHeaderParamsUsingCookieWith(
+		String[][] headerParams = createHeaderParamsToAcceptJsonUsingCookieWith(
 				getCookieValue(getCookieStore(), this.getWebCookie()));
 		HttpGet get = createGetRequestWithParams(getRequest.toString(), headerParams);
 		CloseableHttpResponse response = getHttpClient().execute(get, this.getContext());
@@ -79,7 +79,7 @@ public class HttpWishListSession extends HttpWishSessionHelper {
 		// query string params
 		addStringParamsUsingWishListWithAddedProductInfoWith(getRequest, this.getRand(), wishListId, getTimeStamp());
 		// request header
-		String[][] headerParams = createHeaderParamsUsingCookieWith(
+		String[][] headerParams = createHeaderParamsToAcceptJsonUsingCookieWith(
 				getCookieValue(getCookieStore(), this.getWebCookie()));
 		HttpGet get = createGetRequestWithParams(getRequest.toString(), headerParams);
 		CloseableHttpResponse response = getHttpClient().execute(get, this.getContext());

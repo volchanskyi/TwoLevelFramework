@@ -21,13 +21,13 @@ public class HttpLoginSession extends HttpLoginSessionHelper {
 		// Enable following REDIRECTIONS (302) on POST
 		this.setHttpClient(HttpClients.custom().setRedirectStrategy(new LaxRedirectStrategy()).build());
 	}
-
+	
 	public boolean loginWith(LigalCredentials credentials, String pageTitle) throws IOException, URISyntaxException {
 		URIBuilder postRequest = new URIBuilder(getApp().getProperty("web.baseUrl") + "index.php");
 		// query string params
 		postRequest.setParameter("controller", "authentication");
 		// request header
-		String[][] headerParams = { { "Host", "automationpractice.com" } };
+		String[][] headerParams = createHeaderParamsToAcceptTextHtml();
 		// Form Data
 		String[][] bodyParams = getBodyParamsWith(credentials);
 		HttpPost post = createPostRequestWithParams(postRequest.toString(), headerParams);

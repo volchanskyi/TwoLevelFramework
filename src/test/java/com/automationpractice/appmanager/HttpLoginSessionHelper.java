@@ -27,4 +27,6 @@ public class HttpLoginSessionHelper extends HttpSessionHelper {
 			return content;
 		}
 
+		
+
 }

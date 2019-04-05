@@ -8,7 +8,7 @@ import com.automationpractice.model.Products;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonSyntaxException;
 
-public class HttpWishSessionHelper extends HttpSessionHelper {
+public class HttpWishListSessionHelper extends HttpSessionHelper {
 
 	protected void addStringParamsUsingWishListInfoWith(URIBuilder getRequest) {
 		getRequest.setParameter("fc", "module").setParameter("module", "blockwishlist").setParameter("controller",

@@ -26,27 +26,20 @@ public class HttpRegistrationSessionHelper extends HttpSessionHelper {
 
 	// signUpWith Method
 
-	protected String[][] getBodyParamsWith(String email) {
+	protected String[][] getBodyParamsForAuthenticationControllerWith(String email) {
 		String[][] bodyParams = { { "controller", "authentication" }, { "SubmitCreate", "1" }, { "ajax", "true" },
 				{ "email_create", email }, { "back", "my-account" }, { "token", "ce65cefcbafad255f0866d3b32d32058" } };
 		return bodyParams;
 	}
 
-	// registerWith Method
-
-	protected String[][] createHeaderParamsWithReferer() {
-		String[][] headerParams = { { "Accept",
-				"text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3" },
-				{ "Host", "automationpractice.com" }, { "Cache-Control", "max-age=0" },
-				{ "Origin", "http://automationpractice.com" }, { "Upgrade-Insecure-Requests", "1" },
-				{ "Content-Type", "application/x-www-form-urlencoded" },
-				{ "User-Agent",
-						"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36" },
-				{ "Referer", "http://automationpractice.com/index.php?controller=authentication&back=my-account" } };
+	protected String[][] createHeaderParamsToAcceptJson() {
+		String[][] headerParams = { { "Accept", "application/json, text/javascript, */*; q=0.01" } };
 		return headerParams;
 	}
 
-	protected String[][] getBodyParamsWith(RegistrationFormData formData) {
+	// registerWith Method
+
+	protected String[][] getBodyParamsForMyAccountControllerWith(RegistrationFormData formData) {
 		String[][] bodyParams = { { "customer_firstname", formData.getFirstName() },
 				{ "customer_lastname", formData.getLastName() }, { "email", formData.getEmail() },
 				{ "passwd", formData.getPassword() }, { "firstname", formData.getFirstName() },

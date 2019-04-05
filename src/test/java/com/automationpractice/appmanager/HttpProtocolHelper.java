@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.apache.http.HttpException;
 import org.apache.http.NameValuePair;
+import org.apache.http.ProtocolException;
 import org.apache.http.client.fluent.Executor;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -80,7 +80,7 @@ class HttpProtocolHelper {
 		try {
 			httpResponse = response;
 			if (statusCode != response.getStatusLine().getStatusCode()) {
-				throw new HttpException(
+				throw new ProtocolException(
 						statusCode + " doesnt match the response code " + response.getStatusLine().getStatusCode());
 			} else
 				return statusCode == response.getStatusLine().getStatusCode();

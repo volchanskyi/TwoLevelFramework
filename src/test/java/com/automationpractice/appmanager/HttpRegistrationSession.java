@@ -8,6 +8,7 @@ import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.utils.URIBuilder;
+import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.client.LaxRedirectStrategy;
 
@@ -24,13 +25,17 @@ public class HttpRegistrationSession extends HttpRegistrationSessionHelper {
 		this.getContext().setCookieStore(getCookieStore());
 		// Enable following REDIRECTIONS (302) on POST
 		this.setHttpClient(HttpClients.custom().setRedirectStrategy(new LaxRedirectStrategy()).build());
+
 	}
 
 	// TODO refactor token
-	public boolean signUpWith(String email) throws IOException {
-		HttpPost post = new HttpPost(getApp().getProperty("web.baseUrl") + "index.php");
+	public boolean signUpWith(RegistrationFormData registrationFormData) throws IOException, URISyntaxException {
+		URIBuilder postRequest = new URIBuilder(getApp().getProperty("web.baseUrl") + "index.php");
+		// header params
+		String[][] headerParams = createHeaderParamsToAcceptJson();
 		// Form Data
-		String[][] bodyParams = getBodyParamsWith(email);
+		String[][] bodyParams = getBodyParamsForAuthenticationControllerWith(registrationFormData.getEmail());
+		HttpPost post = createPostRequestWithParams(postRequest.toString(), headerParams);
 		post.setEntity(new UrlEncodedFormEntity(createHttpBodyParamsWith(bodyParams)));
 		CloseableHttpResponse response = this.getHttpClient().execute(post, this.getContext());
 		isHttpStatusCode(200, response);
@@ -38,20 +43,18 @@ public class HttpRegistrationSession extends HttpRegistrationSessionHelper {
 		return body.contains(String.format("<h1 class=\\\"page-heading\\\">%s<\\/h1>", "Create an account"));
 	}
 
-	// TODO refactor generated data
 	public boolean registerWith(RegistrationFormData registrationFormData, String title)
 			throws IOException, URISyntaxException {
 		URIBuilder postRequest = new URIBuilder(getApp().getProperty("web.baseUrl") + "index.php");
 		// query string params
 		postRequest.setParameter("controller", "authentication");
-		// my-account#account-creation
 		// header params
-		String[][] headerParams = createHeaderParamsWithReferer();
-		String[][] bodyParams = getBodyParamsWith(registrationFormData);
+		String[][] headerParams = createHeaderParamsToAcceptTextHtml();
+		String[][] bodyParams = getBodyParamsForMyAccountControllerWith(registrationFormData);
 		HttpPost post = createPostRequestWithParams(postRequest.toString(), headerParams);
 		post.setEntity(new UrlEncodedFormEntity(createHttpBodyParamsWith(bodyParams)));
 		CloseableHttpResponse response = this.getHttpClient().execute(post, this.getContext());
-		isHttpStatusCode(302, response);
+		isHttpStatusCode(200, response);
 		String body = getTextFrom(response);
 		return body.contains(String.format("<title>%s</title>", title));
 	}

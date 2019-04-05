@@ -29,7 +29,7 @@ public class HttpSessionHelper extends HttpProtocolHelper {
 
 	// Cart and WishList helpers use this method
 
-	protected String[][] createHeaderParamsUsingCookieWith(String cookieValue) {
+	protected String[][] createHeaderParamsToAcceptJsonUsingCookieWith(String cookieValue) {
 		String[][] headerParams = { { "Accept", "application/json, text/javascript, */*; q=0.01" },
 				{ "Content-Type", "application/x-www-form-urlencoded; charset=UTF-8" }, { "cache-control", "no-cache" },
 				{ "X-Requested-With", "XMLHttpRequest" }, { "Cookie", cookieValue } };
@@ -44,6 +44,13 @@ public class HttpSessionHelper extends HttpProtocolHelper {
 				.setParameter("quantity", String.valueOf(products.getQuantity()))
 				.setParameter("token", String.valueOf(credentials.getToken())).setParameter("id_product_attribute", "1")
 				.setParameter("_", timestamp);
+	}
+
+	protected String[][] createHeaderParamsToAcceptTextHtml() {
+		String[][] headerParams = { { "Accept",
+				"text/html,application/xhtml+xml,application/xml"},
+				{ "Content-Type", "application/x-www-form-urlencoded" }, {"Host", "automationpractice.com"} };
+		return headerParams;
 	}
 
 	// Cookie management section
@@ -80,7 +87,7 @@ public class HttpSessionHelper extends HttpProtocolHelper {
 	}
 
 	public CloseableHttpClient getHttpClient() {
-		return httpClient;
+		return this.httpClient;
 	}
 
 	public void setHttpClient(CloseableHttpClient httpClient) {
@@ -88,7 +95,7 @@ public class HttpSessionHelper extends HttpProtocolHelper {
 	}
 
 	public HttpClientContext getContext() {
-		return context;
+		return this.context;
 	}
 
 	public void setContext(HttpClientContext context) {
@@ -96,7 +103,7 @@ public class HttpSessionHelper extends HttpProtocolHelper {
 	}
 
 	public CookieStore getCookieStore() {
-		return cookieStore;
+		return this.cookieStore;
 	}
 
 	public void setCookieStore(CookieStore cookieStore) {
@@ -104,7 +111,7 @@ public class HttpSessionHelper extends HttpProtocolHelper {
 	}
 
 	public ApplicationManager getApp() {
-		return app;
+		return this.app;
 	}
 
 	public void setApp(ApplicationManager app) {
@@ -112,7 +119,7 @@ public class HttpSessionHelper extends HttpProtocolHelper {
 	}
 
 	public Timestamp getTimeStamp() {
-		return timeStamp;
+		return this.timeStamp;
 	}
 
 	public void setTimeStamp(Timestamp timeStamp) {
@@ -120,7 +127,7 @@ public class HttpSessionHelper extends HttpProtocolHelper {
 	}
 
 	public String getWebCookie() {
-		return webCookie;
+		return this.webCookie;
 	}
 
 	public void setWebCookie(String webCookie) {
@@ -128,7 +135,7 @@ public class HttpSessionHelper extends HttpProtocolHelper {
 	}
 
 	public int getRand() {
-		return rand;
+		return this.rand;
 	}
 
 	public void setRand(int rand) {
