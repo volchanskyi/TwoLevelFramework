@@ -6,17 +6,8 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.fluent.Form;
 import org.apache.http.client.fluent.Request;
 
-import com.automationpractice.model.LigalCredentials;
-
 public class HttpLoginSessionHelper extends HttpSessionHelper {
 
-	// loginWith Method
-	protected String[][] getBodyParamsWith(LigalCredentials credentials) {
-		String[][] bodyParams = { { "email", credentials.getEmail() }, { "passwd", credentials.getPassword() },
-				{ "back", "my-account" }, { "SubmitLogin", "" } };
-		return bodyParams;
-	}
-	
 	// loginWithErrorHandling Method
 		protected String createFluentPostRequestUsingEmailWith(String email, String password, String property)
 				throws ClientProtocolException, IOException {
