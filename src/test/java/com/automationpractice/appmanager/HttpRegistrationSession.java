@@ -29,7 +29,7 @@ public class HttpRegistrationSession extends HttpRegistrationSessionHelper {
 	}
 
 	// TODO refactor token
-	public boolean signUpWith(RegistrationFormData registrationFormData) throws IOException, URISyntaxException {
+	public HttpRegistrationSession signUpWith(RegistrationFormData registrationFormData) throws IOException, URISyntaxException {
 		URIBuilder postRequest = new URIBuilder(getApp().getProperty("web.baseUrl") + "index.php");
 		// header params
 		String[][] headerParams = createHeaderParamsToAcceptJson();
@@ -40,7 +40,8 @@ public class HttpRegistrationSession extends HttpRegistrationSessionHelper {
 		CloseableHttpResponse response = this.getHttpClient().execute(post, this.getContext());
 		isHttpStatusCode(200, response);
 		String body = getTextFrom(response);
-		return body.contains(String.format("<h1 class=\\\"page-heading\\\">%s<\\/h1>", "Create an account"));
+//		return body.contains(String.format("<h1 class=\\\"page-heading\\\">%s<\\/h1>", "Create an account"));
+		return this;
 	}
 
 	public boolean registerWith(RegistrationFormData registrationFormData, String title)

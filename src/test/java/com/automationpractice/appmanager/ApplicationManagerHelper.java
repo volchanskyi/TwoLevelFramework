@@ -1,5 +1,9 @@
 package com.automationpractice.appmanager;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.Properties;
 
 import org.openqa.selenium.WebDriver;
@@ -19,6 +23,25 @@ public class ApplicationManagerHelper {
 	// Get property key from the file
 	public String getProperty(String key) {
 		return getProperties().getProperty(key);
+
+	}
+
+	public void init() {
+		String target = System.getProperty("target", "local");
+		try {
+			getProperties().load(new FileReader(new File(String.format("src/test/resources/%s.properties", target))));
+		} catch (FileNotFoundException e) {
+			appManagerlogger.error(e.toString());
+		} catch (IOException e) {
+			appManagerlogger.error(e.toString());
+		}
+	}
+
+	public void stop() {
+		// Lazy init
+		if (getWd() != null) {
+			getWd().quit();
+		}
 
 	}
 
@@ -65,7 +88,7 @@ public class ApplicationManagerHelper {
 	public void setBrowser(String browser) {
 		this.browser = browser;
 	}
-	
+
 	public ApplicationManager getApp() {
 		return app;
 	}
