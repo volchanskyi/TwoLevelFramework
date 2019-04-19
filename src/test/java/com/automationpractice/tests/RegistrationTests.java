@@ -25,48 +25,48 @@ public class RegistrationTests extends TestBase {
 		String activationLink = "Dear Random User";
 		HttpRegistrationSession session = APP.newRegistrationSession();
 		assertTrue(session.createEmailWith(newEmail));
-		assertTrue(session.signUpWith(registrationFormData).registerWith(registrationFormData, title));
+		assertTrue(session.signUpWith(registrationFormData));
 		assertTrue(session.verifyActivationLink(newEmail, activationLink));
-//		assertTrue(session.registerWith(registrationFormData, title));
+		assertTrue(session.registerWith(registrationFormData, title));
 	}
 
-//	@Test(groups = { "API", "REGISTRATION" }, priority = 2)
-//	public void testRegisterNewAccountWithExistedCredentialsUsingAPI() throws IOException {
-//		HttpRegistrationSession session = APP.newRegistrationSession();
-//		String errMsg = "An account using this email address has already been registered. Please enter a valid password or request a new one. ";
-//		assertEquals(session.registerExistedAccountWithApiUsing("volchanskij@gmail.com"), errMsg);
-//	}
-//
-//	@Test(groups = { "API", "REGISTRATION" }, priority = 4)
-//	public void testRegisterNewAccountWithEmptyCredentialsUsingAPI() throws IOException {
-//		HttpRegistrationSession session = APP.newRegistrationSession();
-//		String errMsg = "Invalid email address.";
-//		assertEquals(session.registerExistedAccountWithApiUsing(""), errMsg);
-//	}
-//
-//	@Test(groups = { "API",
-//			"REGISTRATION" }, priority = 1, dataProvider = "invalidEmail", dataProviderClass = TestDataProviders.class)
-//	public void testRegisterNewAccountWithWrongEmailFormatUsingAPI(String email) throws IOException {
-//		HttpRegistrationSession session = APP.newRegistrationSession();
-//		String errMsg = "Invalid email address.";
-//		assertEquals(session.registerExistedAccountWithApiUsing(email), errMsg);
-//	}
-//
-//	@Test(groups = { "GUI", "REGISTRATION",
-//			"DEFAULTGROUP" }, priority = 100, dataProvider = "validCredentialsForRegistrationController", dataProviderClass = TestDataProviders.class)
-//	public void testRegisterNewAccountUsingGUI(RegistrationFormData registrationFormData)
-//			throws MessagingException, IOException, InterruptedException {
-//		String myAccountPageTitle = "My account - My Store";
-//		// String link = "https://blablabla"; (not implemented yet) DO NOT DELETE
-//		RegistrationHelper regHelper = APP.newRegistrationSessionUI();
-//		// HttpSession session = APP.newSession();
-//		// assertTrue(session.createEmail(email));
-//		// assertTrue(session.signUp(email + "@mailinator.com"));
-//		// assertTrue(session.verifyActivationLink(link)); (automationpractice.com
-//		// doesn`t send an activation link) DO NOT DELETE
-//		regHelper.initRegistrationUsingEmailWith(registrationFormData.getEmail())
-//				.fillOutRegistrationFormWith(registrationFormData);
-//		assertTrue(regHelper.verifyWithTitle(myAccountPageTitle));
-//	}
+	@Test(groups = { "API", "REGISTRATION" }, priority = 2)
+	public void testRegisterNewAccountWithExistedCredentialsUsingAPI() throws IOException {
+		HttpRegistrationSession session = APP.newRegistrationSession();
+		String errMsg = "An account using this email address has already been registered. Please enter a valid password or request a new one. ";
+		assertEquals(session.registerExistedAccountWithApiUsing("volchanskij@gmail.com"), errMsg);
+	}
+
+	@Test(groups = { "API", "REGISTRATION" }, priority = 4)
+	public void testRegisterNewAccountWithEmptyCredentialsUsingAPI() throws IOException {
+		HttpRegistrationSession session = APP.newRegistrationSession();
+		String errMsg = "Invalid email address.";
+		assertEquals(session.registerExistedAccountWithApiUsing(""), errMsg);
+	}
+
+	@Test(groups = { "API",
+			"REGISTRATION" }, priority = 1, dataProvider = "invalidEmail", dataProviderClass = TestDataProviders.class)
+	public void testRegisterNewAccountWithWrongEmailFormatUsingAPI(String email) throws IOException {
+		HttpRegistrationSession session = APP.newRegistrationSession();
+		String errMsg = "Invalid email address.";
+		assertEquals(session.registerExistedAccountWithApiUsing(email), errMsg);
+	}
+
+	@Test(groups = { "GUI", "REGISTRATION",
+			"DEFAULTGROUP" }, priority = 100, dataProvider = "validCredentialsForRegistrationController", dataProviderClass = TestDataProviders.class)
+	public void testRegisterNewAccountUsingGUI(RegistrationFormData registrationFormData)
+			throws MessagingException, IOException, InterruptedException {
+		String myAccountPageTitle = "My account - My Store";
+		// String link = "https://blablabla"; (not implemented yet) DO NOT DELETE
+		RegistrationHelper regHelper = APP.newRegistrationSessionUI();
+		// HttpSession session = APP.newSession();
+		// assertTrue(session.createEmail(email));
+		// assertTrue(session.signUp(email + "@mailinator.com"));
+		// assertTrue(session.verifyActivationLink(link)); (automationpractice.com
+		// doesn`t send an activation link) DO NOT DELETE
+		regHelper.initRegistrationUsingEmailWith(registrationFormData.getEmail())
+				.fillOutRegistrationFormWith(registrationFormData);
+		assertTrue(regHelper.verifyWithTitle(myAccountPageTitle));
+	}
 
 }
