@@ -61,26 +61,24 @@ public class HttpWishListSession extends HttpWishListSessionHelper {
 		// query string params
 		addStringParamsUsingWishListInfoWith(getRequest);
 		// request header
-		String[][] headerParams = createHeaderParamsToAcceptJsonUsingCookieWith(
-				getCookieValue(getCookieStore(), this.getWebCookie()));
+		String[][] headerParams = createHeaderParamsToAcceptJson();
 		HttpGet get = createGetRequestWithParams(getRequest.toString(), headerParams);
 		CloseableHttpResponse response = getHttpClient().execute(get, this.getContext());
 		isHttpStatusCode(200, response);
 		String json = getTextFrom(response);
 		JsonElement addedProducts = new JsonParser().parse(parsePureHtmlWithRegExUsing("^.*(\\[.*\\])\\;$", json));
-		String wishListId = parsePureHtmlWithRegExUsing("^.*\\('block-order-detail'\\,\\s\\'(\\d{4}).*$", json);
+		String wishListId = parsePureHtmlWithRegExUsing("^.*\\('block-order-detail'\\,\\s\\'(\\d{5,6}).*$", json);
 		boolean bool = isAdded(products, addedProducts) ? deleteWishListWith(wishListId) : false;
 		return bool;
 	}
 
-	private boolean deleteWishListWith(String wishListId)
+	public boolean deleteWishListWith(String wishListId)
 			throws URISyntaxException, ClientProtocolException, IOException {
 		URIBuilder getRequest = new URIBuilder(getApp().getProperty("web.baseUrl"));
 		// query string params
 		addStringParamsUsingWishListWithAddedProductInfoWith(getRequest, this.getRand(), wishListId, getTimeStamp());
 		// request header
-		String[][] headerParams = createHeaderParamsToAcceptJsonUsingCookieWith(
-				getCookieValue(getCookieStore(), this.getWebCookie()));
+		String[][] headerParams = createHeaderParamsToAcceptJson();
 		HttpGet get = createGetRequestWithParams(getRequest.toString(), headerParams);
 		CloseableHttpResponse response = getHttpClient().execute(get, this.getContext());
 		isHttpStatusCode(200, response);

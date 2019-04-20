@@ -15,6 +15,13 @@ import com.google.gson.reflect.TypeToken;
 
 public class HttpCartSessionHelper extends HttpSessionHelper {
 
+	protected String[][] createHeaderParamsToAcceptJsonUsingCookieWith(String cookieValue) {
+		String[][] headerParams = { { "Accept", "application/json, text/javascript, */*; q=0.01" },
+				{ "Content-Type", "application/x-www-form-urlencoded; charset=UTF-8" }, { "cache-control", "no-cache" },
+				{ "X-Requested-With", "XMLHttpRequest" }, { "Cookie", cookieValue } };
+		return headerParams;
+	}
+
 	protected String[][] createBodyParamsForAddProductToCartMethod(String id, String quantity, String token) {
 		String[][] bodyParams = { { "controller", "cart" }, { "add", "1" }, { "ajax", "true" }, { "qty", quantity },
 				{ "id_product", id }, { "token", token } };

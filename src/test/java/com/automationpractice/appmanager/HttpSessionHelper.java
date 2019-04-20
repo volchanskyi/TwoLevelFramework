@@ -15,15 +15,6 @@ import com.automationpractice.model.Products;
 public class HttpSessionHelper extends HttpProtocolHelper {
 
 	// Cart and WishList helpers use this method
-
-	protected String[][] createHeaderParamsToAcceptJsonUsingCookieWith(String cookieValue) {
-		String[][] headerParams = { { "Accept", "application/json, text/javascript, */*; q=0.01" },
-				{ "Content-Type", "application/x-www-form-urlencoded; charset=UTF-8" }, { "cache-control", "no-cache" },
-				{ "X-Requested-With", "XMLHttpRequest" }, { "Cookie", cookieValue } };
-		return headerParams;
-	}
-
-	// Cart and WishList helpers use this method
 	protected void addStringParamsUsingPdpInfoWith(Products products, LigalCredentials credentials,
 			URIBuilder getRequest, String rand, String timestamp) {
 		getRequest.setParameter("rand", rand).setParameter("action", "add")
@@ -36,6 +27,12 @@ public class HttpSessionHelper extends HttpProtocolHelper {
 	protected String[][] createHeaderParamsToAcceptTextHtml() {
 		String[][] headerParams = { { "Accept", "text/html,application/xhtml+xml,application/xml" },
 				{ "Content-Type", "application/x-www-form-urlencoded" }, { "Host", "automationpractice.com" } };
+		return headerParams;
+	}
+
+	protected String[][] createHeaderParamsToAcceptJson() {
+		String[][] headerParams = { { "Accept", "application/json, text/javascript, */*; q=0.01" },
+				{ "Host", "automationpractice.com" } };
 		return headerParams;
 	}
 

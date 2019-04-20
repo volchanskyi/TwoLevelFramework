@@ -32,11 +32,7 @@ public class HttpRegistrationSessionHelper extends HttpSessionHelper {
 		return bodyParams;
 	}
 
-	protected String[][] createHeaderParamsToAcceptJson() {
-		String[][] headerParams = { { "Accept", "application/json, text/javascript, */*; q=0.01" },
-				{ "Host", "automationpractice.com" } };
-		return headerParams;
-	}
+	
 
 	// registerWith Method
 

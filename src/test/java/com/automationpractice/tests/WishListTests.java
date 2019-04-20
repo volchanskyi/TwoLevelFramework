@@ -22,10 +22,7 @@ public class WishListTests extends TestBase {
 			throws IOException, JsonSyntaxException, IllegalStateException, URISyntaxException {
 		// Init HTTP session
 		HttpWishListSession session = APP.newWishListSession();
-		// read token
-//		String token = session.getToken();
 		String errMsg = "You must be logged in to manage your wishlist.";
-	// read cookie PREFIX (Cookie name)
 		String cookieName = session.getCookieName();
 		// pass cookie name to make Server Side generate cookie and pass them to
 		// CONTEXT

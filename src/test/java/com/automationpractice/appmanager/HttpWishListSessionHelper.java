@@ -10,6 +10,8 @@ import com.google.gson.JsonSyntaxException;
 
 public class HttpWishListSessionHelper extends HttpSessionHelper {
 
+
+
 	protected void addStringParamsUsingWishListInfoWith(URIBuilder getRequest) {
 		getRequest.setParameter("fc", "module").setParameter("module", "blockwishlist").setParameter("controller",
 				"mywishlist");
@@ -22,7 +24,7 @@ public class HttpWishListSessionHelper extends HttpSessionHelper {
 				getRequest.setParameter("fc", "module").setParameter("module", "blockwishlist")
 						.setParameter("controller", "mywishlist").setParameter("rand", String.valueOf(rand))
 						.setParameter("deleted", "1").setParameter("id_wishlist", wishListId)
-						.setParameter("_", String.valueOf(timeStamp));
+						.setParameter("_", String.valueOf(timeStamp.toString()));
 				return;
 			}
 		} catch (IllegalArgumentException e) {
