@@ -5,7 +5,7 @@ import java.io.IOException;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.fluent.Request;
 
-public class HttpSearchSessionHelper extends HttpSessionHelper {
+abstract class HttpSearchSessionHelper extends HttpSessionHelper {
 	// searchForProduct Method
 	protected String createFluentPostUsingProductInfoWith(String prod, String property, long timestamp)
 			throws ClientProtocolException, IOException {
@@ -14,4 +14,5 @@ public class HttpSearchSessionHelper extends HttpSessionHelper {
 				.execute().returnContent().asString();
 		return response;
 	}
+
 }

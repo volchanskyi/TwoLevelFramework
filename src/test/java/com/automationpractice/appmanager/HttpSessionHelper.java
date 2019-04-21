@@ -10,34 +10,44 @@ import org.apache.http.client.utils.URIBuilder;
 
 import com.automationpractice.model.LigalCredentials;
 import com.automationpractice.model.Products;
+import com.automationpractice.model.RegistrationFormData;
 
 //Helper Class with Low Level Implementations
-public class HttpSessionHelper extends HttpProtocolHelper {
+abstract class HttpSessionHelper extends HttpProtocolHelper {
 
-	// Cart and WishList helpers use this method
-	protected void addStringParamsUsingPdpInfoWith(Products products, LigalCredentials credentials,
-			URIBuilder getRequest, String rand, String timestamp) {
-		getRequest.setParameter("rand", rand).setParameter("action", "add")
-				.setParameter("id_product", String.valueOf(products.getId()))
-				.setParameter("quantity", String.valueOf(products.getQuantity()))
-				.setParameter("token", String.valueOf(credentials.getToken())).setParameter("id_product_attribute", "1")
-				.setParameter("_", timestamp);
+	protected void setQueryParameter(URIBuilder parameter) {
 	}
 
-	protected String[][] createHeaderParamsToAcceptTextHtml() {
+	protected String[][] setHeaderParameters(String parameter) {
+		return null;
+	}
+
+	protected String[][] setHeaderParameters(Products products, String parameter) {
+		return null;
+	}
+
+	protected String[][] setHeaderParamsToAcceptHtml() {
 		String[][] headerParams = { { "Accept", "text/html,application/xhtml+xml,application/xml" },
 				{ "Content-Type", "application/x-www-form-urlencoded" }, { "Host", "automationpractice.com" } };
 		return headerParams;
 	}
 
-	protected String[][] createHeaderParamsToAcceptJson() {
-		String[][] headerParams = { { "Accept", "application/json, text/javascript, */*; q=0.01" },
-				{ "Host", "automationpractice.com" } };
-		return headerParams;
+	protected String[][] setHeaderParamsToAcceptJson(String fOp, String fV, String sOp, String sV) {
+		String[][] basicHeaderParams = { { "Accept", "application/json, text/javascript, */*; q=0.01" },
+				{ "Host", "automationpractice.com" }, { fOp, fV }, { sOp, sV } };
+		return basicHeaderParams;
+	}
+
+	protected String[][] setBodyParameters(String parameter) {
+		return null;
+	}
+
+	protected String[][] setBodyParameters(RegistrationFormData formData) {
+		return null;
 	}
 
 	// Login and WishList helpers use this method
-	protected String[][] getBodyParamsWith(LigalCredentials credentials) {
+	protected String[][] setBodyParameters(LigalCredentials credentials) {
 		String[][] bodyParams = { { "email", credentials.getEmail() }, { "passwd", credentials.getPassword() },
 				{ "back", "my-account" }, { "SubmitLogin", "" } };
 		return bodyParams;
@@ -48,9 +58,9 @@ public class HttpSessionHelper extends HttpProtocolHelper {
 		// query string params
 		postRequest.setParameter("controller", "authentication");
 		// request header
-		String[][] headerParams = createHeaderParamsToAcceptTextHtml();
+		String[][] headerParams = setHeaderParamsToAcceptHtml();
 		// Form Data
-		String[][] bodyParams = getBodyParamsWith(credentials);
+		String[][] bodyParams = setBodyParameters(credentials);
 		HttpPost post = createPostRequestWithParams(postRequest.toString(), headerParams);
 		post.setEntity(new UrlEncodedFormEntity(createHttpBodyParamsWith(bodyParams)));
 		CloseableHttpResponse response = this.getHttpClient().execute(post, this.getContext());

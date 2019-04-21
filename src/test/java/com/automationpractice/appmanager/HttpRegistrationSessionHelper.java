@@ -12,7 +12,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonSyntaxException;
 
-public class HttpRegistrationSessionHelper extends HttpSessionHelper {
+abstract class HttpRegistrationSessionHelper extends HttpSessionHelper {
 
 	// requestForRegisterExistedAccountWithApiUsing Method
 	protected String createFluentPostRequestWith(String email, String property)
@@ -25,18 +25,16 @@ public class HttpRegistrationSessionHelper extends HttpSessionHelper {
 	}
 
 	// signUpWith Method
-
-	protected String[][] getBodyParamsForAuthenticationControllerWith(String email) {
+	@Override
+	protected String[][] setBodyParameters(String email) {
 		String[][] bodyParams = { { "controller", "authentication" }, { "SubmitCreate", "1" }, { "ajax", "true" },
 				{ "email_create", email }, { "back", "my-account" }, { "token", "ce65cefcbafad255f0866d3b32d32058" } };
 		return bodyParams;
 	}
 
-	
-
 	// registerWith Method
-
-	protected String[][] getBodyParamsForMyAccountControllerWith(RegistrationFormData formData) {
+	@Override
+	protected String[][] setBodyParameters(RegistrationFormData formData) {
 		String[][] bodyParams = { { "customer_firstname", formData.getFirstName() },
 				{ "customer_lastname", formData.getLastName() }, { "email", formData.getEmail() },
 				{ "passwd", formData.getPassword() }, { "firstname", formData.getFirstName() },
@@ -58,16 +56,14 @@ public class HttpRegistrationSessionHelper extends HttpSessionHelper {
 		return bodyParams;
 	}
 
-	protected String[][] createHeaderParamsWithAuthorizationUsing(String property) {
-		String[][] headerParams = { { "Accept", "application/json, text/javascript, */*; q=0.01" },
-				{ "Authorization", property }, { "Content-Type", "application/x-www-form-urlencoded; charset=UTF-8" },
-				{ "X-Requested-With", "XMLHttpRequest" } };
-		return headerParams;
+	@Override
+	protected String[][] setHeaderParameters(String property) {
+		return setHeaderParamsToAcceptJson("Authorization", property, "Connection", "keep-alive");
 	}
 
 	// verifyActivationLink Method
 
-	protected void addStringParamsUsingEmailNameWith(String email, URIBuilder getRequest, String timestamp) {
+	protected void setQueryParameters(String email, URIBuilder getRequest, String timestamp) {
 		getRequest.setParameter("f", "get_email_list").setParameter("offset", "0")
 				.setParameter("site", "guerrillamail.com").setParameter("in", email.split("@")[0])
 				.setParameter("_", timestamp);

@@ -34,10 +34,10 @@ public class HttpCartSession extends HttpCartSessionHelper {
 		// query string params
 		postRequest.setParameter("rand", String.valueOf(this.getRand()));
 		// request header
-		String[][] headerParams = createHeaderParamsToAcceptJsonUsingCookieWith(
+		String[][] headerParams = setHeaderParameters(
 				getCookieValue(getCookieStore(), this.getWebCookie()));
 		// Form Data
-		String[][] bodyParams = createBodyParamsForAddProductToCartMethod(id, quantity, token);
+		String[][] bodyParams = setBodyParameters(id, quantity, token);
 		HttpPost post = createPostRequestWithParams(postRequest.toString(), headerParams);
 		post.setEntity(new UrlEncodedFormEntity(createHttpBodyParamsWith(bodyParams)));
 		CloseableHttpResponse response = getHttpClient().execute(post, this.getContext());
@@ -53,7 +53,7 @@ public class HttpCartSession extends HttpCartSessionHelper {
 		URIBuilder postRequest = new URIBuilder(getApp().getProperty("web.baseUrl") + "index.php");
 		// query string params
 		postRequest.setParameter("rand", String.valueOf(this.getRand()));
-		String[][] headerParams = createHeaderParamsToAcceptJsonUsingCookieWith(
+		String[][] headerParams = setHeaderParameters(
 				getCookieValue(getCookieStore(), this.getWebCookie()));
 		// Form Data
 		String[][] bodyParams = { { "controller", "cart" }, { "ajax", "true" }, { "token", token } };
@@ -70,7 +70,7 @@ public class HttpCartSession extends HttpCartSessionHelper {
 
 	public Products addProductToCart(Products newProduct) throws IOException {
 		// Use fluent API
-		String json = createFluentPostRequestUsingProductInfoWith(newProduct, getApp().getProperty("web.baseUrl"),
+		String json = createFluentPostRequestWith(newProduct, getApp().getProperty("web.baseUrl"),
 				this.getRand(), getCookieValue(getCookieStore(), this.getWebCookie()));
 		JsonElement parsed = new JsonParser().parse(json);
 		JsonArray jsonArray = parsed.getAsJsonObject().getAsJsonArray("products");
@@ -79,7 +79,7 @@ public class HttpCartSession extends HttpCartSessionHelper {
 
 	public void cleanUpCart(String token) throws IOException {
 		// Use fluent API
-		String json = createFluentPostRequestUsingTokenWith(token, getApp().getProperty("web.baseUrl"), this.getRand(),
+		String json = createFluentPostRequestWith(token, getApp().getProperty("web.baseUrl"), this.getRand(),
 				this.getWebCookie());
 		JsonElement parsed = new JsonParser().parse(json);
 		JsonElement key = parsed.getAsJsonObject().get("nbTotalProducts");

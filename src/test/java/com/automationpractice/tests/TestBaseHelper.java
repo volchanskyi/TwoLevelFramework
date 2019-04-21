@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 
 import com.automationpractice.appmanager.ApplicationManager;
 
-public class TestBaseHelper {
+abstract class TestBaseHelper {
 
 	// Inti App Manager and set browser type in local runs
 	protected static final ApplicationManager APP = new ApplicationManager(

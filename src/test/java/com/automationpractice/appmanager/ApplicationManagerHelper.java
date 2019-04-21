@@ -10,7 +10,7 @@ import org.openqa.selenium.WebDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class ApplicationManagerHelper {
+abstract public class ApplicationManagerHelper {
 	private ApplicationManager app;
 	private Properties properties;
 	private WebDriver wd;

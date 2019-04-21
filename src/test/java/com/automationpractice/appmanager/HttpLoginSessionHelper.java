@@ -6,10 +6,10 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.fluent.Form;
 import org.apache.http.client.fluent.Request;
 
-public class HttpLoginSessionHelper extends HttpSessionHelper {
+abstract class HttpLoginSessionHelper extends HttpSessionHelper {
 
 	// loginWithErrorHandling Method
-		protected String createFluentPostRequestUsingEmailWith(String email, String password, String property)
+		protected String createFluentPostRequestWith(String email, String password, String property)
 				throws ClientProtocolException, IOException {
 			String content = Request
 					.Post(property + "index.php?controller=authentication").bodyForm(Form.form().add("email", email)
@@ -17,7 +17,5 @@ public class HttpLoginSessionHelper extends HttpSessionHelper {
 					.execute().returnContent().asString();
 			return content;
 		}
-
-		
 
 }

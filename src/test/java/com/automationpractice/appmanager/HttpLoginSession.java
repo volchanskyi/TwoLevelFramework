@@ -21,7 +21,7 @@ public class HttpLoginSession extends HttpLoginSessionHelper {
 	}
 	
 	public boolean loginWithErrorHandling(String email, String password, String errorMsg) throws IOException {
-		String content = createFluentPostRequestUsingEmailWith(email, password, getApp().getProperty("web.baseUrl"));
+		String content = createFluentPostRequestWith(email, password, getApp().getProperty("web.baseUrl"));
 		return content.contains(errorMsg);
 
 	}

@@ -44,11 +44,10 @@ public class HttpWishListSession extends HttpWishListSessionHelper {
 			throws IOException, URISyntaxException {
 		URIBuilder getRequest = new URIBuilder(getApp().getProperty("web.baseUrl") + "modules/blockwishlist/cart.php");
 		// query string params
-		addStringParamsUsingPdpInfoWith(products, credentials, getRequest, String.valueOf(this.getRand()),
+		setQueryParameter(products, credentials, getRequest, String.valueOf(this.getRand()),
 				String.valueOf((getTimeStamp().getTime())));
 		// request header
-		String[][] headerParams = createHeaderParamsUsingPdpIndoWith(products,
-				getCookieValue(getCookieStore(), this.getWebCookie()));
+		String[][] headerParams = setHeaderParameters(products, getCookieValue(getCookieStore(), this.getWebCookie()));
 		HttpGet get = createGetRequestWithParams(getRequest.toString(), headerParams);
 		CloseableHttpResponse response = getHttpClient().execute(get, this.getContext());
 		isHttpStatusCode(200, response);
@@ -59,9 +58,9 @@ public class HttpWishListSession extends HttpWishListSessionHelper {
 			throws ClientProtocolException, IOException, URISyntaxException {
 		URIBuilder getRequest = new URIBuilder(getApp().getProperty("web.baseUrl"));
 		// query string params
-		addStringParamsUsingWishListInfoWith(getRequest);
+		setQueryParameter(getRequest);
 		// request header
-		String[][] headerParams = createHeaderParamsToAcceptJson();
+		String[][] headerParams = setHeaderParamsToAcceptHtml();
 		HttpGet get = createGetRequestWithParams(getRequest.toString(), headerParams);
 		CloseableHttpResponse response = getHttpClient().execute(get, this.getContext());
 		isHttpStatusCode(200, response);
@@ -76,9 +75,9 @@ public class HttpWishListSession extends HttpWishListSessionHelper {
 			throws URISyntaxException, ClientProtocolException, IOException {
 		URIBuilder getRequest = new URIBuilder(getApp().getProperty("web.baseUrl"));
 		// query string params
-		addStringParamsUsingWishListWithAddedProductInfoWith(getRequest, this.getRand(), wishListId, getTimeStamp());
+		setQueryParamenter(getRequest, this.getRand(), wishListId, getTimeStamp());
 		// request header
-		String[][] headerParams = createHeaderParamsToAcceptJson();
+		String[][] headerParams = setHeaderParamsToAcceptJson("cache-control", "no-cache", "Connection", "keep-alive");
 		HttpGet get = createGetRequestWithParams(getRequest.toString(), headerParams);
 		CloseableHttpResponse response = getHttpClient().execute(get, this.getContext());
 		isHttpStatusCode(200, response);

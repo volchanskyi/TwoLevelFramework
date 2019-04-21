@@ -13,22 +13,20 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 
-public class HttpCartSessionHelper extends HttpSessionHelper {
-
-	protected String[][] createHeaderParamsToAcceptJsonUsingCookieWith(String cookieValue) {
-		String[][] headerParams = { { "Accept", "application/json, text/javascript, */*; q=0.01" },
-				{ "Content-Type", "application/x-www-form-urlencoded; charset=UTF-8" }, { "cache-control", "no-cache" },
-				{ "X-Requested-With", "XMLHttpRequest" }, { "Cookie", cookieValue } };
-		return headerParams;
+abstract class HttpCartSessionHelper extends HttpSessionHelper {
+	
+	@Override
+	protected String[][] setHeaderParameters(String cookieValue) {
+		return setHeaderParamsToAcceptJson("Cookie", cookieValue, "Connection", "keep-alive");
 	}
 
-	protected String[][] createBodyParamsForAddProductToCartMethod(String id, String quantity, String token) {
+	protected String[][] setBodyParameters(String id, String quantity, String token) {
 		String[][] bodyParams = { { "controller", "cart" }, { "add", "1" }, { "ajax", "true" }, { "qty", quantity },
 				{ "id_product", id }, { "token", token } };
 		return bodyParams;
 	}
 
-	protected void createFluentPostRequestUsingTokenWith(String token, String id, String ipa, String property, int rand,
+	protected void createFluentPostRequest(String token, String id, String ipa, String property, int rand,
 			String cookie) throws ClientProtocolException, IOException {
 		Request.Post(property + "index.php?rand=" + rand)
 				.addHeader("Accept", "application/json, text/javascript, */*; q=0.01")
@@ -47,7 +45,7 @@ public class HttpCartSessionHelper extends HttpSessionHelper {
 				for (JsonElement jSo : jsonArray) {
 					String id = jSo.getAsJsonObject().get("id").getAsString();
 					String ipa = jSo.getAsJsonObject().get("idCombination").getAsString();
-					createFluentPostRequestUsingTokenWith(token, id, ipa, property, rand, webCookie);
+					createFluentPostRequest(token, id, ipa, property, rand, webCookie);
 
 				}
 			}
@@ -78,7 +76,7 @@ public class HttpCartSessionHelper extends HttpSessionHelper {
 		return null;
 	}
 
-	protected String createFluentPostRequestUsingProductInfoWith(Products newProduct, String property, int rand,
+	protected String createFluentPostRequestWith(Products newProduct, String property, int rand,
 			String cookieValue) throws ClientProtocolException, IOException {
 		String json = Request.Post(property + "index.php?rand=" + rand)
 				.addHeader("Accept", "application/json, text/javascript, */*; q=0.01")
@@ -91,7 +89,7 @@ public class HttpCartSessionHelper extends HttpSessionHelper {
 		return json;
 	}
 
-	protected String createFluentPostRequestUsingTokenWith(String token, String property, int rand, String cookie)
+	protected String createFluentPostRequestWith(String token, String property, int rand, String cookie)
 			throws ClientProtocolException, IOException {
 		String json = Request.Post(property + "index.php?rand=" + rand)
 				.addHeader("Accept", "application/json, text/javascript, */*; q=0.01")

@@ -25,7 +25,7 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.safari.SafariDriver;
 
-public class WebDriverWorker extends ApplicationManagerHelper {
+abstract class WebDriverWorker extends ApplicationManagerHelper {
 
 	public WebDriver initWebDriver() throws SessionNotCreatedException {
 		// Load locators
