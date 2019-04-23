@@ -1,6 +1,6 @@
 package com.automationpractice.model;
 
-public class LigalCredentials implements LigalCreds {
+public class LigalCredentials implements LigarCredentialsInterface {
 
 	/*
 	 * (non-Javadoc)

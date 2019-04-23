@@ -1,6 +1,6 @@
 package com.automationpractice.model;
 
-public class RegistrationFormData implements RegFormData {
+public class RegistrationFormData implements RegistrationFormDataInterface {
 
 	/*
 	 * (non-Javadoc)

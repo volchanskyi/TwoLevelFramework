@@ -44,7 +44,7 @@ public class HttpWishListSession extends HttpWishListSessionHelper {
 			throws IOException, URISyntaxException {
 		URIBuilder getRequest = new URIBuilder(getApp().getProperty("web.baseUrl") + "modules/blockwishlist/cart.php");
 		// query string params
-		setQueryParameter(products, credentials, getRequest, String.valueOf(this.getRand()),
+		setQueryParameters(getRequest, String.valueOf(this.getRand()), products, credentials,
 				String.valueOf((getTimeStamp().getTime())));
 		// request header
 		String[][] headerParams = setHeaderParameters(products, getCookieValue(getCookieStore(), this.getWebCookie()));
@@ -75,7 +75,7 @@ public class HttpWishListSession extends HttpWishListSessionHelper {
 			throws URISyntaxException, ClientProtocolException, IOException {
 		URIBuilder getRequest = new URIBuilder(getApp().getProperty("web.baseUrl"));
 		// query string params
-		setQueryParamenter(getRequest, this.getRand(), wishListId, getTimeStamp());
+		setQueryParamenters(getRequest, this.getRand(), wishListId, getTimeStamp());
 		// request header
 		String[][] headerParams = setHeaderParamsToAcceptJson("cache-control", "no-cache", "Connection", "keep-alive");
 		HttpGet get = createGetRequestWithParams(getRequest.toString(), headerParams);

@@ -1,6 +1,6 @@
 package com.automationpractice.model;
 
-public class Products implements Prods{
+public class Products implements ProductsInterface{
 
     /* (non-Javadoc)
 	 * @see com.automationpractice.model.Prods#hashCode()

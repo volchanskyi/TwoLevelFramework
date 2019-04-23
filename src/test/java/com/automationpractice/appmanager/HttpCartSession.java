@@ -34,7 +34,7 @@ public class HttpCartSession extends HttpCartSessionHelper {
 		// query string params
 		postRequest.setParameter("rand", String.valueOf(this.getRand()));
 		// request header
-		String[][] headerParams = setHeaderParameters(
+		String[][] headerParams = setHeaderParameter(
 				getCookieValue(getCookieStore(), this.getWebCookie()));
 		// Form Data
 		String[][] bodyParams = setBodyParameters(id, quantity, token);
@@ -53,7 +53,7 @@ public class HttpCartSession extends HttpCartSessionHelper {
 		URIBuilder postRequest = new URIBuilder(getApp().getProperty("web.baseUrl") + "index.php");
 		// query string params
 		postRequest.setParameter("rand", String.valueOf(this.getRand()));
-		String[][] headerParams = setHeaderParameters(
+		String[][] headerParams = setHeaderParameter(
 				getCookieValue(getCookieStore(), this.getWebCookie()));
 		// Form Data
 		String[][] bodyParams = { { "controller", "cart" }, { "ajax", "true" }, { "token", token } };

@@ -16,8 +16,8 @@ public class TestDataProviders extends TestDataObjectGenerator {
 	// **************INVALID/ILLEGAL TEST DATA********************//
 
 	@DataProvider(name = "illegalCredentials")
-	protected static Object[][] getIlligalCredentials() {
-		Object[][] generatedTestData = new Object[20][2];
+	protected static String[][] getIlligalCredentials() {
+		String[][] generatedTestData = new String[20][2];
 		// loop over 2D array
 		for (int row = 0; row < generatedTestData.length; row++) {
 			generatedTestData[row] = generateValidFormatCredentials();
@@ -26,8 +26,8 @@ public class TestDataProviders extends TestDataObjectGenerator {
 	}
 
 	@DataProvider(name = "invalidEmail")
-	protected static Object[] generateInvalidEmail() {
-		Object[] generatedTestData = new Object[40];
+	protected static String[] generateInvalidEmail() {
+		String[] generatedTestData = new String[40];
 		// loop over 2D array
 		for (int row = 0; row < generatedTestData.length; row++) {
 			generatedTestData[row] = generateInvalidFormatEmails();
@@ -36,8 +36,8 @@ public class TestDataProviders extends TestDataObjectGenerator {
 	}
 
 	@DataProvider(name = "invalidPasswordAndValidEmail")
-	protected static Object[][] generateInvalidPasswordAndValidEmail() {
-		Object[][] generatedTestData = new Object[20][2];
+	protected static String[][] generateInvalidPasswordAndValidEmail() {
+		String[][] generatedTestData = new String[20][2];
 		// loop over 2D array
 		for (int row = 0; row < generatedTestData.length; row++) {
 			generatedTestData[row][0] = generateValidFormatEmails();
@@ -47,8 +47,8 @@ public class TestDataProviders extends TestDataObjectGenerator {
 	}
 
 	@DataProvider(name = "invalidEmailAndValidPassword")
-	protected static Object[][] generateInvalidEmailAndValidPassword() {
-		Object[][] generatedTestData = new Object[20][2];
+	protected static String[][] generateInvalidEmailAndValidPassword() {
+		String[][] generatedTestData = new String[20][2];
 		// loop over 2D array
 		for (int row = 0; row < generatedTestData.length; row++) {
 			generatedTestData[row][0] = generateInvalidFormatEmails();

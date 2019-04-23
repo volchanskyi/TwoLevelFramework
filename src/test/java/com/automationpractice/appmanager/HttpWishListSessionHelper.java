@@ -9,15 +9,17 @@ import com.automationpractice.model.Products;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonSyntaxException;
 
-public class HttpWishListSessionHelper extends HttpSessionHelper {
+public class HttpWishListSessionHelper extends HttpSessionHelper
+		implements HttpQueryParameterInterface, HttpHeaderParametersInterface, HttpQueryParametersInterface {
 
 	@Override
-	protected void setQueryParameter(URIBuilder getRequest) {
+	public void setQueryParameter(URIBuilder getRequest) {
 		getRequest.setParameter("fc", "module").setParameter("module", "blockwishlist").setParameter("controller",
 				"mywishlist");
 	}
-
-	protected void setQueryParamenter(URIBuilder getRequest, int rand, String wishListId, Timestamp timeStamp) {
+	
+	@Override
+	public void setQueryParamenters(URIBuilder getRequest, int rand, String wishListId, Timestamp timeStamp) {
 		try {
 			if (!wishListId.isEmpty() & wishListId.length() != 0) {
 				getRequest.setParameter("fc", "module").setParameter("module", "blockwishlist")
@@ -31,8 +33,9 @@ public class HttpWishListSessionHelper extends HttpSessionHelper {
 		}
 	}
 
-	protected void setQueryParameter(Products products, LigalCredentials credentials, URIBuilder getRequest,
-			String rand, String timestamp) {
+	@Override
+	public void setQueryParameters(URIBuilder getRequest, String rand, Products products,
+			LigalCredentials credentials, String timestamp) {
 		getRequest.setParameter("rand", rand).setParameter("action", "add")
 				.setParameter("id_product", String.valueOf(products.getId()))
 				.setParameter("quantity", String.valueOf(products.getQuantity()))
@@ -71,7 +74,7 @@ public class HttpWishListSessionHelper extends HttpSessionHelper {
 	}
 
 	@Override
-	protected String[][] setHeaderParameters(Products products, String cookieValue) {
+	public String[][] setHeaderParameters(Products products, String cookieValue) {
 		return setHeaderParamsToAcceptJson("Cookie", cookieValue, "Referer",
 				"http://automationpractice.com/index.php?id_product=" + String.valueOf(products.getId())
 						+ "&controller=product");

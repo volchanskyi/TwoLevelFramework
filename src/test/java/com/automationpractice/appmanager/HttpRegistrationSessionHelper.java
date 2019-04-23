@@ -12,7 +12,8 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonSyntaxException;
 
-abstract class HttpRegistrationSessionHelper extends HttpSessionHelper {
+abstract class HttpRegistrationSessionHelper extends HttpSessionHelper
+		implements HttpHeaderParameterInterface, HttpBodyParametersInterface {
 
 	// requestForRegisterExistedAccountWithApiUsing Method
 	protected String createFluentPostRequestWith(String email, String property)
@@ -26,7 +27,7 @@ abstract class HttpRegistrationSessionHelper extends HttpSessionHelper {
 
 	// signUpWith Method
 	@Override
-	protected String[][] setBodyParameters(String email) {
+	public String[][] setBodyParameters(String email) {
 		String[][] bodyParams = { { "controller", "authentication" }, { "SubmitCreate", "1" }, { "ajax", "true" },
 				{ "email_create", email }, { "back", "my-account" }, { "token", "ce65cefcbafad255f0866d3b32d32058" } };
 		return bodyParams;
@@ -34,7 +35,7 @@ abstract class HttpRegistrationSessionHelper extends HttpSessionHelper {
 
 	// registerWith Method
 	@Override
-	protected String[][] setBodyParameters(RegistrationFormData formData) {
+	public String[][] setBodyParameters(RegistrationFormData formData) {
 		String[][] bodyParams = { { "customer_firstname", formData.getFirstName() },
 				{ "customer_lastname", formData.getLastName() }, { "email", formData.getEmail() },
 				{ "passwd", formData.getPassword() }, { "firstname", formData.getFirstName() },
@@ -56,9 +57,10 @@ abstract class HttpRegistrationSessionHelper extends HttpSessionHelper {
 		return bodyParams;
 	}
 
+	// For creating emails ONLY (overrides "Host" parameter)
 	@Override
-	protected String[][] setHeaderParameters(String property) {
-		return setHeaderParamsToAcceptJson("Authorization", property, "Connection", "keep-alive");
+	public String[][] setHeaderParameter(String property) {
+		return setHeaderParamsToAcceptJson("Authorization", property, "Host", "www.guerrillamail.com");
 	}
 
 	// verifyActivationLink Method

@@ -13,10 +13,10 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 
-abstract class HttpCartSessionHelper extends HttpSessionHelper {
-	
+class HttpCartSessionHelper extends HttpSessionHelper implements HttpHeaderParameterInterface {
+
 	@Override
-	protected String[][] setHeaderParameters(String cookieValue) {
+	public String[][] setHeaderParameter(String cookieValue) {
 		return setHeaderParamsToAcceptJson("Cookie", cookieValue, "Connection", "keep-alive");
 	}
 
@@ -76,8 +76,8 @@ abstract class HttpCartSessionHelper extends HttpSessionHelper {
 		return null;
 	}
 
-	protected String createFluentPostRequestWith(Products newProduct, String property, int rand,
-			String cookieValue) throws ClientProtocolException, IOException {
+	protected String createFluentPostRequestWith(Products newProduct, String property, int rand, String cookieValue)
+			throws ClientProtocolException, IOException {
 		String json = Request.Post(property + "index.php?rand=" + rand)
 				.addHeader("Accept", "application/json, text/javascript, */*; q=0.01")
 				.addHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8")

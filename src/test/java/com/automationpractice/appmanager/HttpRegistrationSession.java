@@ -8,7 +8,6 @@ import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.utils.URIBuilder;
-import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.client.LaxRedirectStrategy;
 
@@ -32,7 +31,8 @@ public class HttpRegistrationSession extends HttpRegistrationSessionHelper {
 	public boolean signUpWith(RegistrationFormData registrationFormData) throws IOException, URISyntaxException {
 		URIBuilder postRequest = new URIBuilder(getApp().getProperty("web.baseUrl") + "index.php");
 		// header params
-		String[][] headerParams = setHeaderParamsToAcceptJson("Connection", "keep-alive", "", "");
+		String[][] headerParams = setHeaderParamsToAcceptJson("Connection", "keep-alive", "Accept-Encoding",
+				"gzip, deflate");
 		// Form Data
 		String[][] bodyParams = setBodyParameters(registrationFormData.getEmail());
 		HttpPost post = createPostRequestWithParams(postRequest.toString(), headerParams);
@@ -73,7 +73,7 @@ public class HttpRegistrationSession extends HttpRegistrationSessionHelper {
 		// query string params
 		postRequest.setParameter("f", "set_email_user");
 		// request header
-		String[][] headerParams = setHeaderParameters(getApp().getProperty("web.emailGeneratorApiToken"));
+		String[][] headerParams = setHeaderParameter(getApp().getProperty("web.emailGeneratorApiToken"));
 		// Form Data
 		String[][] bodyParams = getBodyParamsUsingEmailNameWith(email);
 		HttpPost post = createPostRequestWithParams(postRequest.toString(), headerParams);
@@ -99,7 +99,7 @@ public class HttpRegistrationSession extends HttpRegistrationSessionHelper {
 		URIBuilder getRequest = new URIBuilder(getApp().getProperty("web.emailGenerator") + "/ajax.php");
 		// query string params
 		setQueryParameters(email, getRequest, String.valueOf(getTimeStamp().getTime()));
-		String[][] headerParams = setHeaderParameters(getApp().getProperty("web.emailGeneratorApiToken"));
+		String[][] headerParams = setHeaderParameter(getApp().getProperty("web.emailGeneratorApiToken"));
 		HttpGet get = createGetRequestWithParams(getRequest.toString(), headerParams);
 		CloseableHttpResponse response = this.getHttpClient().execute(get, this.getContext());
 		isHttpStatusCode(200, response);

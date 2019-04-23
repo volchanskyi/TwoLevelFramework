@@ -31,7 +31,7 @@ public class HttpLoginSession extends HttpLoginSessionHelper {
 		// query string params
 		getRequest.setParameter("controller", "my-account");
 		// request header
-		String[][] headerParams = { { "Host", "automationpractice.com" } };
+		String[][] headerParams = setHeaderParamsToAcceptHtml();
 		HttpGet get = createGetRequestWithParams(getRequest.toString(), headerParams);
 		CloseableHttpResponse response = this.getHttpClient().execute(get, this.getContext());
 		isHttpStatusCode(200, response);
