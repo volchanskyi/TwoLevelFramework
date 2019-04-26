@@ -8,7 +8,7 @@ import com.automationpractice.model.RegistrationFormData;
 
 public class RegistrationHelper extends HelperBase {
 
-	public RegistrationHelper(ApplicationManager app) throws MalformedURLException {
+	RegistrationHelper(ApplicationManager app) throws MalformedURLException {
 		super(app);
 
 	}

@@ -13,7 +13,7 @@ import com.automationpractice.model.LigalCredentials;
 
 public class HttpLoginSession extends HttpLoginSessionHelper {
 
-	public HttpLoginSession(ApplicationManager app) {
+	HttpLoginSession(ApplicationManager app) {
 		this.setApp(app);
 		this.getContext().setCookieStore(getCookieStore());
 		// Enable following REDIRECTIONS (302) on POST

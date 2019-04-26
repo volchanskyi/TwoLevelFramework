@@ -9,7 +9,7 @@ import com.automationpractice.model.Products;
 
 public class HttpSearchProductSession extends HttpSearchSessionHelper {
 
-	public HttpSearchProductSession(ApplicationManager app) {
+	HttpSearchProductSession(ApplicationManager app) {
 		this.setApp(app);
 		this.getContext().setCookieStore(getCookieStore());
 		// Enable following REDIRECTIONS (302) on POST

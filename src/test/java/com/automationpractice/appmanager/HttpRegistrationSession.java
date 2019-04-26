@@ -19,7 +19,7 @@ import com.google.gson.JsonSyntaxException;
 
 public class HttpRegistrationSession extends HttpRegistrationSessionHelper {
 
-	public HttpRegistrationSession(ApplicationManager app) {
+	HttpRegistrationSession(ApplicationManager app) {
 		this.setApp(app);
 		this.getContext().setCookieStore(getCookieStore());
 		// Enable following REDIRECTIONS (302) on POST

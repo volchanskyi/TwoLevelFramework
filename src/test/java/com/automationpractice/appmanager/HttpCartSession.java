@@ -21,7 +21,7 @@ import com.google.gson.reflect.TypeToken;
 
 public class HttpCartSession extends HttpCartSessionHelper {
 
-	public HttpCartSession(ApplicationManager app) {
+	HttpCartSession(ApplicationManager app) {
 		this.setApp(app);
 		this.getContext().setCookieStore(getCookieStore());
 		// Enable following REDIRECTIONS (302) on POST

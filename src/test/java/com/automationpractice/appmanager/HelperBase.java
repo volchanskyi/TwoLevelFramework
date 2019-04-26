@@ -17,11 +17,11 @@ public class HelperBase {
 	private WebDriver wd;
 	private WebDriverWait wait;
 
-	public HelperBase(ApplicationManager app) throws MalformedURLException {
+	HelperBase(ApplicationManager app) throws MalformedURLException {
 		this.app = app;
 		this.setWd(app.initWebDriver());
 		// Assure all browsers have the same screen resolution and starting point (for
-		// GUI tests)
+		// UI tests)
 		this.getWd().manage().window().setPosition(new Point(0, 0));
 		this.getWd().manage().window().setSize(new Dimension(1280, 1024));
 		// set EXPLICIT timeouts

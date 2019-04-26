@@ -18,7 +18,7 @@ import com.google.gson.JsonSyntaxException;
 
 public class HttpWishListSession extends HttpWishListSessionHelper {
 
-	public HttpWishListSession(ApplicationManager app) {
+	HttpWishListSession(ApplicationManager app) {
 		this.setApp(app);
 		this.getContext().setCookieStore(getCookieStore());
 		// Enable following REDIRECTIONS (302) on POST
