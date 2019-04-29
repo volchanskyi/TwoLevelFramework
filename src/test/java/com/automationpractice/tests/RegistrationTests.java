@@ -59,11 +59,6 @@ public class RegistrationTests extends TestBase {
 		String myAccountPageTitle = "My account - My Store";
 		// String link = "https://blablabla"; (not implemented yet) DO NOT DELETE
 		RegistrationHelper regHelper = APP.newRegistrationSessionUI();
-		// HttpSession session = APP.newSession();
-		// assertTrue(session.createEmail(email));
-		// assertTrue(session.signUp(email + "@mailinator.com"));
-		// assertTrue(session.verifyActivationLink(link)); (automationpractice.com
-		// doesn`t send an activation link) DO NOT DELETE
 		regHelper.initRegistrationUsingEmailWith(registrationFormData.getEmail())
 				.fillOutRegistrationFormWith(registrationFormData);
 		assertTrue(regHelper.verifyWithTitle(myAccountPageTitle));
