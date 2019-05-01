@@ -17,7 +17,7 @@ public class HttpWishListSessionHelper extends HttpSessionHelper
 		getRequest.setParameter("fc", "module").setParameter("module", "blockwishlist").setParameter("controller",
 				"mywishlist");
 	}
-	
+
 	@Override
 	public void setQueryParamenters(URIBuilder getRequest, int rand, String wishListId, Timestamp timeStamp) {
 		try {
@@ -34,8 +34,8 @@ public class HttpWishListSessionHelper extends HttpSessionHelper
 	}
 
 	@Override
-	public void setQueryParameters(URIBuilder getRequest, String rand, Products products,
-			LigalCredentials credentials, String timestamp) {
+	public void setQueryParameters(URIBuilder getRequest, String rand, Products products, LigalCredentials credentials,
+			String timestamp) {
 		getRequest.setParameter("rand", rand).setParameter("action", "add")
 				.setParameter("id_product", String.valueOf(products.getId()))
 				.setParameter("quantity", String.valueOf(products.getQuantity()))

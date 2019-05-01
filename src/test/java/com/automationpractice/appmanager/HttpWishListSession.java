@@ -14,7 +14,6 @@ import com.automationpractice.model.LigalCredentials;
 import com.automationpractice.model.Products;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
-import com.google.gson.JsonSyntaxException;
 
 public class HttpWishListSession extends HttpWishListSessionHelper {
 
@@ -23,21 +22,6 @@ public class HttpWishListSession extends HttpWishListSessionHelper {
 		this.getContext().setCookieStore(getCookieStore());
 		// Enable following REDIRECTIONS (302) on POST
 		this.setHttpClient(HttpClients.custom().setRedirectStrategy(new LaxRedirectStrategy()).build());
-	}
-
-	public boolean navigateToPdpUsing(Products products)
-			throws JsonSyntaxException, IOException, IllegalStateException, URISyntaxException {
-		URIBuilder getRequest = new URIBuilder(getApp().getProperty("web.baseUrl") + "index.php");
-		// query string params
-		getRequest.setParameter("id_product", String.valueOf(products.getId())).setParameter("controller", "product");
-		// request header
-		String[][] headerParams = { { "Cookie", getCookieValue(getCookieStore(), this.getWebCookie()) } };
-		HttpGet get = createGetRequestWithParams(getRequest.toString(), headerParams);
-		CloseableHttpResponse response = getHttpClient().execute(get, this.getContext());
-		isHttpStatusCode(200, response);
-		String body = getTextFrom(response);
-		return body.toLowerCase()
-				.contains(String.format("<title>%s</title>", products.getProductName() + " - my store"));
 	}
 
 	public String addProductToWishListUsing(Products products, LigalCredentials credentials)

@@ -5,13 +5,16 @@ import java.net.URISyntaxException;
 
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.utils.URIBuilder;
 
 import com.automationpractice.model.LigalCredentials;
+import com.automationpractice.model.Products;
+import com.google.gson.JsonSyntaxException;
 
 //Helper Class with Low Level Implementations
-abstract class HttpSessionHelper extends HttpProtocolHelper implements LoginWithCredentialsInterface {
+abstract class HttpSessionHelper extends HttpProtocolHelper implements LoginWithCredentialsInterface, NavigateToPdpInterface {
 
 	final protected String[][] setHeaderParamsToAcceptHtml() {
 		String[][] headerParams = { { "Accept", "text/html,application/xhtml+xml,application/xml" },
@@ -49,5 +52,21 @@ abstract class HttpSessionHelper extends HttpProtocolHelper implements LoginWith
 		isHttpStatusCode(200, response);
 		return body.contains(String.format("<title>%s</title>", pageTitle));
 	}
+	
+	@Override
+	final public boolean navigateToPdpUsing(Products products)
+			throws JsonSyntaxException, IOException, IllegalStateException, URISyntaxException {
+				URIBuilder getRequest = new URIBuilder(getApp().getProperty("web.baseUrl") + "index.php");
+				// query string params
+				getRequest.setParameter("id_product", String.valueOf(products.getId())).setParameter("controller", "product");
+				// request header
+				String[][] headerParams = { { "Cookie", getCookieValue(getCookieStore(), this.getWebCookie()) } };
+				HttpGet get = createGetRequestWithParams(getRequest.toString(), headerParams);
+				CloseableHttpResponse response = getHttpClient().execute(get, this.getContext());
+				isHttpStatusCode(200, response);
+				String body = getTextFrom(response);
+				return body.toLowerCase()
+						.contains(String.format("<title>%s</title>", products.getProductName() + " - my store"));
+			}
 
 }
