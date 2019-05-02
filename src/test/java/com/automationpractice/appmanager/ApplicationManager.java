@@ -38,7 +38,7 @@ public class ApplicationManager extends WebDriverWorker {
 			try {
 				setRegistrationHelper(new RegistrationHelper(this));
 			} catch (MalformedURLException e) {
-				appManagerlogger.error(e.toString());
+				APP_MANAGER_LOGGER.error(e.toString());
 			}
 		}
 		return getRegistrationHelper();

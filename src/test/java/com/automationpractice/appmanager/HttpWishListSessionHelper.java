@@ -29,7 +29,7 @@ public class HttpWishListSessionHelper extends HttpSessionHelper
 				return;
 			}
 		} catch (IllegalArgumentException e) {
-			httpSessionlogger.error(e.toString());
+			HTTP_SESSION_LOGGER.error(e.toString());
 		}
 	}
 
@@ -49,7 +49,7 @@ public class HttpWishListSessionHelper extends HttpSessionHelper
 					: false;
 			return !wishlistProductsIds;
 		} catch (JsonSyntaxException e) {
-			httpSessionlogger.error(e.toString());
+			HTTP_SESSION_LOGGER.error(e.toString());
 		}
 		return false;
 	}
@@ -68,7 +68,7 @@ public class HttpWishListSessionHelper extends HttpSessionHelper
 			} else
 				return false;
 		} catch (JsonSyntaxException e) {
-			httpSessionlogger.error(e.toString());
+			HTTP_SESSION_LOGGER.error(e.toString());
 		}
 		return false;
 	}

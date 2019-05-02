@@ -28,7 +28,7 @@ abstract class HttpProtocolHelper {
 	private CloseableHttpResponse httpResponse;
 
 	// Init Logger for TestBase.class
-	final protected Logger httpSessionlogger = LoggerFactory.getLogger(HttpProtocolHelper.class);
+	protected static final Logger HTTP_SESSION_LOGGER = LoggerFactory.getLogger(HttpProtocolHelper.class);
 
 	private ApplicationManager app;
 
@@ -44,7 +44,7 @@ abstract class HttpProtocolHelper {
 
 	private String webCookie;
 
-	protected String getTextFrom(CloseableHttpResponse response) throws IOException {
+	protected static String getTextFrom(CloseableHttpResponse response) throws IOException {
 		try {
 			return EntityUtils.toString(response.getEntity());
 		} finally {
@@ -62,17 +62,17 @@ abstract class HttpProtocolHelper {
 			matcher.find();
 			return matcher.group(1);
 		} catch (IllegalStateException e) {
-			httpSessionlogger.error(e.toString());
+			HTTP_SESSION_LOGGER.error(e.toString());
 		}
 		return "Couldn`t find RegEx pattern";
 
 	}
 
-	protected Executor getExecutor(CloseableHttpClient httpClient) {
+	protected static Executor getExecutor(CloseableHttpClient httpClient) {
 		return Executor.newInstance(httpClient);
 	}
 
-	protected ArrayList<NameValuePair> createHttpBodyParamsWith(String paramPairs[][]) {
+	protected static ArrayList<NameValuePair> createHttpBodyParamsWith(String paramPairs[][]) {
 		ArrayList<NameValuePair> params = new ArrayList<>();
 		for (int row = 0; row < paramPairs.length; row++) {
 			params.add(new BasicNameValuePair(paramPairs[row][0], paramPairs[row][1]));
@@ -80,7 +80,7 @@ abstract class HttpProtocolHelper {
 		return params;
 	}
 
-	protected HttpPost createPostRequestWithParams(String post, String[][] params) {
+	protected static HttpPost createPostRequestWithParams(String post, String[][] params) {
 		HttpPost postWithParams = new HttpPost(post);
 		for (int row = 0; row < params.length; row++) {
 			postWithParams.setHeader(params[row][0], params[row][1]);
@@ -88,7 +88,7 @@ abstract class HttpProtocolHelper {
 		return postWithParams;
 	}
 
-	protected HttpGet createGetRequestWithParams(String get, String[][] params) {
+	protected static HttpGet createGetRequestWithParams(String get, String[][] params) {
 		HttpGet getWithParams = new HttpGet(get);
 		for (int row = 0; row < params.length; row++) {
 			getWithParams.setHeader(params[row][0], params[row][1]);
@@ -105,7 +105,7 @@ abstract class HttpProtocolHelper {
 			} else
 				return statusCode == response.getStatusLine().getStatusCode();
 		} catch (Exception e) {
-			httpSessionlogger.error(e.toString());
+			HTTP_SESSION_LOGGER.error(e.toString());
 		}
 		return false;
 	}
@@ -113,7 +113,7 @@ abstract class HttpProtocolHelper {
 	public String getCartToken() {
 		return getApp().getProperty("web.cartToken");
 	}
-	
+
 	public String getRegisteredCartToken() {
 		return getApp().getProperty("web.registeredCartToken");
 	}
@@ -162,7 +162,7 @@ abstract class HttpProtocolHelper {
 		this.setWebCookie(cookie);
 	}
 
-	public String getCookieValue(CookieStore cookieStore, String cookieName) {
+	public static String getCookieValue(CookieStore cookieStore, String cookieName) {
 		String value = null;
 		for (Cookie cookie : cookieStore.getCookies()) {
 			if (cookie.getName().equals(cookieName)) {

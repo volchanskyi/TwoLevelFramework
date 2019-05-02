@@ -16,7 +16,7 @@ abstract class TestBaseHelper {
 			System.getProperty("browser", BrowserType.CHROME));
 
 	// Init Logger for TestBase.class
-	final protected Logger testBaseLogger = LoggerFactory.getLogger(TestBase.class);
+	 protected static final Logger TEST_BASE_LOGGER = LoggerFactory.getLogger(TestBase.class);
 
 	// Check "Debug" property value
 	protected boolean isDebugTestsEnabled() {
@@ -29,9 +29,9 @@ abstract class TestBaseHelper {
 			else
 				return false;
 		} catch (InvalidParameterException e) {
-			testBaseLogger.error(e.toString());
+			TEST_BASE_LOGGER.error(e.toString());
 		} catch (IllegalArgumentException e) {
-			testBaseLogger.error(e.toString());
+			TEST_BASE_LOGGER.error(e.toString());
 		}
 		return false;
 

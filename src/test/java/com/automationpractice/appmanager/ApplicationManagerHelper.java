@@ -18,7 +18,7 @@ abstract public class ApplicationManagerHelper {
 	private RegistrationHelper registrationHelper;
 
 	// Init Logger for ApplicationManager.class
-	final protected Logger appManagerlogger = LoggerFactory.getLogger(ApplicationManager.class);
+	final static protected Logger APP_MANAGER_LOGGER = LoggerFactory.getLogger(ApplicationManager.class);
 
 	// Get property key from the file
 	public String getProperty(String key) {
@@ -31,9 +31,9 @@ abstract public class ApplicationManagerHelper {
 		try {
 			getProperties().load(new FileReader(new File(String.format("src/test/resources/%s.properties", target))));
 		} catch (FileNotFoundException e) {
-			appManagerlogger.error(e.toString());
+			APP_MANAGER_LOGGER.error(e.toString());
 		} catch (IOException e) {
-			appManagerlogger.error(e.toString());
+			APP_MANAGER_LOGGER.error(e.toString());
 		}
 	}
 

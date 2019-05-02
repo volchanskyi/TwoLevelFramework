@@ -33,11 +33,11 @@ abstract class WebDriverWorker extends ApplicationManagerHelper {
 			getProperties().load(new FileReader(new File(String.format("src/test/resources/locator.properties"))));
 		} catch (FileNotFoundException e) {
 			// If the the property file cant be found
-			appManagerlogger
+			APP_MANAGER_LOGGER
 					.error(e.toString() + " Check *.property file in the source folder. Was the build option passed?");
 		} catch (IOException e) {
 			// FS access error
-			appManagerlogger.error(e.toString());
+			APP_MANAGER_LOGGER.error(e.toString());
 		}
 		// If we dont use selenium server then run local browser
 		if ("".equals(getProperties().getProperty("selenium.server"))) {
@@ -73,14 +73,14 @@ abstract class WebDriverWorker extends ApplicationManagerHelper {
 				}
 			} catch (NullPointerException e) {
 				// If no/wrong build option passed
-				appManagerlogger
+				APP_MANAGER_LOGGER
 						.error(e.toString() + " | The browser wasn`t initialized. Check the build option presented");
 			} catch (IllegalStateException e) {
 				// the webdriver binary issue
-				appManagerlogger.error(e.toString()
+				APP_MANAGER_LOGGER.error(e.toString()
 						+ " | The browser wasn`t initialized. Check the webdriver presented / valid build option passed");
 			} catch (WebDriverException e) {
-				appManagerlogger.error(e.toString()
+				APP_MANAGER_LOGGER.error(e.toString()
 						+ " | Are you trying to run the build on the currently available platform/configuration?");
 			}
 		} else {
@@ -92,12 +92,12 @@ abstract class WebDriverWorker extends ApplicationManagerHelper {
 				setWd(new RemoteWebDriver(new URL(getProperties().getProperty("selenium.server")), capabilities));
 			} catch (WebDriverException e) {
 				// If there`s capability issue. Can`t start the remote webdriver
-				appManagerlogger.error(e.toString()
+				APP_MANAGER_LOGGER.error(e.toString()
 						+ " | Are you trying to run the build on the currently available platform/configuration?"
 						+ "| Are you trying to run the build locally? Was the build option passed?");
 			} catch (MalformedURLException e) {
 				// If loading property failed or no build option passed
-				appManagerlogger.error(
+				APP_MANAGER_LOGGER.error(
 						e.toString() + " | Most likely loading property file has failed. Was the build option passed?");
 			}
 		}

@@ -16,20 +16,20 @@ import com.google.gson.JsonSyntaxException;
 //Helper Class with Low Level Implementations
 abstract class HttpSessionHelper extends HttpProtocolHelper implements LoginWithCredentialsInterface, NavigateToPdpInterface {
 
-	final protected String[][] setHeaderParamsToAcceptHtml() {
+	final protected static String[][] setHeaderParamsToAcceptHtml() {
 		String[][] headerParams = { { "Accept", "text/html,application/xhtml+xml,application/xml" },
 				{ "Content-Type", "application/x-www-form-urlencoded" }, { "Host", "automationpractice.com" } };
 		return headerParams;
 	}
 
-	final protected String[][] setHeaderParamsToAcceptJson(String fOp, String fV, String sOp, String sV) {
+	final protected static String[][] setHeaderParamsToAcceptJson(String fOp, String fV, String sOp, String sV) {
 		String[][] basicHeaderParams = { { "Accept", "application/json, text/javascript, */*; q=0.01" },
 				{ "Host", "automationpractice.com" }, { fOp, fV }, { sOp, sV } };
 		return basicHeaderParams;
 	}
 
 	// Login and WishList helpers use this method
-	protected String[][] setBodyParameters(LigalCredentials credentials) {
+	protected static String[][] setBodyParameters(LigalCredentials credentials) {
 		String[][] bodyParams = { { "email", credentials.getEmail() }, { "passwd", credentials.getPassword() },
 				{ "back", "my-account" }, { "SubmitLogin", "" } };
 		return bodyParams;

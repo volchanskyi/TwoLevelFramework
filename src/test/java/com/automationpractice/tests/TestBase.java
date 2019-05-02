@@ -24,14 +24,14 @@ public class TestBase extends TestBaseHelper {
 	@BeforeMethod(alwaysRun = true)
 	public void logTestStart(Method method, Object[] parameters) throws Exception {
 		if (isDebugTestsEnabled() == true) {
-			testBaseLogger.debug("Start test {} with params {}", method.getName(), Arrays.asList(parameters));
+			TEST_BASE_LOGGER.debug("Start test {} with params {}", method.getName(), Arrays.asList(parameters));
 		}
 	}
 
 	@AfterMethod(alwaysRun = true)
 	public void logTestStop(Method method, Object[] parameters) throws Exception {
 		if (isDebugTestsEnabled() == true) {
-			testBaseLogger.debug("Stop test {}", method.getName());
+			TEST_BASE_LOGGER.debug("Stop test {}", method.getName());
 		}
 		return;
 	}
@@ -39,10 +39,10 @@ public class TestBase extends TestBaseHelper {
 	@AfterSuite(alwaysRun = true)
 	public void tearDown(ITestContext context) throws Exception {
 		Collection<ITestNGMethod> result = context.getFailedTests().getAllMethods();
-		testBaseLogger.error("{} Failed tests {}", result.size(), result);
-		testBaseLogger.warn("Retrieves information about the failed configuration method invocations  {}",
+		TEST_BASE_LOGGER.error("{} Failed tests {}", result.size(), result);
+		TEST_BASE_LOGGER.warn("Retrieves information about the failed configuration method invocations  {}",
 				Arrays.asList(context.getFailedConfigurations()));
-		testBaseLogger.info("The host where this test was run, or null if it was run locally. {}",
+		TEST_BASE_LOGGER.info("The host where this test was run, or null if it was run locally. {}",
 				Arrays.asList(context.getHost()));
 		APP.stop();
 	}

@@ -16,7 +16,7 @@ abstract class HttpRegistrationSessionHelper extends HttpSessionHelper
 		implements HttpHeaderParameterInterface, HttpBodyParametersInterface {
 
 	// requestForRegisterExistedAccountWithApiUsing Method
-	protected String createFluentPostRequestWith(String email, String property)
+	protected static String createFluentPostRequestWith(String email, String property)
 			throws ClientProtocolException, IOException {
 		String pageContent = Request.Post(property + "index.php?controller=authentication")
 				.bodyForm(Form.form().add("controller", "authentication").add("SubmitCreate", "1").add("ajax", "true")
@@ -83,9 +83,9 @@ abstract class HttpRegistrationSessionHelper extends HttpSessionHelper
 				}
 			}
 		} catch (JsonSyntaxException e) {
-			httpSessionlogger.error(e.toString());
+			HTTP_SESSION_LOGGER.error(e.toString());
 		} catch (IllegalArgumentException e) {
-			httpSessionlogger.error(e.toString());
+			HTTP_SESSION_LOGGER.error(e.toString());
 		}
 		return false;
 	}

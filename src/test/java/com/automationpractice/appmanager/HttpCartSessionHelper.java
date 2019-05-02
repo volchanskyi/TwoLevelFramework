@@ -50,13 +50,13 @@ class HttpCartSessionHelper extends HttpSessionHelper implements HttpHeaderParam
 				}
 			}
 		} catch (JsonSyntaxException e) {
-			httpSessionlogger.error(e.toString());
+			HTTP_SESSION_LOGGER.error(e.toString());
 		} catch (ClientProtocolException e) {
-			httpSessionlogger.error(e.toString());
+			HTTP_SESSION_LOGGER.error(e.toString());
 		} catch (IllegalArgumentException e) {
-			httpSessionlogger.error(e.toString());
+			HTTP_SESSION_LOGGER.error(e.toString());
 		} catch (IOException e) {
-			httpSessionlogger.error(e.toString());
+			HTTP_SESSION_LOGGER.error(e.toString());
 		}
 	}
 
@@ -69,9 +69,9 @@ class HttpCartSessionHelper extends HttpSessionHelper implements HttpHeaderParam
 				}
 			}
 		} catch (JsonSyntaxException e) {
-			httpSessionlogger.error(e.toString());
+			HTTP_SESSION_LOGGER.error(e.toString());
 		} catch (IllegalArgumentException e) {
-			httpSessionlogger.error(e.toString());
+			HTTP_SESSION_LOGGER.error(e.toString());
 		}
 		return null;
 	}
