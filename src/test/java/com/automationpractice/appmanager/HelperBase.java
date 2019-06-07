@@ -21,7 +21,7 @@ public class HelperBase {
 	private WebDriverWait wait;
 
 	// Init Logger for ApplicationManager.class
-	final static protected Logger HELPER_BASE_LOGGER = LoggerFactory.getLogger(HelperBase.class);
+	protected static final Logger HELPER_BASE_LOGGER = LoggerFactory.getLogger(HelperBase.class);
 
 	HelperBase(ApplicationManager app) throws MalformedURLException {
 		try {

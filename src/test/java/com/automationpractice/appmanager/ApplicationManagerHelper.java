@@ -18,7 +18,7 @@ abstract public class ApplicationManagerHelper {
 	private RegistrationHelper registrationHelper;
 
 	// Init Logger for ApplicationManager.class
-	final static protected Logger APP_MANAGER_LOGGER = LoggerFactory.getLogger(ApplicationManager.class);
+	protected static final Logger APP_MANAGER_LOGGER = LoggerFactory.getLogger(ApplicationManager.class);
 
 	// Get property key from the file
 	public String getProperty(String key) {
