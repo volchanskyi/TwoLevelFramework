@@ -110,13 +110,13 @@ abstract class HttpProtocolHelper {
 		return false;
 	}
 
-	public String getCartToken() {
+	public String getAnonimUserCartToken() {
 		return getApp().getProperty("web.cartToken");
 	}
 
-	public String getRegisteredCartToken() {
-		return getApp().getProperty("web.registeredCartToken");
-	}
+//	public String getRegisteredCartToken() {
+//		return getApp().getProperty("web.registeredCartToken");
+//	}
 
 	public CloseableHttpClient getHttpClient() {
 		return this.httpClient;
