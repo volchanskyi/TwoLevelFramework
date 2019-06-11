@@ -27,9 +27,9 @@ abstract class HttpRegistrationSessionHelper extends HttpSessionHelper
 
 	// signUpWith Method
 	@Override
-	public String[][] setBodyParameters(String email) {
+	public String[][] setBodyParameters(String email, String token) {
 		String[][] bodyParams = { { "controller", "authentication" }, { "SubmitCreate", "1" }, { "ajax", "true" },
-				{ "email_create", email }, { "back", "my-account" }, { "token", "ce65cefcbafad255f0866d3b32d32058" } };
+				{ "email_create", email }, { "back", "my-account" }, { "token", token } };
 		return bodyParams;
 	}
 

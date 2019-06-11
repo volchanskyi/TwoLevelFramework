@@ -18,6 +18,8 @@ build/
 build
 /build
 gradle/
+#TestNG
+reports
 # Binaries
 *.7z
 *.dmg

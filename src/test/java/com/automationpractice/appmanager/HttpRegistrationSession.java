@@ -28,13 +28,13 @@ public class HttpRegistrationSession extends HttpRegistrationSessionHelper {
 	}
 
 	// TODO refactor token
-	public boolean signUpWith(RegistrationFormData registrationFormData) throws IOException, URISyntaxException {
+	public boolean signUpWith(RegistrationFormData registrationFormData, String token) throws IOException, URISyntaxException {
 		URIBuilder postRequest = new URIBuilder(getApp().getProperty("web.baseUrl") + "index.php");
 		// header params
 		String[][] headerParams = setHeaderParamsToAcceptJson("Connection", "keep-alive", "Accept-Encoding",
 				"gzip, deflate");
 		// Form Data
-		String[][] bodyParams = setBodyParameters(registrationFormData.getEmail());
+		String[][] bodyParams = setBodyParameters(registrationFormData.getEmail(), token);
 		HttpPost post = createPostRequestWithParams(postRequest.toString(), headerParams);
 		post.setEntity(new UrlEncodedFormEntity(createHttpBodyParamsWith(bodyParams)));
 		CloseableHttpResponse response = this.getHttpClient().execute(post, this.getContext());
