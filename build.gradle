@@ -70,7 +70,7 @@ dependencies {
     //https://search.maven.org/artifact/org.testng/testng
     implementation 'org.testng:testng:6.14.3'
     //https://search.maven.org/artifact/org.seleniumhq.selenium/selenium-java
-    implementation 'org.seleniumhq.selenium:selenium-java:3.141.59'
+    implementation 'org.seleniumhq.selenium:selenium-java:4.0.0-alpha-1'
     //compile 'com.beust:jcommander:1.72'
     implementation 'org.subethamail:subethasmtp:3.1.7'
     implementation 'ru.lanwen.verbalregex:java-verbal-expressions:1.5'
@@ -102,25 +102,33 @@ dependencies {
 task downloadDrivers(type: Download) {
 	group = 'Update webdriver'
 	description = 'Task that downloads the webdriver'
-	if (project.getProperty('platform').toUpperCase().contains("WINDOWS")) {
+	def platformValue = 'NO_PLATFORM_SET'
+	def browserValue = "NO_BROWSER_SET"
+	if (project.hasProperty('platform')) {
+	platformValue = project.findProperty('platform').toUpperCase()
+	}
+	if (project.hasProperty('browser')) {
+	browserValue = project.findProperty('browser').toUpperCase()
+	}
+	if (platformValue.contains("WINDOWS")) {
 	def webdriversFolderPath = "src/test/resources/webdriver/webdriver.exe"
-	if (project.getProperty('browser').toUpperCase().contains("CHROME")) {
+	if (browserValue.contains("CHROME")) {
         src 'https://github.com/volchanskyi/extras-two-level-framework-drivers/raw/master/chromedriver.exe'
-        } else if (project.getProperty('browser').toUpperCase().contains("FIREFOX")) {
+        } else if (browserValue.contains("FIREFOX")) {
         src 'https://github.com/volchanskyi/extras-two-level-framework-drivers/raw/master/geckodriver.exe'
-        } else if (project.getProperty('browser').toUpperCase().contains("MICROSOFTEDGE")) {
+        } else if (browserValue.contains("MICROSOFTEDGE")) {
         src 'https://github.com/volchanskyi/extras-two-level-framework-drivers/raw/master/MicrosoftWebDriver.exe'
-        } else if (project.getProperty('browser').toUpperCase().contains("INTERNET EXPLORER")) {
+        } else if (browserValue.contains("INTERNET EXPLORER")) {
         src 'https://github.com/volchanskyi/extras-two-level-framework-drivers/raw/master/IEDriverServer.exe'
     		}
     		dest webdriversFolderPath
     		onlyIfModified true
     		overwrite true
-	} else if (project.getProperty('platform').toUpperCase().contains("MAC")) {
+	} else if (platformValue.contains("MAC")) {
 	def webdriversFolderPath = "src/test/resources/webdriver/webdriver"
-	if (project.getProperty('browser').toUpperCase().contains("CHROME")) {
+	if (browserValue.contains("CHROME") || browserValue.contains("SAFARI")) {
         src 'https://github.com/volchanskyi/extras-two-level-framework-drivers/raw/master/chromedriver'
-        } else if (project.getProperty('browser').toUpperCase().contains("FIREFOX")) {
+        } else if (browserValue.contains("FIREFOX")) {
         src 'https://github.com/volchanskyi/extras-two-level-framework-drivers/raw/master/geckodriver'
         }
     		dest webdriversFolderPath
