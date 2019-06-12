@@ -26,7 +26,7 @@ class HttpCartSessionHelper extends HttpSessionHelper implements HttpHeaderParam
 		return bodyParams;
 	}
 
-	protected void createFluentPostRequest(String token, String id, String ipa, String property, int rand,
+	protected void createFluentPostRequest(String token, String id, String ipa, String property, long rand,
 			String cookie) throws ClientProtocolException, IOException {
 		Request.Post(property + "index.php?rand=" + rand)
 				.addHeader("Accept", "application/json, text/javascript, */*; q=0.01")
@@ -37,7 +37,7 @@ class HttpCartSessionHelper extends HttpSessionHelper implements HttpHeaderParam
 				.execute().returnContent().asString();
 	}
 
-	protected void cleanUpUsing(String token, JsonElement parsed, JsonElement key, String property, int rand,
+	protected void cleanUpUsing(String token, JsonElement parsed, JsonElement key, String property, long rand,
 			String webCookie) {
 		try {
 			if (!key.isJsonNull() && key.isJsonPrimitive() && key.getAsInt() > 0) {
@@ -76,7 +76,7 @@ class HttpCartSessionHelper extends HttpSessionHelper implements HttpHeaderParam
 		return null;
 	}
 
-	protected String createFluentPostRequestWith(Products newProduct, String property, int rand, String cookieValue)
+	protected String createFluentPostRequestWith(String token, Products newProduct, String property, long rand, String cookieValue)
 			throws ClientProtocolException, IOException {
 		String json = Request.Post(property + "index.php?rand=" + rand)
 				.addHeader("Accept", "application/json, text/javascript, */*; q=0.01")
@@ -84,12 +84,12 @@ class HttpCartSessionHelper extends HttpSessionHelper implements HttpHeaderParam
 				.addHeader("X-Requested-With", "XMLHttpRequest").addHeader("Cookie", cookieValue)
 				.bodyForm(Form.form().add("controller", "cart").add("add", "1").add("ajax", "true")
 						.add("qty", String.valueOf(newProduct.getQuantity()))
-						.add("id_product", String.valueOf(newProduct.getId())).build())
+						.add("id_product", String.valueOf(newProduct.getId())).add("token", token).build())
 				.execute().returnContent().asString();
 		return json;
 	}
 
-	protected String createFluentPostRequestWith(String token, String property, int rand, String cookie)
+	protected String createFluentPostRequestWith(String token, String property, long rand, String cookie)
 			throws ClientProtocolException, IOException {
 		String json = Request.Post(property + "index.php?rand=" + rand)
 				.addHeader("Accept", "application/json, text/javascript, */*; q=0.01")

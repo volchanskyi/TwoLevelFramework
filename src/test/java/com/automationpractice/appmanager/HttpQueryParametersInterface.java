@@ -9,7 +9,7 @@ import com.automationpractice.model.Products;
 
 interface HttpQueryParametersInterface {
 
-	void setQueryParamenters(URIBuilder getRequest, int rand, String wishListId, Timestamp timeStamp);
+	void setQueryParamenters(URIBuilder getRequest, long rand, String wishListId, Timestamp timeStamp);
 
 	void setQueryParameters(URIBuilder getRequest, String rand, Products products, LigalCredentials credentials,
 			String timestamp);

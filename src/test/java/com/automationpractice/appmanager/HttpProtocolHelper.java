@@ -38,7 +38,7 @@ abstract class HttpProtocolHelper {
 
 	private Timestamp timeStamp = new Timestamp(System.currentTimeMillis());
 
-	private int rand = new Random().nextInt(99999998) + 1;
+	private long rand = new Random().longs(999999999, (9999999999999L + 1)).limit(13).findFirst().getAsLong();
 
 	private CookieStore cookieStore = new BasicCookieStore();
 
@@ -150,7 +150,7 @@ abstract class HttpProtocolHelper {
 		this.timeStamp = timeStamp;
 	}
 
-	public int getRand() {
+	public long getRand() {
 		return this.rand;
 	}
 

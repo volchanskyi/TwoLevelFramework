@@ -19,7 +19,7 @@ public class HttpWishListSessionHelper extends HttpSessionHelper
 	}
 
 	@Override
-	public void setQueryParamenters(URIBuilder getRequest, int rand, String wishListId, Timestamp timeStamp) {
+	public void setQueryParamenters(URIBuilder getRequest, long rand, String wishListId, Timestamp timeStamp) {
 		try {
 			if (!wishListId.isEmpty() & wishListId.length() != 0) {
 				getRequest.setParameter("fc", "module").setParameter("module", "blockwishlist")

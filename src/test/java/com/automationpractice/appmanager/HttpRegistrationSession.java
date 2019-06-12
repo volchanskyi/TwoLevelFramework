@@ -27,7 +27,6 @@ public class HttpRegistrationSession extends HttpRegistrationSessionHelper {
 
 	}
 
-	// TODO refactor token
 	public boolean signUpWith(RegistrationFormData registrationFormData, String token) throws IOException, URISyntaxException {
 		URIBuilder postRequest = new URIBuilder(getApp().getProperty("web.baseUrl") + "index.php");
 		// header params
