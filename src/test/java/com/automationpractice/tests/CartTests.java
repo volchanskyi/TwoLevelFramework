@@ -18,20 +18,20 @@ public class CartTests extends TestBase {
 		// Init HTTP session
 		HttpCartSession session = APP.newCartSession();
 		// read token
-		String token = session.getAnonimUserCartToken();
+		String usersCartToken = session.getAnonimUserCartToken();
 		// read cookie PREFIX (Cookie name)
 		String cookieName = session.getCookieName();
 		// pass cookie name to make Server Side generate cookie and pass them to
 		// CONTEXT
 		session.initCookie(cookieName);
 		// add sample item to the cart
-		session.addProductToCart("6", "99", token);
+		session.addProductToCart("6", "99", usersCartToken);
 		// get items from the cart and save them to the init value
-		Set<Products> oldCart = session.getProductsFromCart(token);
+		Set<Products> oldCart = session.getProductsFromCart(usersCartToken);
 		// add the product to the cart and save it to var
-		Products newAddedProduct = session.addProductToCart(product, token);
+		Products newAddedProduct = session.addProductToCart(product, usersCartToken);
 		// get items from the cart and save them to the new value
-		Set<Products> newCart = session.getProductsFromCart(token);
+		Set<Products> newCart = session.getProductsFromCart(usersCartToken);
 		// use model object (new product item with real ID)
 		// and add it to the the init value of the cart
 		oldCart.add(newAddedProduct);
@@ -47,7 +47,7 @@ public class CartTests extends TestBase {
 		HttpCartSession session = APP.newCartSession();
 		String pageTitle = "My account - My Store";
 		// read token
-		String token = credentials.getToken();
+		String usersCartToken = credentials.getToken();
 		// read cookie PREFIX (Cookie name)
 		String cookieName = session.getCookieName();
 		// pass cookie name to make Server Side generate cookie and pass them to
@@ -56,13 +56,13 @@ public class CartTests extends TestBase {
 		//login into account
 		session.loginWith(credentials, pageTitle);
 		// add sample item to the cart
-		session.addProductToCart("6", "99", token);
+		session.addProductToCart("6", "99", usersCartToken);
 		// get items from the cart and save them to the init value
-		Set<Products> oldCart = session.getProductsFromCart(token);
+		Set<Products> oldCart = session.getProductsFromCart(usersCartToken);
 		// add the product to the cart and save it to var
-		Products newAddedProduct = session.addProductToCart(product, token);
+		Products newAddedProduct = session.addProductToCart(product, usersCartToken);
 		// get items from the cart and save them to the new value
-		Set<Products> newCart = session.getProductsFromCart(token);
+		Set<Products> newCart = session.getProductsFromCart(usersCartToken);
 		// use model object (new product item with real ID)
 		// and add it to the the init value of the cart
 		oldCart.add(newAddedProduct);

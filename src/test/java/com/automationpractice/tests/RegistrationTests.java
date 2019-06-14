@@ -25,9 +25,9 @@ public class RegistrationTests extends TestBase {
 		String activationLink = "Dear Random User";
 		HttpRegistrationSession session = APP.newRegistrationSession();
 		// add sign up token
-		String token = session.getSignUpToken();
+		String userSignUpToken = session.getSignUpToken();
 		session.createEmailWith(newEmail);
-		assertTrue(session.signUpWith(registrationFormData, token));
+		assertTrue(session.signUpWith(registrationFormData, userSignUpToken));
 		assertTrue(session.verifyActivationLink(newEmail, activationLink));
 		assertTrue(session.registerWith(registrationFormData, title));
 	}
