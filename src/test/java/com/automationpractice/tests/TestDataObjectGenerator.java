@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
+import java.security.AccessControlException;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 
@@ -21,12 +22,13 @@ public class TestDataObjectGenerator extends TestDataObjectGeneratorHelper {
 		String accountListFile = "src/test/resources/validAccounts.csv";
 		LinkedHashSet<LigalCredentials> set = new LinkedHashSet<LigalCredentials>();
 		String line;
+		// use a try-with-resource statement
 		try (
-				// open an input stream
+				// Create a connection stream | Knows how to connect to the file
 				InputStream fileInputStream = new FileInputStream(accountListFile);
-				// read file as UTF-8
+				// Chaining to a connection stream | read object as UTF-8
 				InputStreamReader reader = new InputStreamReader(fileInputStream, Charset.forName("UTF-8"));
-				// open a BufferedReader to read line-by-line
+				// open a BufferedReader to read stream line-by-line
 				BufferedReader br = new BufferedReader(reader);) {
 			while ((line = br.readLine()) != null) {
 				// split objects by ","
@@ -40,9 +42,11 @@ public class TestDataObjectGenerator extends TestDataObjectGeneratorHelper {
 						.withToken(token));
 			}
 		} catch (FileNotFoundException e) {
-			dataGenLogger.error(e.toString());
+			DATA_GEN_LOGGER.error(e.toString());
+		} catch (AccessControlException e) {
+			DATA_GEN_LOGGER.error(e.toString());
 		} catch (IOException e) {
-			dataGenLogger.error(e.toString());
+			DATA_GEN_LOGGER.error(e.toString());
 		}
 		return set;
 	}
@@ -52,12 +56,13 @@ public class TestDataObjectGenerator extends TestDataObjectGeneratorHelper {
 		String productListFile = "src/test/resources/validProducts.csv";
 		LinkedHashSet<Products> set = new LinkedHashSet<Products>();
 		String line;
+		// use a try-with-resource statement
 		try (
-				// open an input stream
+				// Create a connection stream | Knows how to connect to the file
 				InputStream fileInputStream = new FileInputStream(productListFile);
-				// read file as UTF-8
+				// Chaining to a connection stream | read object as UTF-8
 				InputStreamReader reader = new InputStreamReader(fileInputStream, Charset.forName("UTF-8"));
-				// open a BufferedReader to read line-by-line
+				// open a BufferedReader to read stream line-by-line
 				BufferedReader br = new BufferedReader(reader);) {
 			while ((line = br.readLine()) != null) {
 				// split objects by ","
@@ -69,9 +74,11 @@ public class TestDataObjectGenerator extends TestDataObjectGeneratorHelper {
 				set.add(new Products().withId(id).withQuantity(qty).withProductName(name));
 			}
 		} catch (FileNotFoundException e) {
-			dataGenLogger.error(e.toString());
+			DATA_GEN_LOGGER.error(e.toString());
+		} catch (AccessControlException e) {
+			DATA_GEN_LOGGER.error(e.toString());
 		} catch (IOException e) {
-			dataGenLogger.error(e.toString());
+			DATA_GEN_LOGGER.error(e.toString());
 		}
 		return set;
 	}
@@ -79,11 +86,14 @@ public class TestDataObjectGenerator extends TestDataObjectGeneratorHelper {
 	// Registration Form Data
 	protected static HashSet<RegistrationFormData> generateRegistrationFormData() {
 		LinkedHashSet<RegistrationFormData> set = new LinkedHashSet<RegistrationFormData>();
+		// temp counter == 1 (fix the test first)
 		for (int i = 1; i > 0; --i) {
+			// update zip, city and state names.
+			String[] locationData = getLocationData();
 			set.add(new RegistrationFormData().withEmail(generateValidFormatEmails())
 					.withFirstName(generateValidFormatName()).withLastName(generateValidFormatLastName())
 					.withPassword(generateValidFormatPasswords()).withAddress(generateValidFormatAddress())
-					.withCityName("San Francisco").withPostCode(generateValidFormatPostalCode()).withState("California")
+					.withCityName(getLocationData()[1]).withPostCode(locationData[0]).withState(getLocationData()[2])
 					.withPhoneNumber(generateValidFormatPhoneNumber()));
 		}
 		return set;
