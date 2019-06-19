@@ -1,6 +1,8 @@
 package com.automationpractice.tests;
 
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Random;
 
 import org.apache.commons.lang3.RandomStringUtils;
@@ -10,6 +12,9 @@ import org.openqa.selenium.json.JsonException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.xml.bind.*;
+
+import com.automationpractice.model.LocationData;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 
@@ -98,33 +103,45 @@ public class TestDataObjectGeneratorHelper {
 
 	// Location Data Helper
 	protected static String[] getLocationData() {
-		// Use fluent API
-		String json = null;
+		InputStream xml = null;
 		try {
-			json = Request.Post("https://tools.usps.com/tools/app/ziplookup/cityByZip")
-					.addHeader(":authority", "tools.usps.com").addHeader(":method", "POST")
-					.addHeader(":path", "/tools/app/ziplookup/cityByZip").addHeader(":scheme", "https")
-					.addHeader("accept", "application/json, text/javascript, */*; q=0.01")
-					.addHeader("content-Type", "application/x-www-form-urlencoded; charset=UTF-8")
-					.addHeader("referer", "https://tools.usps.com/zip-code-lookup.htm?citybyzipcode")
-					.addHeader("origin", "https://tools.usps.com").addHeader("x-requested-with", "XMLHttpRequest")
-					.bodyForm(Form.form().add("zip", generateValidFormatPostalCode()).build()).execute().returnContent()
-					.asString();
+			xml = Request.Post("http://production.shippingapis.com/ShippingAPITest.dll?API=CityStateLookup")
+					.addHeader("accept", "text/html,application/xhtml+xml,application/xml;q=0.9")
+					.bodyForm(Form.form().add("API", "CityStateLookup")
+							.add("XML", "<CityStateLookupRequest USERID=\"559REMOT6381\"><ZipCode ID=\"0\"><Zip5>"
+									+ generateValidFormatPostalCode() + "</Zip5></ZipCode></CityStateLookupRequest>")
+							.build())
+					.execute().returnContent().asStream();
 		} catch (IOException e) {
 			DATA_GEN_LOGGER.error(e.toString());
 		}
-		JsonElement parsed = new JsonParser().parse(json);
-		String status = parsed.getAsJsonObject().get("resultStatus").getAsString();
-		// checking return status
-		if (status.equals("SUCCESS")) {
-			String zip = parsed.getAsJsonObject().get("zip5").getAsString();
-			String city = parsed.getAsJsonObject().get("defaultCity").getAsString();
-			String state = parsed.getAsJsonObject().get("defaultState").getAsString();
+		// getting the xml file to read
+		try {
+			JAXBContext jaxbContext = JAXBContext.newInstance(LocationData.class);
+			Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
+			LocationData parsedXml = (LocationData) jaxbUnmarshaller.unmarshal(xml);
+			String zip = parsedXml.getZip();
+			String city = parsedXml.getCity();
+			String state = parsedXml.getState();
 			String[] locationData = { zip, city, state };
 			return locationData;
-		} else {
-			throw new JsonException("api request error" + status);
+		} catch (JAXBException e) {
+			DATA_GEN_LOGGER.error(e.toString());
 		}
+//		} catch (JAXBException e) {
+//			DATA_GEN_LOGGER.error(e.toString());
+//		
+//		// checking return status
+//		if (status.equals("SUCCESS")) {
+//			String zip = parsed.getAsJsonObject().get("zip5").getAsString();
+//			String city = parsed.getAsJsonObject().get("defaultCity").getAsString();
+//			String state = parsed.getAsJsonObject().get("defaultState").getAsString();
+//			String[] locationData = { zip, city, state };
+//			return locationData;
+//		} else {
+//			throw new JsonException("api request error" + status);
+//		}
+		return null;
 	}
 
 }
