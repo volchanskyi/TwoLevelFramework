@@ -1,45 +1,48 @@
 package com.automationpractice.model;
 
-import javax.xml.bind.annotation.*;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name = "CityStateLookupResponse")
+//@XmlType( propOrder = { "name", "city", "permanent", "special" } )
 public class LocationData {
-	private String zip;
+	private String state;
 	private String zipCode;
 	private String id;
+	private String Zip5;
 	private String city;
-	private String state;
 
-	@XmlElement(name = "ZipCode")
 	public String getZipCode() {
-		return zipCode;
+		return this.zipCode;
 	}
 
+	@XmlElement(name = "ZipCode")
 	public void setZipCode(String zipCode) {
 		this.zipCode = zipCode;
 	}
-	
-	@XmlAttribute(name = "ID")
+
 	public String getId() {
-		return id;
+		return this.id;
 	}
-	
+
+	@XmlAttribute(name = "ID")
 	public void setId(String id) {
 		this.id = id;
 	}
-	
-	@XmlElement(name = "Zip5")
+
 	public String getZip() {
-		return zip;
+		return this.Zip5;
 	}
-	
-	public void setZip(String zip) {
-		this.zip = zip;
+
+	@XmlElement(name = "Zip5")
+	public void setZip(String Zip5) {
+		this.Zip5 = Zip5;
 	}
 
 	@XmlElement(name = "City")
 	public String getCity() {
-		return city;
+		return this.city;
 	}
 
 	public void setCity(String city) {
@@ -48,7 +51,7 @@ public class LocationData {
 
 	@XmlElement(name = "State")
 	public String getState() {
-		return state;
+		return this.state;
 	}
 
 	public void setState(String state) {
