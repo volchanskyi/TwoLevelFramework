@@ -3,6 +3,7 @@ package com.automationpractice.tests;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.StringReader;
 import java.util.Random;
 
 import org.apache.commons.lang3.RandomStringUtils;
@@ -103,23 +104,24 @@ public class TestDataObjectGeneratorHelper {
 
 	// Location Data Helper
 	protected static String[] getLocationData() {
-		InputStream xml = null;
+//		InputStream xml = null;
+		String xmlString = null;
 		try {
-			xml = Request.Post("http://production.shippingapis.com/ShippingAPITest.dll?API=CityStateLookup")
+			xmlString = Request.Post("http://production.shippingapis.com/ShippingAPITest.dll?API=CityStateLookup")
 					.addHeader("accept", "text/html,application/xhtml+xml,application/xml;q=0.9")
 					.bodyForm(Form.form().add("API", "CityStateLookup")
 							.add("XML", "<CityStateLookupRequest USERID=\"559REMOT6381\"><ZipCode ID=\"0\"><Zip5>"
 									+ generateValidFormatPostalCode() + "</Zip5></ZipCode></CityStateLookupRequest>")
 							.build())
-					.execute().returnContent().asStream();
+					.execute().returnContent().asString();
 		} catch (IOException e) {
 			DATA_GEN_LOGGER.error(e.toString());
 		}
 		// getting the xml file to read
 		try {
+
 			JAXBContext jaxbContext = JAXBContext.newInstance(LocationData.class);
-			Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
-			LocationData parsedXml = (LocationData) jaxbUnmarshaller.unmarshal(xml);
+			LocationData parsedXml = (LocationData) jaxbContext.createUnmarshaller().unmarshal(new StringReader(xmlString));
 			String zip = parsedXml.getZip();
 			String city = parsedXml.getCity();
 			String state = parsedXml.getState();
