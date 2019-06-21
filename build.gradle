@@ -6,7 +6,7 @@ plugins {
 	//Add a download task to Gradle that displays progress information
     id 'de.undercouch.download' version '3.4.3'
     //Provide insights into problems with the build environment, dependencies, performance
-    id 'com.gradle.build-scan' version '2.2.1'
+    id 'com.gradle.build-scan' version '2.3'
     // Apply the java plugin to add support for Java
     id 'java'
     
