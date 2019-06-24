@@ -54,16 +54,16 @@ public class RegistrationTests extends TestBase {
 //		assertEquals(session.registerExistedAccountWithApiUsing(email), errMsg);
 //	}
 //
-//	@Test(groups = { "GUI", "REGISTRATION",
-//			"DEFAULTGROUP" }, priority = 100, dataProvider = "validCredentialsForRegistrationController", dataProviderClass = TestDataProviders.class)
-//	public void testRegisterNewAccountUsingGUI(RegistrationFormData registrationFormData)
-//			throws MessagingException, IOException, InterruptedException {
-//		String myAccountPageTitle = "My account - My Store";
-//		// String link = "https://blablabla"; (not implemented yet) DO NOT DELETE
-//		RegistrationHelper regHelper = APP.newRegistrationSessionUI();
-//		regHelper.initRegistrationUsingEmailWith(registrationFormData.getEmail())
-//				.fillOutRegistrationFormWith(registrationFormData);
-//		assertTrue(regHelper.verifyWithTitle(myAccountPageTitle));
-//	}
+	@Test(groups = { "GUI", "REGISTRATION",
+			"DEFAULTGROUP" }, priority = 100, dataProvider = "validCredentialsForRegistrationController", dataProviderClass = TestDataProviders.class)
+	public void testRegisterNewAccountUsingGUI(RegistrationFormData registrationFormData)
+			throws MessagingException, IOException, InterruptedException {
+		String myAccountPageTitle = "My account - My Store";
+		// String link = "https://blablabla"; (not implemented yet) DO NOT DELETE
+		RegistrationHelper regHelper = APP.newRegistrationSessionUI();
+		regHelper.initRegistrationUsingEmailWith(registrationFormData.getEmail())
+				.fillOutRegistrationFormWith(registrationFormData);
+		assertTrue(regHelper.verifyWithTitle(myAccountPageTitle));
+	}
 
 }
