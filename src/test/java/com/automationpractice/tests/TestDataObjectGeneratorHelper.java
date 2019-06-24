@@ -61,11 +61,6 @@ public class TestDataObjectGeneratorHelper {
 		return generateNumeric(1, 4) + " " + generateAlphabetic(5, 10) + " Dr.";
 	}
 
-	// PostalCode
-	protected static String generateValidFormatPostalCode() {
-		return generateNumeric(5, 5);
-	}
-
 	// PhoneNumber
 	protected static String generateValidFormatPhoneNumber() {
 		return generateNumeric(10, 10);
@@ -104,28 +99,5 @@ public class TestDataObjectGeneratorHelper {
 	}
 
 	// Location Data Helper
-	protected static String[] getLocationData() {
-		try {
-			InputStream xml = Request.Post("http://production.shippingapis.com/ShippingAPITest.dll?API=CityStateLookup")
-					.addHeader("accept", "text/html,application/xhtml+xml,application/xml;q=0.9")
-					.bodyForm(Form.form().add("API", "CityStateLookup")
-							.add("XML", "<CityStateLookupRequest USERID=\"559REMOT6381\"><ZipCode ID=\"0\"><Zip5>"
-									+ generateValidFormatPostalCode() + "</Zip5></ZipCode></CityStateLookupRequest>")
-							.build())
-					.execute().returnContent().asStream();
-			Serializer serializer = new Persister();
-			LocationData parsedXml = serializer.read(LocationData.class, xml);
-			String zip = parsedXml.getZip();
-			String city = parsedXml.getCity();
-			String state = parsedXml.getState();
-			String[] locationData = { zip, city, state };
-			return locationData;
-		} catch (IOException e) {
-			DATA_GEN_LOGGER.error(e.toString());
-		} catch (Exception e) {
-			DATA_GEN_LOGGER.error(e.toString());
-		}
-		return null;
-	}
 
 }

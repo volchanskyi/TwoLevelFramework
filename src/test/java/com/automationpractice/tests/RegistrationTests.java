@@ -16,21 +16,21 @@ import com.automationpractice.model.RegistrationFormData;
 
 public class RegistrationTests extends TestBase {
 
-	@Test(groups = { "API",
-			"REGISTRATION" }, priority = 3, dataProvider = "validCredentialsForRegistrationController", dataProviderClass = TestDataProviders.class)
-	public void testRegisterNewAccountUsingAPI(RegistrationFormData registrationFormData)
-			throws MessagingException, IOException, InterruptedException, URISyntaxException {
-		String title = "My account - My Store";
-		String newEmail = registrationFormData.getEmail();
-		String activationLink = "Dear Random User";
-		HttpRegistrationSession session = APP.newRegistrationSession();
-		// add sign up token
-		String userSignUpToken = session.getSignUpToken();
-		session.createEmailWith(newEmail);
-		assertTrue(session.signUpWith(registrationFormData, userSignUpToken));
-		assertTrue(session.verifyActivationLink(newEmail, activationLink));
-		assertTrue(session.registerWith(registrationFormData, title));
-	}
+//	@Test(groups = { "API",
+//			"REGISTRATION" }, priority = 3, dataProvider = "validCredentialsForRegistrationController", dataProviderClass = TestDataProviders.class)
+//	public void testRegisterNewAccountUsingAPI(RegistrationFormData registrationFormData)
+//			throws MessagingException, IOException, InterruptedException, URISyntaxException {
+//		String title = "My account - My Store";
+//		String newEmail = registrationFormData.getEmail();
+//		String activationLink = "Dear Random User";
+//		HttpRegistrationSession session = APP.newRegistrationSession();
+//		// add sign up token
+//		String userSignUpToken = session.getSignUpToken();
+//		session.createEmailWith(newEmail);
+//		assertTrue(session.signUpWith(registrationFormData, userSignUpToken));
+//		assertTrue(session.verifyActivationLink(newEmail, activationLink));
+//		assertTrue(session.registerWith(registrationFormData, title));
+//	}
 //
 //	@Test(groups = { "API", "REGISTRATION" }, priority = 2)
 //	public void testRegisterNewAccountWithExistedCredentialsUsingAPI() throws IOException {
