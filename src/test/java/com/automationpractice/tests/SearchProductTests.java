@@ -7,6 +7,7 @@ import java.io.IOException;
 import org.testng.annotations.Test;
 
 import com.automationpractice.appmanager.HttpSearchProductSession;
+import com.automationpractice.datagenerators.TestDataProviders;
 import com.automationpractice.model.Products;
 
 public class SearchProductTests extends TestBase {

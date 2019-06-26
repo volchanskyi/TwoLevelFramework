@@ -8,6 +8,7 @@ import java.net.URISyntaxException;
 import org.testng.annotations.Test;
 
 import com.automationpractice.appmanager.HttpLoginSession;
+import com.automationpractice.datagenerators.TestDataProviders;
 import com.automationpractice.model.LigalCredentials;
 
 //@Guice

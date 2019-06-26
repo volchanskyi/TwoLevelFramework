@@ -1,4 +1,4 @@
-package com.automationpractice.tests;
+package com.automationpractice.datagenerators;
 
 import java.io.File;
 import java.io.IOException;
@@ -37,7 +37,7 @@ public class TestDataObjectGeneratorHelper {
 		return RandomStringUtils.randomNumeric(min, max).toString();
 	}
 
-	private static String generateNegativeNumeric() {
+   	private static String generateNegativeNumeric() {
 		Double rand = new Random().nextDouble() - 3;
 		return rand.toString();
 	}

@@ -1,4 +1,4 @@
-package com.automationpractice.appmanager;
+package com.automationpractice.datagenerators;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -8,9 +8,10 @@ import org.apache.http.client.fluent.Request;
 import org.simpleframework.xml.Serializer;
 import org.simpleframework.xml.core.Persister;
 
+import com.automationpractice.appmanager.ApplicationManagerHelper;
 import com.automationpractice.model.LocationData;
 
-public class SoapHelper extends ApplicationManagerHelper {
+public class LocationDataHelper extends ApplicationManagerHelper {
 
 	// String userId = getProperty("web.baseUrl");
 

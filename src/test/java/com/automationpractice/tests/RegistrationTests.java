@@ -12,6 +12,7 @@ import org.testng.annotations.Test;
 
 import com.automationpractice.appmanager.HttpRegistrationSession;
 import com.automationpractice.appmanager.RegistrationHelper;
+import com.automationpractice.datagenerators.TestDataProviders;
 import com.automationpractice.model.RegistrationFormData;
 
 public class RegistrationTests extends TestBase {

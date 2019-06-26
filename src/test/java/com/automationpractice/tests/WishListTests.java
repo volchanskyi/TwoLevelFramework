@@ -10,6 +10,7 @@ import java.net.URISyntaxException;
 import org.testng.annotations.Test;
 
 import com.automationpractice.appmanager.HttpWishListSession;
+import com.automationpractice.datagenerators.TestDataProviders;
 import com.automationpractice.model.LigalCredentials;
 import com.automationpractice.model.Products;
 import com.google.gson.JsonSyntaxException;

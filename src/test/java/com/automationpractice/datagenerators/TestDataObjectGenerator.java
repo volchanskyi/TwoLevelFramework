@@ -1,4 +1,4 @@
-package com.automationpractice.tests;
+package com.automationpractice.datagenerators;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -13,7 +13,6 @@ import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Random;
 
-import com.automationpractice.appmanager.SoapHelper;
 import com.automationpractice.model.LigalCredentials;
 import com.automationpractice.model.Products;
 import com.automationpractice.model.RegistrationFormData;
@@ -120,7 +119,7 @@ public class TestDataObjectGenerator extends TestDataObjectGeneratorHelper {
 			Random randomZip = new Random();
 			int randomSelection = randomZip.nextInt(zipCodes.size());
 			// update zip, city and state names.
-			String[] locationData = SoapHelper.getLocationData(zipCodes.get(randomSelection));
+			String[] locationData = LocationDataHelper.getLocationData(zipCodes.get(randomSelection));
 			set.add(new RegistrationFormData().withEmail(generateValidFormatEmails())
 					.withFirstName(generateValidFormatName()).withLastName(generateValidFormatLastName())
 					.withPassword(generateValidFormatPasswords()).withAddress(generateValidFormatAddress())

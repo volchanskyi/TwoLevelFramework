@@ -1,4 +1,4 @@
-package com.automationpractice.tests;
+package com.automationpractice.datagenerators;
 
 import java.io.IOException;
 import java.util.ArrayList;
