@@ -13,11 +13,16 @@ import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Random;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.automationpractice.model.LigalCredentials;
 import com.automationpractice.model.Products;
 import com.automationpractice.model.RegistrationFormData;
 
-public class TestDataObjectGenerator extends TestDataObjectGeneratorHelper {
+public class TestDataModelGenerator {
+
+	protected static final Logger MODEL_DATA_GEN_LOGGER = LoggerFactory.getLogger(TestDataModelGenerator.class);
 
 	// Credentials
 	protected static HashSet<LigalCredentials> readLigalCredentialsList() {
@@ -34,21 +39,21 @@ public class TestDataObjectGenerator extends TestDataObjectGeneratorHelper {
 				BufferedReader br = new BufferedReader(reader);) {
 			while ((line = br.readLine()) != null) {
 				// split objects by ","
-				String[] objects = line.split(",");
-				String email = objects[0];
-				String password = objects[1];
-				String name = objects[2].replaceAll("_", " ");
-				String token = objects[3];
+				String[] tokens = line.split(",");
+				String email = tokens[0];
+				String password = tokens[1];
+				String name = tokens[2].replaceAll("_", " ");
+				String token = tokens[3];
 				// create a model object (new product item with real email, name and password)
 				set.add(new LigalCredentials().withEmail(email).withPassword(password).withAccountName(name)
 						.withToken(token));
 			}
 		} catch (FileNotFoundException e) {
-			DATA_GEN_LOGGER.error(e.toString());
+			MODEL_DATA_GEN_LOGGER.error(e.toString());
 		} catch (AccessControlException e) {
-			DATA_GEN_LOGGER.error(e.toString());
+			MODEL_DATA_GEN_LOGGER.error(e.toString());
 		} catch (IOException e) {
-			DATA_GEN_LOGGER.error(e.toString());
+			MODEL_DATA_GEN_LOGGER.error(e.toString());
 		}
 		return set;
 	}
@@ -68,19 +73,19 @@ public class TestDataObjectGenerator extends TestDataObjectGeneratorHelper {
 				BufferedReader br = new BufferedReader(reader);) {
 			while ((line = br.readLine()) != null) {
 				// split objects by ","
-				String[] objects = line.split(",");
-				int id = Integer.parseInt(objects[0]);
-				int qty = Integer.parseInt(objects[1]);
-				String name = objects[2].toLowerCase().replaceAll("_", " ");
+				String[] tokens = line.split(",");
+				int id = Integer.parseInt(tokens[0]);
+				int qty = Integer.parseInt(tokens[1]);
+				String name = tokens[2].toLowerCase().replaceAll("_", " ");
 				// create a model object (new product item with real ID nad QTY)
 				set.add(new Products().withId(id).withQuantity(qty).withProductName(name));
 			}
 		} catch (FileNotFoundException e) {
-			DATA_GEN_LOGGER.error(e.toString());
+			MODEL_DATA_GEN_LOGGER.error(e.toString());
 		} catch (AccessControlException e) {
-			DATA_GEN_LOGGER.error(e.toString());
+			MODEL_DATA_GEN_LOGGER.error(e.toString());
 		} catch (IOException e) {
-			DATA_GEN_LOGGER.error(e.toString());
+			MODEL_DATA_GEN_LOGGER.error(e.toString());
 		}
 		return set;
 	}
@@ -104,27 +109,30 @@ public class TestDataObjectGenerator extends TestDataObjectGeneratorHelper {
 				// read out the file
 				while ((line = br.readLine()) != null) {
 					// split objects by ","
-					String[] objects = line.split(",");
+					String[] tokens = line.split(",");
 					// add zip codes to the array
-					zipCodes.add(objects[0]);
+					zipCodes.add(tokens[0]);
 				}
 			} catch (FileNotFoundException e) {
-				DATA_GEN_LOGGER.error(e.toString());
+				MODEL_DATA_GEN_LOGGER.error(e.toString());
 			} catch (AccessControlException e) {
-				DATA_GEN_LOGGER.error(e.toString());
+				MODEL_DATA_GEN_LOGGER.error(e.toString());
 			} catch (IOException e) {
-				DATA_GEN_LOGGER.error(e.toString());
+				MODEL_DATA_GEN_LOGGER.error(e.toString());
 			}
-			// choose a random zip
+			// choose a random zip code
 			Random randomZip = new Random();
 			int randomSelection = randomZip.nextInt(zipCodes.size());
 			// update zip, city and state names.
 			String[] locationData = LocationDataHelper.getLocationData(zipCodes.get(randomSelection));
-			set.add(new RegistrationFormData().withEmail(generateValidFormatEmails())
-					.withFirstName(generateValidFormatName()).withLastName(generateValidFormatLastName())
-					.withPassword(generateValidFormatPasswords()).withAddress(generateValidFormatAddress())
+			set.add(new RegistrationFormData()
+					.withEmail(TestDataGenerator.generateValidFormatEmails())
+					.withFirstName(TestDataGenerator.generateValidFormatName())
+					.withLastName(TestDataGenerator.generateValidFormatLastName())
+					.withPassword(TestDataGenerator.generateValidFormatPasswords())
+					.withAddress(TestDataGenerator.generateValidFormatAddress())
 					.withCityName(locationData[1]).withPostCode(locationData[0]).withState(locationData[2])
-					.withPhoneNumber(generateValidFormatPhoneNumber()));
+					.withPhoneNumber(TestDataGenerator.generateValidFormatPhoneNumber()));
 		}
 		return set;
 	}

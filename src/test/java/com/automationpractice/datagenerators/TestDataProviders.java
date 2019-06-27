@@ -11,7 +11,7 @@ import com.automationpractice.model.LigalCredentials;
 import com.automationpractice.model.Products;
 import com.automationpractice.model.RegistrationFormData;
 
-public class TestDataProviders extends TestDataObjectGenerator {
+public class TestDataProviders {
 
 	// **************INVALID/ILLEGAL TEST DATA********************//
 
@@ -20,7 +20,7 @@ public class TestDataProviders extends TestDataObjectGenerator {
 		String[][] generatedTestData = new String[20][2];
 		// loop over 2D array
 		for (int row = 0; row < generatedTestData.length; row++) {
-			generatedTestData[row] = generateValidFormatCredentials();
+			generatedTestData[row] = TestDataGenerator.generateValidFormatCredentials();
 		}
 		return generatedTestData;
 	}
@@ -30,7 +30,7 @@ public class TestDataProviders extends TestDataObjectGenerator {
 		String[] generatedTestData = new String[40];
 		// loop over 2D array
 		for (int row = 0; row < generatedTestData.length; row++) {
-			generatedTestData[row] = generateInvalidFormatEmails();
+			generatedTestData[row] = TestDataGenerator.generateInvalidFormatEmails();
 		}
 		return generatedTestData;
 	}
@@ -40,8 +40,8 @@ public class TestDataProviders extends TestDataObjectGenerator {
 		String[][] generatedTestData = new String[20][2];
 		// loop over 2D array
 		for (int row = 0; row < generatedTestData.length; row++) {
-			generatedTestData[row][0] = generateValidFormatEmails();
-			generatedTestData[row][1] = generateInvalidFormatPasswords();
+			generatedTestData[row][0] = TestDataGenerator.generateValidFormatEmails();
+			generatedTestData[row][1] = TestDataGenerator.generateInvalidFormatPasswords();
 		}
 		return generatedTestData;
 	}
@@ -51,8 +51,8 @@ public class TestDataProviders extends TestDataObjectGenerator {
 		String[][] generatedTestData = new String[20][2];
 		// loop over 2D array
 		for (int row = 0; row < generatedTestData.length; row++) {
-			generatedTestData[row][0] = generateInvalidFormatEmails();
-			generatedTestData[row][1] = generateValidFormatPasswords();
+			generatedTestData[row][0] = TestDataGenerator.generateInvalidFormatEmails();
+			generatedTestData[row][1] = TestDataGenerator.generateValidFormatPasswords();
 		}
 		return generatedTestData;
 	}
@@ -62,30 +62,30 @@ public class TestDataProviders extends TestDataObjectGenerator {
 	@DataProvider(name = "validCredentialsForRegistrationController")
 	protected static Iterator<RegistrationFormData> generateRegistrationFormDataForRegistratonPage()
 			throws InterruptedException, IOException {
-		return generateRegistrationFormData().iterator();
+		return TestDataModelGenerator.generateRegistrationFormData().iterator();
 	}
 
 	@DataProvider(name = "getValidProductsFromPropertyFile")
 	protected static Iterator<Products> generateValidProducts() throws InterruptedException, IOException {
-		return readProductList().iterator();
+		return TestDataModelGenerator.readProductList().iterator();
 	}
 
 	@DataProvider(name = "getLigalCredentialsForAuthenticationControllerFromPropertyFile")
 	protected static Iterator<LigalCredentials> generateValidCredentialsForController()
 			throws InterruptedException, IOException {
-		return readLigalCredentialsList().iterator();
+		return TestDataModelGenerator.readLigalCredentialsList().iterator();
 	}
 
 	@DataProvider(name = "getLigalCredentialsAndProductIdsForPdpControllerFromPropertyFiles")
 	protected static Object[][] generatePdpDataForWishListController() throws InterruptedException, IOException {
 		// Create a dynamic 2D array with the size of the validCredentials
 		// entries(accounts)
-		Object[][] generatedTestData = new Object[readLigalCredentialsList().size()][2];
+		Object[][] generatedTestData = new Object[TestDataModelGenerator.readLigalCredentialsList().size()][2];
 		List<LigalCredentials> ligalCredentialsList = new ArrayList<LigalCredentials>();
 		List<Products> productList = new ArrayList<Products>();
 		// convert sets to lists
-		ligalCredentialsList.addAll(readLigalCredentialsList());
-		productList.addAll(readProductList());
+		ligalCredentialsList.addAll(TestDataModelGenerator.readLigalCredentialsList());
+		productList.addAll(TestDataModelGenerator.readProductList());
 		// fill out the array with the lists values (sets values)
 		for (int i = 0; i < ligalCredentialsList.size(); i++) {
 			generatedTestData[i][0] = ligalCredentialsList.get(i);

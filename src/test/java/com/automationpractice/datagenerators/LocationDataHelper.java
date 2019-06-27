@@ -7,13 +7,14 @@ import org.apache.http.client.fluent.Form;
 import org.apache.http.client.fluent.Request;
 import org.simpleframework.xml.Serializer;
 import org.simpleframework.xml.core.Persister;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import com.automationpractice.appmanager.ApplicationManagerHelper;
 import com.automationpractice.model.LocationData;
 
-public class LocationDataHelper extends ApplicationManagerHelper {
+public class LocationDataHelper {
 
-	// String userId = getProperty("web.baseUrl");
+	protected static final Logger LOCATION_DATA_GEN_LOGGER = LoggerFactory.getLogger(LocationDataHelper.class);
 
 	public static String[] getLocationData(String validFormatPostalCode) {
 		try {
@@ -30,9 +31,9 @@ public class LocationDataHelper extends ApplicationManagerHelper {
 			String[] locationData = { parsedXml.getZip(), parsedXml.getCity(), parsedXml.getState() };
 			return locationData;
 		} catch (IOException e) {
-			APP_MANAGER_LOGGER.error(e.toString() + "Is ZIP valid?");
+			LOCATION_DATA_GEN_LOGGER.error(e.toString() + "Is ZIP valid?");
 		} catch (Exception e) {
-			APP_MANAGER_LOGGER.error(e.toString() + "Is ZIP valid?");
+			LOCATION_DATA_GEN_LOGGER.error(e.toString() + "Is ZIP valid?");
 		}
 		return null;
 

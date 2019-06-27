@@ -20,7 +20,7 @@ public class RegistrationHelper extends HelperBase {
 		return this;
 
 	}
-
+//TODO refactor
 	public HelperBase fillOutRegistrationFormWith(RegistrationFormData registrationFormData) {
 		// wd.get(app.getProperty("web.baseUrl") +
 		// "index.php?controller=authentication&back=my-account#account-creation");

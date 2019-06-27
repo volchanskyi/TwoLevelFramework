@@ -1,28 +1,14 @@
 package com.automationpractice.datagenerators;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.Random;
 
 import org.apache.commons.lang3.RandomStringUtils;
-import org.apache.http.client.fluent.Form;
-import org.apache.http.client.fluent.Request;
-import org.openqa.selenium.json.JsonException;
-import org.simpleframework.xml.Serializer;
-import org.simpleframework.xml.core.Persister;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.xml.bind.*;
+public class TestDataGenerator {
 
-import com.automationpractice.model.LocationData;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonParser;
-
-public class TestDataObjectGeneratorHelper {
-
-	protected static final Logger DATA_GEN_LOGGER = LoggerFactory.getLogger(TestDataObjectGenerator.class);
+	protected static final Logger DATA_GEN_LOGGER = LoggerFactory.getLogger(TestDataGenerator.class);
 
 	// String generators
 	private static String generateAscii(int min, int max) {
@@ -37,7 +23,7 @@ public class TestDataObjectGeneratorHelper {
 		return RandomStringUtils.randomNumeric(min, max).toString();
 	}
 
-   	private static String generateNegativeNumeric() {
+	private static String generateNegativeNumeric() {
 		Double rand = new Random().nextDouble() - 3;
 		return rand.toString();
 	}
@@ -97,7 +83,5 @@ public class TestDataObjectGeneratorHelper {
 		int randomSelection = randomEmailDomain.nextInt(emailDomains.length);
 		return emailDomains[randomSelection];
 	}
-
-	// Location Data Helper
 
 }
