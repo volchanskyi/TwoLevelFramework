@@ -20,10 +20,8 @@ public class RegistrationHelper extends HelperBase {
 		return this;
 
 	}
-//TODO refactor
+
 	public HelperBase fillOutRegistrationFormWith(RegistrationFormData registrationFormData) {
-		// wd.get(app.getProperty("web.baseUrl") +
-		// "index.php?controller=authentication&back=my-account#account-creation");
 		type(By.name(useProperty("locator.fNameTxtFld(RP)")), registrationFormData.getFirstName());
 		type(By.name(useProperty("locator.lastNameTextField")), registrationFormData.getFirstName());
 		type(By.cssSelector(useProperty("locator.newPasswordTextField")), registrationFormData.getPassword());

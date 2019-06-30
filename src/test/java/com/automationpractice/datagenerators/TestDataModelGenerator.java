@@ -131,7 +131,9 @@ public class TestDataModelGenerator {
 					.withLastName(TestDataGenerator.generateValidFormatLastName())
 					.withPassword(TestDataGenerator.generateValidFormatPasswords())
 					.withAddress(TestDataGenerator.generateValidFormatAddress())
-					.withCityName(locationData[1]).withPostCode(locationData[0]).withState(locationData[2])
+					.withCityName(locationData[1]).withPostCode(locationData[0])
+//					.withState(locationData[2])
+					.withState("Florida")
 					.withPhoneNumber(TestDataGenerator.generateValidFormatPhoneNumber()));
 		}
 		return set;
