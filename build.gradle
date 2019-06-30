@@ -149,7 +149,8 @@ task downloadResources(type: Download) {
     src([
         'https://github.com/volchanskyi/extras-two-level-framework-locators/raw/master/locator.properties',
     	'https://github.com/volchanskyi/extras-two-level-framework-valid-test-data/raw/master/validAccounts.csv',
-    	'https://github.com/volchanskyi/extras-two-level-framework-valid-test-data/raw/master/validProducts.csv'
+    	'https://github.com/volchanskyi/extras-two-level-framework-valid-test-data/raw/master/validProducts.csv',
+    	'https://github.com/volchanskyi/extras-two-level-framework-valid-test-data/raw/master/validPostalCodes.csv'
     	])
     dest resourceFolderPath
     onlyIfModified true
