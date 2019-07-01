@@ -95,7 +95,7 @@ public class TestDataModelGenerator {
 		String postalCodesListFile = "src/test/resources/validPostalCodes.csv";
 		ArrayList<String> zipCodes = new ArrayList<String>();
 		LinkedHashSet<RegistrationFormData> set = new LinkedHashSet<RegistrationFormData>();
-		// TODO temp counter == 1 (fix the test first)
+		// number of test data sets generted
 		for (int i = 1; i > 0; --i) {
 			String line;
 			// use a try-with-resource statement

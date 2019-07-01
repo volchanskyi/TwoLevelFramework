@@ -6,7 +6,7 @@ import org.simpleframework.xml.Root;
 
 @Root(name = "CityStateLookupResponse")
 
-public class LocationData {
+public class LocationData implements LigalLocationDataInterface {
 	@Element(name = "State", required = false)
 	private String state;
 	@Element(name = "ZipCode", required = false)
@@ -30,22 +30,27 @@ public class LocationData {
 	@Element(name = "HelpContext", required = false)
 	private String helpContext;
 
+	@Override
 	public String getZipCode() {
 		return this.zipCode;
 	}
 
+	@Override
 	public String getZip() {
 		return this.postalCode;
 	}
 
+	@Override
 	public String getCity() {
 		return this.city;
 	}
 
+	@Override
 	public String getState() {
 		return this.state;
 	}
 
+	@Override
 	public String getDescription() {
 		return this.description;
 	}
