@@ -226,6 +226,6 @@ clean.finalizedBy downloadResources
 //Skip downloading webdrivers if using CI
 downloadDrivers.onlyIf {project.getProperty('target') == "local"}
 //Make the driver executable on *nix based systems ONLY
-makeDriverExecutable.onlyIf {project.getProperty('platform').toUpperCase().contains("MAC") || project.getProperty('platform').toUpperCase().contains("LINUX")}
+//makeDriverExecutable.onlyIf {project.getProperty('platform').toUpperCase().contains("MAC") || project.getProperty('platform').toUpperCase().contains("LINUX")}
 //CleanUp webdrivers after the test
 test.finalizedBy cleanUp
