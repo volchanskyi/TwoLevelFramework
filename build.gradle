@@ -138,18 +138,21 @@ task downloadDrivers(type: Download) {
     		onlyIfModified true
     		overwrite true
     		doLast {
-   				 makeDriverExecutable.execute() 
+    			project.exec {
+    			commandLine ('chmod', '+x', 'src/test/resources/webdriver/webdriver')
+    			}
     		}
 	}
 	
 }
 
 //Make the driver executable on *nix based systems only
-task makeDriverExecutable(type: Exec) {
+/* task makeDriverExecutable(type: Exec) {
 	group = 'Setup webdriver'
 	description = 'Makes the driver executable on *nix based systems'
 	commandLine 'chmod', '755', 'src/test/resources/webdriver/webdriver'
 	}
+*/
 
 // Download updated property files and test data
 task downloadResources(type: Download) {
@@ -218,10 +221,6 @@ test {
 defaultTasks 'test'
 //download the webdrivers from the github repo after the project`s clean up
 clean.finalizedBy downloadDrivers
-
-//Make the driver executable on *nix based systems
-//downloadDrivers.finalizedBy makeDriverExecutable.execute() 
-
 //download resources to compile
 clean.finalizedBy downloadResources
 //Skip downloading webdrivers if using CI
