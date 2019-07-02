@@ -137,6 +137,7 @@ task downloadDrivers(type: Download) {
     		dest webdriversFolderPath
     		onlyIfModified true
     		overwrite true
+    		//Make the driver executable on *nix based systems ONLY
     		doLast {
     			project.exec {
     			commandLine ('chmod', '+x', 'src/test/resources/webdriver/webdriver')
@@ -145,14 +146,6 @@ task downloadDrivers(type: Download) {
 	}
 	
 }
-
-//Make the driver executable on *nix based systems only
-/* task makeDriverExecutable(type: Exec) {
-	group = 'Setup webdriver'
-	description = 'Makes the driver executable on *nix based systems'
-	commandLine 'chmod', '755', 'src/test/resources/webdriver/webdriver'
-	}
-*/
 
 // Download updated property files and test data
 task downloadResources(type: Download) {
@@ -225,7 +218,5 @@ clean.finalizedBy downloadDrivers
 clean.finalizedBy downloadResources
 //Skip downloading webdrivers if using CI
 downloadDrivers.onlyIf {project.getProperty('target') == "local"}
-//Make the driver executable on *nix based systems ONLY
-//makeDriverExecutable.onlyIf {project.getProperty('platform').toUpperCase().contains("MAC") || project.getProperty('platform').toUpperCase().contains("LINUX")}
 //CleanUp webdrivers after the test
 test.finalizedBy cleanUp
