@@ -142,7 +142,7 @@ task downloadDrivers(type: Download) {
 }
 
 //Make the driver executable on *nix based systems only
-task driverPermissions(type: Exec) {
+task makeDriverExecutable(type: Exec) {
 	description = 'Make the driver executable on *nix based systems'
 	commandLine 'chmod', '755', 'src/test/resources/webdriver/webdriver'
 	}
@@ -215,12 +215,12 @@ defaultTasks 'test'
 //download the webdrivers from the github repo after the project`s clean up
 clean.finalizedBy downloadDrivers
 //Make the driver executable on *nix based systems
-downloadDrivers.finalizedBy driverPermissions 
+downloadDrivers.finalizedBy makeDriverExecutable 
 //download resources to compile
 clean.finalizedBy downloadResources
 //Skip downloading webdrivers if using CI
 downloadDrivers.onlyIf {project.getProperty('target') == "local"}
 //Make the driver executable on *nix based systems ONLY
-driverPermissions.onlyIf {project.getProperty('platform').toUpperCase().contains("MAC") || project.getProperty('platform').toUpperCase().contains("LINUX")}
+makeDriverExecutable.onlyIf {project.getProperty('platform').toUpperCase().contains("MAC") || project.getProperty('platform').toUpperCase().contains("LINUX")}
 //CleanUp webdrivers after the test
 test.finalizedBy cleanUp
