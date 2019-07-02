@@ -38,4 +38,5 @@ reports
 # Other
 bin/
 *.old
+src/test/resources/webdriver/
 

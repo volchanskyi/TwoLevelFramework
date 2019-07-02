@@ -27,17 +27,17 @@ public class HelperBase {
 		try {
 			this.app = app;
 			this.setWd(app.initWebDriver());
-			// Assure all browsers have the same screen resolution and starting point (for
-			// UI tests)
-			this.getWd().manage().window().setPosition(new Point(0, 0));
-			this.getWd().manage().window().setSize(new Dimension(1280, 1024));
+			// Maximize browser session window
+			this.getWd().manage().window().maximize();
 			// set EXPLICIT timeouts
 			this.wait = new WebDriverWait(this.getWd(), 15);
 			// Set timeout for Async Java Script
 			this.getWd().manage().timeouts().setScriptTimeout(20, TimeUnit.SECONDS);
 			this.getWd().manage().timeouts().pageLoadTimeout(15, TimeUnit.SECONDS);
 		} catch (WebDriverException e) {
-			HELPER_BASE_LOGGER.error(e.toString() + "Driver settings set issue. Check driver management section");
+			HELPER_BASE_LOGGER.error(e.toString()
+					+ "Driver settings set issue. Check driver management section. Screen resolution settings: "
+					+ this.getWd().manage().window().getPosition() + this.getWd().manage().window().getSize());
 		}
 	}
 
