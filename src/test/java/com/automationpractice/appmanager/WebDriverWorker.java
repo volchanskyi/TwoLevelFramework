@@ -69,6 +69,7 @@ abstract class WebDriverWorker extends ApplicationManagerHelper {
 						options.setCapability("InPrivate", true);
 						setWd(new EdgeDriver(options));
 					}
+					getWd().manage().window().maximize();
 					getWd().get(getProperties().getProperty("web.baseUrl"));
 				}
 			} catch (NullPointerException e) {
