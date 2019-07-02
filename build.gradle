@@ -137,6 +137,9 @@ task downloadDrivers(type: Download) {
     		dest webdriversFolderPath
     		onlyIfModified true
     		overwrite true
+    		doLast {
+   				 makeDriverExecutable.execute() 
+    		}
 	}
 	
 }
@@ -215,8 +218,10 @@ test {
 defaultTasks 'test'
 //download the webdrivers from the github repo after the project`s clean up
 clean.finalizedBy downloadDrivers
+
 //Make the driver executable on *nix based systems
-downloadDrivers.finalizedBy makeDriverExecutable.execute() 
+//downloadDrivers.finalizedBy makeDriverExecutable.execute() 
+
 //download resources to compile
 clean.finalizedBy downloadResources
 //Skip downloading webdrivers if using CI
