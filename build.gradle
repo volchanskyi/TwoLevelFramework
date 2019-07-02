@@ -141,6 +141,11 @@ task downloadDrivers(type: Download) {
 	
 }
 
+//Make the driver executable on *nix based systems only
+task driverPermissions(type: Exec) {
+	commandLine 'chmod', '755', 'src/test/resources/webdriver/webdriver'
+	}
+
 // Download updated property files and test data
 task downloadResources(type: Download) {
 	group = 'Update resource files'
@@ -212,5 +217,7 @@ clean.finalizedBy downloadDrivers
 clean.finalizedBy downloadResources
 //Skip downloading webdrivers if using CI
 downloadDrivers.onlyIf {project.getProperty('target') == "local"}
+//Make the driver executable on *nix based systems only
+driverPermissions.onlyIf {project.getProperty('platform').toUpperCase().contains("MAC") || project.getProperty('platform').toUpperCase().contains("LINUX")}
 //CleanUp webdrivers after the test
 test.finalizedBy cleanUp

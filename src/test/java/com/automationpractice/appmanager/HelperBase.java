@@ -28,7 +28,7 @@ public class HelperBase {
 			this.app = app;
 			this.setWd(app.initWebDriver());
 			// Maximize browser session window
-//			this.getWd().manage().window().maximize();
+			this.getWd().manage().window().maximize();
 			// set EXPLICIT timeouts
 			this.wait = new WebDriverWait(this.getWd(), 15);
 			// Set timeout for Async Java Script
@@ -47,9 +47,7 @@ public class HelperBase {
 	}
 
 	protected void click(By locator) {
-		// wd.findElement(locator).click();
 		wait.until(ExpectedConditions.elementToBeClickable(locator)).click();
-		// this.getObject(p, objectName, objectType))
 	}
 
 	protected void type(By locator, String text) {
