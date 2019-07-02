@@ -50,7 +50,7 @@ abstract public class ApplicationManagerHelper {
 		String path;
 		if (System.getProperty("platform").toUpperCase().contains("WINDOWS")) {
 			path = "src/test/resources/webdriver/webdriver.exe";
-		} else if (System.getProperty("platform").toUpperCase().contains("MAC OS X")) {
+		} else if (System.getProperty("platform").toUpperCase().contains("MAC")) {
 			path = "src/test/resources/webdriver/webdriver";
 		} else
 			throw new IllegalArgumentException("Unknown OS");
