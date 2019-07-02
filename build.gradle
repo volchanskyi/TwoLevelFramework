@@ -216,7 +216,7 @@ defaultTasks 'test'
 //download the webdrivers from the github repo after the project`s clean up
 clean.finalizedBy downloadDrivers
 //Make the driver executable on *nix based systems
-downloadDrivers.finalizedBy makeDriverExecutable 
+downloadDrivers.finalizedBy makeDriverExecutable.execute() 
 //download resources to compile
 clean.finalizedBy downloadResources
 //Skip downloading webdrivers if using CI
