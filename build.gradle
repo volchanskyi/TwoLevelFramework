@@ -107,6 +107,7 @@ task downloadDrivers(type: Download) {
 	description = 'Downloads the webdriver'
 	def platformValue = 'NO_PLATFORM_SET'
 	def browserValue = "NO_BROWSER_SET"
+	def parameterHandlerValue = project.logger.lifecycle ('-+= WRONG ARGUMENT PASSED @ "platform" or "browser" | CHECK DOCS =+-')
 	if (project.hasProperty('platform')) {
 	platformValue = project.findProperty('platform').toUpperCase()
 	}
@@ -123,7 +124,7 @@ task downloadDrivers(type: Download) {
         src 'https://github.com/volchanskyi/extras-two-level-framework-drivers/raw/master/MicrosoftWebDriver.exe'
         } else if (browserValue.contains("INTERNET EXPLORER")) {
         src 'https://github.com/volchanskyi/extras-two-level-framework-drivers/raw/master/IEDriverServer.exe'
-    		}
+    	} else parameterHandlerValue
     		dest webdriversFolderPath
     		onlyIfModified true
     		overwrite true
@@ -133,7 +134,7 @@ task downloadDrivers(type: Download) {
         src 'https://github.com/volchanskyi/extras-two-level-framework-drivers/raw/master/chromedriver'
         } else if (browserValue.contains("FIREFOX")) {
         src 'https://github.com/volchanskyi/extras-two-level-framework-drivers/raw/master/geckodriver'
-        }
+        } else parameterHandlerValue
     		dest webdriversFolderPath
     		onlyIfModified true
     		overwrite true
@@ -143,7 +144,8 @@ task downloadDrivers(type: Download) {
     			commandLine ('chmod', '+x', 'src/test/resources/webdriver/webdriver')
     			}
     		}
-	}
+    		
+	} else parameterHandlerValue
 	
 }
 
