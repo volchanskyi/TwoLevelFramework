@@ -103,7 +103,7 @@ dependencies {
  */
  //Download updated drivers (for no CI environments)
 task downloadDrivers(type: Download) {
-	group = 'Update webdriver'
+	group = 'Setup webdriver'
 	description = 'Task that downloads the webdriver'
 	def platformValue = 'NO_PLATFORM_SET'
 	def browserValue = "NO_BROWSER_SET"
@@ -143,13 +143,14 @@ task downloadDrivers(type: Download) {
 
 //Make the driver executable on *nix based systems only
 task makeDriverExecutable(type: Exec) {
-	description = 'Make the driver executable on *nix based systems'
+	group = 'Setup webdriver'
+	description = 'Task that make the driver executable on *nix based systems'
 	commandLine 'chmod', '755', 'src/test/resources/webdriver/webdriver'
 	}
 
 // Download updated property files and test data
 task downloadResources(type: Download) {
-	group = 'Update resource files'
+	group = 'Setup resource files'
 	description = 'Task that downloads and updates resource files'
 	def resourceFolderPath = "src/test/resources"
     src([
