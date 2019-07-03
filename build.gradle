@@ -107,7 +107,7 @@ task downloadDrivers(type: Download) {
 	description = 'Downloads the webdriver'
 	def platformValue = 'NO_PLATFORM_SET'
 	def browserValue = "NO_BROWSER_SET"
-	def parameterHandlerValue = project.logger.lifecycle ('-+= WRONG ARGUMENT PASSED @ "platform" or "browser" | CHECK DOCS =+-')
+	def parameterHandlerValue = '-+= WRONG ARGUMENT PASSED @ "browser" | CHECK DOCS =+-'
 	if (project.hasProperty('platform')) {
 	platformValue = project.findProperty('platform').toUpperCase()
 	}
@@ -124,7 +124,7 @@ task downloadDrivers(type: Download) {
         src 'https://github.com/volchanskyi/extras-two-level-framework-drivers/raw/master/MicrosoftWebDriver.exe'
         } else if (browserValue.contains("INTERNET EXPLORER")) {
         src 'https://github.com/volchanskyi/extras-two-level-framework-drivers/raw/master/IEDriverServer.exe'
-    	} else parameterHandlerValue
+    	} else project.logger.lifecycle (parameterHandlerValue)
     		dest webdriversFolderPath
     		onlyIfModified true
     		overwrite true
@@ -134,7 +134,7 @@ task downloadDrivers(type: Download) {
         src 'https://github.com/volchanskyi/extras-two-level-framework-drivers/raw/master/chromedriver'
         } else if (browserValue.contains("FIREFOX")) {
         src 'https://github.com/volchanskyi/extras-two-level-framework-drivers/raw/master/geckodriver'
-        } else parameterHandlerValue
+        } else project.logger.lifecycle (parameterHandlerValue)
     		dest webdriversFolderPath
     		onlyIfModified true
     		overwrite true
@@ -145,8 +145,11 @@ task downloadDrivers(type: Download) {
     			}
     		}
     		
-	} else parameterHandlerValue
-	
+	} else if (platformValue.contains("LINUX")) 
+		{ 
+			project.logger.lifecycle ('linux is supported on GRID only') 
+		}
+	 else project.logger.lifecycle ('WRONG "platform" parameter | See docs')
 }
 
 // Download updated property files and test data
