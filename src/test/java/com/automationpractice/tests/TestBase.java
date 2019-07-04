@@ -24,7 +24,7 @@ public class TestBase extends TestBaseHelper {
 	@BeforeMethod(alwaysRun = true)
 	public void logTestStart(Method method, Object[] parameters) throws Exception {
 		if (isDebugTestsEnabled() == true) {
-			TEST_BASE_LOGGER.debug("Start test {} with params {}", method.getName(), Arrays.asList(parameters));
+			TEST_BASE_LOGGER.debug("Start test {} with params {}", method.getName(), Arrays.asList(parameters.toString()));
 		}
 	}
 

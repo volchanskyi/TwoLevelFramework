@@ -2,6 +2,13 @@ package com.automationpractice.model;
 
 public class RegistrationFormData implements RegistrationFormDataInterface {
 
+	@Override
+	public String toString() {
+		return "RegistrationFormData [email=" + email + ", fName=" + fName + ", lName=" + lName + ", password="
+				+ password + ", address=" + address + ", city=" + city + ", postcode=" + postcode + ", state=" + state
+				+ ", phone=" + phone + "]";
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 

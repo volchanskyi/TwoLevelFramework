@@ -2,6 +2,12 @@ package com.automationpractice.model;
 
 public class LigalCredentials implements LigarCredentialsInterface {
 
+	@Override
+	public String toString() {
+		return "LigalCredentials [accountName=" + accountName + ", email=" + email + ", password=" + password
+				+ ", token=" + token + "]";
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 
