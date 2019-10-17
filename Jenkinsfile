@@ -1,6 +1,6 @@
-node {
+pipeline {
   agent {
-      docker {image: 'hello-world'}
+      docker {image 'hello-world'}
     }
   stages {
   stage ('Checkout') {
