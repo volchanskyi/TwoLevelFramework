@@ -1,10 +1,13 @@
 node {
-  stage 'Checkout'
+  stage ('Checkout') {
   git url: 'https://github.com/volchanskyi/TwoLevelFramework.git'
+}
 
-  stage 'build'
+  stage ('build') {
   docker.build('mobycounter')
-
-  stage 'deploy'
+  }
+  
+  stage ('deploy') {
   sh './deploy.sh'
+  }
 }
