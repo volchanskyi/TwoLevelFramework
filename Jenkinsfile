@@ -1,33 +1,13 @@
-pipeline {
-    agent none 
-    stages {
-        stage('Example Build') {
-            agent { docker 'maven:3-alpine' } 
-            steps {
-                echo 'Hello, Maven'
-                sh 'mvn --version'
-            }
-        }
-        stage('Example Test') {
-            agent { docker 'openjdk:8-jre' } 
-            steps {
-                echo 'Hello, JDK'
-                sh 'java -version'
-            }
-        }
-    }
+node {
+  stage ('Checkout') {
+  git url: 'https://github.com/volchanskyi/TwoLevelFramework.git'
 }
 
-//node {
-//  stage ('Checkout') {
- // git url: 'https://github.com/volchanskyi/TwoLevelFramework.git'
-//}
-
- // stage ('build') {
- //docker.build('mobycounter')
- //}
+  stage ('build') {
+ docker.build('mobycounter')
+ }
   
- // stage ('deploy') {
- // sh './deploy.sh'
- // }
-//}
+  stage ('deploy') {
+  sh './deploy.sh'
+  }
+}
