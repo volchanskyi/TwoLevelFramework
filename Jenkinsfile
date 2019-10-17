@@ -5,12 +5,12 @@ node {
           git url : 'https://github.com/volchanskyi/TwoLevelFramework.git'
          }
         }
-      stage ('Build') {
-        steps {
-          sh 'echo uname -r'
-          docker.build('hello-world')
-         }
-        } 
+      //stage ('Build') {
+      //  steps {
+      //    sh 'echo uname -r'
+       //   docker.build('hello-world')
+       //  }
+       // } 
   
       stage ('Deploy') {
         steps {
