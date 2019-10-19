@@ -1,2 +1,2 @@
-Two-level-architecture framework that implements API and UI testing layers. Optimized for running on Local, GRID and/or CI environments supporting multiple platforms and configuratio s. Uses extensive application logging(logback), test reporting(Allure) and build publishing(Gradle scan) features. 
-Comes with a docker-compose configuration file to play with the framework. Enjoy!:)
+Two-level-architecture framework that implements API and UI testing layers. Optimized for running on Local, GRID and/or CI environments supporting multiple platforms and configuratios. Uses extensive application logging(logback), test reporting(Allure) and build publishing(Gradle scan) components. 
+Comes with evironment configuration files (Jenkinsfile, Dockerfile, Docker-compose and shell scripts) to play with the framework easily just by grabbing Jenkinsfile from your CI\CD. Enjoy!:)
