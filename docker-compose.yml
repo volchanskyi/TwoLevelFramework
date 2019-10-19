@@ -44,7 +44,7 @@ services:
     networks:
       qa_network:
         ipv4_address: 172.18.0.4
- 
+#network configuration describe here
 networks:
     qa_network:
         ipam:
