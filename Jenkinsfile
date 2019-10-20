@@ -4,7 +4,7 @@ node {
 }
 
   stage ('build') {
- docker.build('hello-world')
+ docker.build('selenium-base')
  }
   
   stage ('deploy') {
