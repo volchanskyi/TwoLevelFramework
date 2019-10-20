@@ -3,13 +3,14 @@ node {
   stage ('Checkout') {
   git url: 'https://github.com/volchanskyi/TwoLevelFramework.git'
   //run code quality check
-  //run unit tests
   //sanity check
   //run security tests
 }
 
   //Delivery
   stage ('build') {
+    //Build app and run unit tests
+    //run integration tests
   docker.build('nexus')
   //copy artifacts to the artifact repo
  }
@@ -17,5 +18,8 @@ node {
   //Deployment to staging env
   stage ('deploy') {
   sh './deploy.sh'
+    //Env check tests
+    //Integration tests (regression)
+    //E2E acceptance tests (UI functional test)
   }
 }
