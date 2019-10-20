@@ -1,2 +1,3 @@
 FROM sonatype/nexus3:latest
-LABEL authors=SeleniumHQ
+LABEL authors=Nexus3
+MAINTAINER Ivan Volchansky <ivan.volchansky@outlook.com>
