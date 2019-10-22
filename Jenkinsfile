@@ -1,4 +1,12 @@
 node {
+  
+  environment {
+        WORKSPACE = '/var/lib/jenkins/workspace/'
+        JENKINS_HOME    = '/var/lib/jenkins/'
+        JOB_NAME = 'automationpractice'
+    }
+  
+  
   //Integration
   stage ('Checkout') {
   git url: 'https://github.com/volchanskyi/TwoLevelFramework.git'
