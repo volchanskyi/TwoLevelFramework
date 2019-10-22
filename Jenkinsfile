@@ -27,7 +27,11 @@ node {
   stage ('deploy') {
     //make deploy.sh executable
   sh 'chmod +x deploy.sh'
+    echo 'Workspace is at ${WORKSPACE}'
+    echo 'Workspace is at ${JOB_NAME}'
+    sh 'printenv'
   sh '#!/bin/bash ./deploy.sh'
+    sh 'printenv'
     //Env check tests
     //Integration tests (regression)
     //E2E acceptance tests (UI functional test)
