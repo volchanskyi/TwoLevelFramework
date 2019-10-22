@@ -25,8 +25,9 @@ node {
   
   //Deployment to staging env
   stage ('deploy') {
+      echo "Running tests in a fully containerized environment..."
     //make deploy.sh executable
-  sh 'chmod +x deploy.sh'
+    sh 'chmod +x deploy.sh'
     echo 'Workspace is at ${WORKSPACE}'
     echo 'Workspace is at ${JOB_NAME}'
     sh 'printenv'
