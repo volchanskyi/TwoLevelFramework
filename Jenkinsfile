@@ -18,8 +18,8 @@ node {
   //Deployment to staging env
   stage ('deploy') {
     //make deploy.sh executable
-  sh 'chmod +x deploy.sh'
-  sh './deploy.sh'
+  bash 'chmod +x deploy.sh'
+  bash './deploy.sh'
     //Env check tests
     //Integration tests (regression)
     //E2E acceptance tests (UI functional test)
