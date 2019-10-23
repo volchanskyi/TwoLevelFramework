@@ -191,9 +191,7 @@ pipeline {
       }
     }
 }
-
-*/
-  
+ 
   always {
   cleanWs()
 }
