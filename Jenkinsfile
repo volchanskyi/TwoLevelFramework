@@ -190,9 +190,10 @@ pipeline {
           //bitbucketStatusNotify buildState: "FAILED"
       }
     }
-}
- 
-  always {
+          always {
   cleanWs()
 }
 }
+ 
+  
+
