@@ -45,7 +45,9 @@ pipeline {
           //run integration tests
             //copy artifacts to the artifact repo
             steps {
+              script {
                 docker.build('nexus')
+              }
               /*  
               sh "docker-composer build"
                 sh "docker-compose up -d"
@@ -172,6 +174,7 @@ pipeline {
                       message: "${env.STACK_PREFIX} production deploy failed: *${env.DEPLOY_VERSION}*. <${env.BUILD_URL}|Check build>"
                     )
                 }
+                }
             }
         }
         */
@@ -180,6 +183,7 @@ pipeline {
     post {
       always {
           sh "docker-compose down || true"
+          cleanWs()
       }
 
       success {
@@ -192,8 +196,6 @@ pipeline {
           //bitbucketStatusNotify buildState: "FAILED"
       }
     }
-          always {
-  cleanWs()
-    }
+   
 }
   
