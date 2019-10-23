@@ -7,5 +7,4 @@ COMPOSE_ID=${JOB_NAME}
 #docker-compose -p $COMPOSE_ID rm -f
 # Starting new stack environment
 #docker-compose -p $COMPOSE_ID up -d --build
-
 docker-compose up -f /var/lib/jenkins/COMPOSE_ID/docker-compose.yml -d
