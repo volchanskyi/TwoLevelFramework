@@ -69,6 +69,7 @@ pipeline {
               //E2E acceptance tests (UI functional test)
             steps {
             echo "Running tests in a fully containerized environment..."
+             
               //making deploy.sh executable
               sh 'chmod +x deploy.sh'
               //Deploying testing env
