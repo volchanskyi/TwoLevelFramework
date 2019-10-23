@@ -23,7 +23,7 @@ pipeline {
   
     stages {
       
-      stage('prepare')
+      stage('Prepare Environment')
       {
         steps {
         sh 'printenv'
@@ -40,7 +40,7 @@ pipeline {
         }
 
       //Delivery
-        stage("build") {
+        stage("Build") {
           //Build app and run unit tests
           //run integration tests
             //copy artifacts to the artifact repo
@@ -65,7 +65,7 @@ pipeline {
 
       
       //Deployment to staging env
-        stage("deploy") {
+        stage("Deploy") {
               //Env check tests
               //Integration tests (regression)
               //E2E acceptance tests (UI functional test)
