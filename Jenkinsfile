@@ -183,7 +183,8 @@ pipeline {
     post {
       always {
           sh "docker-compose down || true"
-          cleanWs()
+        //Clean up the workspace
+          //cleanWs()
       }
 
       success {
