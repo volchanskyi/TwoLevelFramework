@@ -37,4 +37,8 @@ node {
     //Integration tests (regression)
     //E2E acceptance tests (UI functional test)
   }
+  
+  always {
+  cleanWs()
+}
 }
