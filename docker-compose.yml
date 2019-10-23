@@ -1,6 +1,6 @@
 # To execute this docker-compose yml file use docker-compose -f <file_name> up
 # Add the "-d" flag at the end for deattached execution
-version: "3.7"
+version: "3"
 services:
 #E2E test infrastructure setup
   selenium-hub:
