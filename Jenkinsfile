@@ -20,7 +20,7 @@ pipeline {
         //STACK_PREFIX = "my-project-stack-name"
     }
 
-  //Integration
+  
     stages {
       
       stage('prepare')
@@ -29,7 +29,7 @@ pipeline {
         sh 'printenv'
         }
       } 
-      
+      //Integration
       stage("Checkout") {
             steps {
               git url: 'https://github.com/volchanskyi/TwoLevelFramework.git'
@@ -78,7 +78,7 @@ pipeline {
                 //sh "docker-compose exec -T php-fpm composer --no-ansi --no-interaction tests-ci"
                // sh "docker-compose exec -T php-fpm composer --no-ansi --no-interaction behat-ci"
             }
-/*
+                /*
             post {
                 always {
                     junit "build/junit/*.xml"
@@ -90,8 +90,9 @@ pipeline {
                    
                 }
             }
+            */
         }
-
+        /*
         stage("Determine new version") {
             when {
                 branch "master"
