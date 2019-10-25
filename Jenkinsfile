@@ -178,7 +178,7 @@ pipeline {
             }
         }
         */
-    }
+    
 
     post {
       always {
@@ -197,4 +197,5 @@ pipeline {
           //bitbucketStatusNotify buildState: "FAILED"
       }
     } 
+  }
 } 
