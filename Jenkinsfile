@@ -99,6 +99,7 @@ pipeline {
                       message: "${env.JOB_NAME} failed to deploy to the staging environment"  
                     )
                 }
+               }
                 //sh "docker-compose exec -T php-fpm composer --no-ansi --no-interaction tests-ci"
                // sh "docker-compose exec -T php-fpm composer --no-ansi --no-interaction behat-ci"
             }
@@ -218,7 +219,5 @@ pipeline {
         echo "FAILED" 
           //bitbucketStatusNotify buildState: "FAILED"
       }
-    }
-   
-}
-  
+    } 
+} 
