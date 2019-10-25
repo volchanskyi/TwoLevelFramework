@@ -81,6 +81,7 @@ pipeline {
                 //sh "docker-compose exec -T php-fpm composer --no-ansi --no-interaction tests-ci"
                // sh "docker-compose exec -T php-fpm composer --no-ansi --no-interaction behat-ci"
             }
+      }
                 /*
             post {
                 always {
@@ -176,10 +177,11 @@ pipeline {
                 }
                 }
             }
-        }
         */
+       
+        
     
-    }
+     
     post {
       always {
           sh "docker-compose down || true"
