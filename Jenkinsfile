@@ -94,7 +94,6 @@ pipeline {
                 }
             }
             */
-        }
         /*
         stage("Determine new version") {
             when {
