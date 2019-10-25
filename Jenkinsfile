@@ -73,6 +73,7 @@ pipeline {
             echo "Running tests in a fully containerized environment..."
              
               //making deploy.sh executable
+              sh 'cd /var/lib/jenkins/workspace/$JOB_NAME'
               sh 'chmod +x deploy.sh'
               //Deploying testing env
               sh '#!/bin/bash ./deploy.sh'
