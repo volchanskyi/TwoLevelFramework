@@ -12,9 +12,9 @@ pipeline {
         //TEST_IMAGE = "${env.TEST_PREFIX}:${env.BUILD_NUMBER}"
         //TEST_CONTAINER = "${env.TEST_PREFIX}-${env.BUILD_NUMBER}"
         //REGISTRY_ADDRESS = "my.registry.address.com"
-        SLACK_CHANNEL = "#testing-environment"
-        SLACK_TEAM_DOMAIN = "automationpractice-qa"
-        SLACK_TOKEN = credentials("4HX9c252AQ4ejJZcQUoH09eW")
+        //SLACK_CHANNEL = "#testing-environment"
+        //SLACK_TEAM_DOMAIN = "automationpractice-qa"
+        //SLACK_TOKEN = credentials("4HX9c252AQ4ejJZcQUoH09eW")
         //DEPLOY_URL = "https://deployment.example.com/"
         //REGISTRY_AUTH = credentials("docker-registry")
         //STACK_PREFIX = "my-project-stack-name"
@@ -184,11 +184,9 @@ pipeline {
      
     post {
       always {
-        sh 'pwd'
-          sh 'cd /var/lib/jenkins/workspace/$JOB_NAME'
           sh 'docker-compose down || true'
         //Clean up the workspace
-          //cleanWs()
+          cleanWs()
       }
 
       success {
