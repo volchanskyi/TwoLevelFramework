@@ -1,4 +1,4 @@
-!/bin/bash
+#!/bin/bash
 #docker kill nexus > "/dev/null 2>&1"
 #docker rm nexus > "/dev/null 2>&1"
 # JOB_NAME is the name of the project of this build. This is the name you gave your job. It is set up by Jenkins
