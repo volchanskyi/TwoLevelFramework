@@ -12,9 +12,9 @@ pipeline {
         //TEST_IMAGE = "${env.TEST_PREFIX}:${env.BUILD_NUMBER}"
         //TEST_CONTAINER = "${env.TEST_PREFIX}-${env.BUILD_NUMBER}"
         //REGISTRY_ADDRESS = "my.registry.address.com"
-        //SLACK_CHANNEL = "#deployment-notifications"
-        //SLACK_TEAM_DOMAIN = "MY-SLACK-TEAM"
-        //SLACK_TOKEN = credentials("slack_token")
+        SLACK_CHANNEL = "#testing-environment"
+        SLACK_TEAM_DOMAIN = "automationpractice-qa"
+        SLACK_TOKEN = credentials("4HX9c252AQ4ejJZcQUoH09eW")
         //DEPLOY_URL = "https://deployment.example.com/"
         //REGISTRY_AUTH = credentials("docker-registry")
         //STACK_PREFIX = "my-project-stack-name"
@@ -78,6 +78,27 @@ pipeline {
               //Deploying testing env
               sh '#!/bin/bash ./deploy.sh'
               
+               post {
+                success {
+                    slackSend (
+                        teamDomain: "${env.SLACK_TEAM_DOMAIN}",
+                        token: "${env.SLACK_TOKEN}",
+                        channel: "${env.SLACK_CHANNEL}",
+                        color: "good",
+                        message: "${env.JOB_NAME} deployed to the staging environment successfuly"  
+                      //message: "${env.STACK_PREFIX} production deploy: *${env.DEPLOY_VERSION}*. <${env.DEPLOY_URL}|Access service> - <${env.BUILD_URL}|Check build>"
+                    )
+                }
+
+                failure {
+                    slackSend (
+                        teamDomain: "${env.SLACK_TEAM_DOMAIN}",
+                        token: "${env.SLACK_TOKEN}",
+                        channel: "${env.SLACK_CHANNEL}",
+                        color: "danger",
+                      message: "${env.JOB_NAME} failed to deploy to the staging environment"  
+                    )
+                }
                 //sh "docker-compose exec -T php-fpm composer --no-ansi --no-interaction tests-ci"
                // sh "docker-compose exec -T php-fpm composer --no-ansi --no-interaction behat-ci"
             }
@@ -185,7 +206,7 @@ pipeline {
       always {
           sh "docker-compose down || true"
         //Clean up the workspace
-          //cleanWs()
+          cleanWs()
       }
 
       success {
