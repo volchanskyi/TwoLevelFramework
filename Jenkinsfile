@@ -179,12 +179,12 @@ pipeline {
         }
         */
     
-
+    }
     post {
       always {
           sh "docker-compose down || true"
         //Clean up the workspace
-          cleanWs()
+          //cleanWs()
       }
 
       success {
@@ -196,6 +196,6 @@ pipeline {
         echo "FAILED" 
           //bitbucketStatusNotify buildState: "FAILED"
       }
-    } 
+     
   }
 } 
