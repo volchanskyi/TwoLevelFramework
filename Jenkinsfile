@@ -184,7 +184,9 @@ pipeline {
      
     post {
       always {
-          sh "docker-compose down || true"
+        sh 'pwd'
+          sh 'cd /var/lib/jenkins/workspace/$JOB_NAME'
+          sh 'docker-compose down || true'
         //Clean up the workspace
           //cleanWs()
       }
