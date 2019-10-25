@@ -77,28 +77,6 @@ pipeline {
               sh 'chmod +x deploy.sh'
               //Deploying testing env
               sh '#!/bin/bash ./deploy.sh'
-              
-               post {
-                success {
-                    slackSend (
-                        teamDomain: "${env.SLACK_TEAM_DOMAIN}",
-                        token: "${env.SLACK_TOKEN}",
-                        channel: "${env.SLACK_CHANNEL}",
-                        color: "good",
-                        message: "${env.JOB_NAME} deployed to the staging environment successfuly"  
-                      //message: "${env.STACK_PREFIX} production deploy: *${env.DEPLOY_VERSION}*. <${env.DEPLOY_URL}|Access service> - <${env.BUILD_URL}|Check build>"
-                    )
-                }
-
-                failure {
-                    slackSend (
-                        teamDomain: "${env.SLACK_TEAM_DOMAIN}",
-                        token: "${env.SLACK_TOKEN}",
-                        channel: "${env.SLACK_CHANNEL}",
-                        color: "danger",
-                      message: "${env.JOB_NAME} failed to deploy to the staging environment"  
-                    )
-                }
                }
                 //sh "docker-compose exec -T php-fpm composer --no-ansi --no-interaction tests-ci"
                // sh "docker-compose exec -T php-fpm composer --no-ansi --no-interaction behat-ci"
