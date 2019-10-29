@@ -192,7 +192,15 @@ pipeline {
       success {
         echo "SUCCESSFUL"  
         //bitbucketStatusNotify buildState: "SUCCESSFUL"
-      }
+                    slackSend (
+                        teamDomain: "${env.SLACK_TEAM_DOMAIN}",
+                        token: "${env.SLACK_TOKEN}",
+                        channel: "${env.SLACK_CHANNEL}",
+                        color: "good",
+                        message: "The pipeline *${currentBuild.fullDisplayName}* completed *successfully*."
+                      //{env.STACK_PREFIX} production deploy: *${env.DEPLOY_VERSION}*. <${env.DEPLOY_URL}|Access service> - <${env.BUILD_URL}|Check build>"
+                    )
+                }
 
       failure {
         echo "FAILED" 
