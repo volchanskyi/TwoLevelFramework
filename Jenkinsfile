@@ -12,8 +12,8 @@ pipeline {
         //TEST_IMAGE = "${env.TEST_PREFIX}:${env.BUILD_NUMBER}"
         //TEST_CONTAINER = "${env.TEST_PREFIX}-${env.BUILD_NUMBER}"
         //REGISTRY_ADDRESS = "my.registry.address.com"
-        //SLACK_CHANNEL = "#testing-environment"
-        //SLACK_TEAM_DOMAIN = "automationpractice-qa"
+        SLACK_CHANNEL = "#testing-environment"
+        SLACK_TEAM_DOMAIN = "automationpractice-qa"
         //SLACK_TOKEN = credentials("4HX9c252AQ4ejJZcQUoH09eW")
         //DEPLOY_URL = "https://deployment.example.com/"
         //REGISTRY_AUTH = credentials("docker-registry")
