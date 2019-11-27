@@ -15,10 +15,11 @@ import com.automationpractice.model.LocationData;
 public class LocationDataHelper {
 
 	protected static final Logger LOCATION_DATA_GEN_LOGGER = LoggerFactory.getLogger(LocationDataHelper.class);
+	private static final String USPS_CITY_STATE_LOOKUP = "http://production.shippingapis.com/ShippingAPITest.dll?API=CityStateLookup";
 
 	public static String[] getLocationData(String validFormatPostalCode) {
 		try {
-			InputStream xml = Request.Post("http://production.shippingapis.com/ShippingAPITest.dll?API=CityStateLookup")
+			InputStream xml = Request.Post(USPS_CITY_STATE_LOOKUP)
 					.addHeader("accept", "text/html,application/xhtml+xml,application/xml;q=0.9")
 					.bodyForm(Form.form().add("API", "CityStateLookup")
 							.add("XML",

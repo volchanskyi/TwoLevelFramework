@@ -55,4 +55,6 @@ public class LocationData implements LigalLocationDataInterface {
 		return this.description;
 	}
 
+	//States String format converter
+	//Introduce map for states. examp. CA = CALIFORNIA, FL = FLORIDA
 }
