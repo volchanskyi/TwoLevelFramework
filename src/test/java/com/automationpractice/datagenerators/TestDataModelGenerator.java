@@ -22,10 +22,12 @@ import com.automationpractice.model.RegistrationFormData;
 
 public class TestDataModelGenerator {
 
+	
+	
 	protected static final Logger MODEL_DATA_GEN_LOGGER = LoggerFactory.getLogger(TestDataModelGenerator.class);
 
 	// Credentials
-	protected static HashSet<LigalCredentials> readLigalCredentialsList() {
+	protected HashSet<LigalCredentials> readLigalCredentialsList() {
 		String accountListFile = "src/test/resources/validAccounts.csv";
 		LinkedHashSet<LigalCredentials> set = new LinkedHashSet<LigalCredentials>();
 		String line;
@@ -59,7 +61,7 @@ public class TestDataModelGenerator {
 	}
 
 	// Products
-	protected static HashSet<Products> readProductList() {
+	protected HashSet<Products> readProductList() {
 		String productListFile = "src/test/resources/validProducts.csv";
 		LinkedHashSet<Products> set = new LinkedHashSet<Products>();
 		String line;
@@ -91,9 +93,12 @@ public class TestDataModelGenerator {
 	}
 
 	// Registration Form Data
-	protected static HashSet<RegistrationFormData> generateRegistrationFormData() {
+	protected HashSet<RegistrationFormData> generateRegistrationFormData() {
 		String postalCodesListFile = "src/test/resources/validPostalCodes.csv";
 		ArrayList<String> zipCodes = new ArrayList<String>();
+		LocationDataHelper ldh = new LocationDataHelper();
+		//init tdg
+		TestDataGenerator tdg = new TestDataGenerator();
 		LinkedHashSet<RegistrationFormData> set = new LinkedHashSet<RegistrationFormData>();
 		// number of test data sets generted
 		for (int i = 1; i > 0; --i) {
@@ -124,17 +129,17 @@ public class TestDataModelGenerator {
 			Random randomZip = new Random();
 			int randomSelection = randomZip.nextInt(zipCodes.size());
 			// update zip, city and state names.
-			String[] locationData = LocationDataHelper.getLocationData(zipCodes.get(randomSelection));
+			String[] locationData = ldh.getLocationData(zipCodes.get(randomSelection));
 			set.add(new RegistrationFormData()
-					.withEmail(TestDataGenerator.generateValidFormatEmails())
-					.withFirstName(TestDataGenerator.generateValidFormatName())
-					.withLastName(TestDataGenerator.generateValidFormatLastName())
-					.withPassword(TestDataGenerator.generateValidFormatPasswords())
-					.withAddress(TestDataGenerator.generateValidFormatAddress())
+					.withEmail(tdg.generateValidFormatEmails())
+					.withFirstName(tdg.generateValidFormatName())
+					.withLastName(tdg.generateValidFormatLastName())
+					.withPassword(tdg.generateValidFormatPasswords())
+					.withAddress(tdg.generateValidFormatAddress())
 					.withCityName(locationData[1]).withPostCode(locationData[0])
 //					.withState(locationData[2])
-					.withState("Florida")
-					.withPhoneNumber(TestDataGenerator.generateValidFormatPhoneNumber()));
+					.withState("1")
+					.withPhoneNumber(tdg.generateValidFormatPhoneNumber()));
 		}
 		return set;
 	}

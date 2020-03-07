@@ -11,73 +11,73 @@ public class TestDataGenerator {
 	protected static final Logger DATA_GEN_LOGGER = LoggerFactory.getLogger(TestDataGenerator.class);
 
 	// String generators
-	private static String generateAscii(int min, int max) {
+	private String generateAscii(int min, int max) {
 		return RandomStringUtils.randomAscii(min, max).toString();
 	}
 
-	private static String generateAlphaNumeric(int min, int max) {
+	private String generateAlphaNumeric(int min, int max) {
 		return RandomStringUtils.randomAlphanumeric(min, max).toString();
 	}
 
-	private static String generateNumeric(int min, int max) {
+	private String generateNumeric(int min, int max) {
 		return RandomStringUtils.randomNumeric(min, max).toString();
 	}
 
-	private static String generateNegativeNumeric() {
+	private String generateNegativeNumeric() {
 		Double rand = new Random().nextDouble() - 3;
 		return rand.toString();
 	}
 
-	private static String generateAlphabetic(int min, int max) {
+	private String generateAlphabetic(int min, int max) {
 		return RandomStringUtils.randomAlphabetic(min, max).toString();
 	}
 
 	// Name
-	protected static String generateValidFormatName() {
+	protected String generateValidFormatName() {
 		return generateAlphabetic(4, 10);
 	}
 
 	// Last Name
-	protected static String generateValidFormatLastName() {
+	protected String generateValidFormatLastName() {
 		return generateAlphabetic(5, 12);
 	}
 
 	// Address
-	protected static String generateValidFormatAddress() {
+	protected String generateValidFormatAddress() {
 		return generateNumeric(1, 4) + " " + generateAlphabetic(5, 10) + " Dr.";
 	}
 
 	// PhoneNumber
-	protected static String generateValidFormatPhoneNumber() {
+	protected String generateValidFormatPhoneNumber() {
 		return generateNumeric(10, 10);
 	}
 
 	// Emails
-	protected static String generateValidFormatEmails() {
+	protected String generateValidFormatEmails() {
 		return generateAlphaNumeric(5, 15) + getRandomValidEmailDomain();
 	}
 
-	protected static String generateInvalidFormatEmails() {
+	protected String generateInvalidFormatEmails() {
 		return generateAscii(5, 230) + generateNegativeNumeric() + "@" + generateAscii(3, 10) + ".com";
 	}
 
 	// Passwords
-	protected static String generateValidFormatPasswords() {
+	protected String generateValidFormatPasswords() {
 		return generateAlphaNumeric(5, 10);
 	}
 
-	protected static String generateInvalidFormatPasswords() {
+	protected String generateInvalidFormatPasswords() {
 		return generateAscii(1, 4);
 	}
 
 	// Credentials
-	protected static String[] generateValidFormatCredentials() {
+	protected String[] generateValidFormatCredentials() {
 		String[] validFormatEmailAndPassword = { generateValidFormatEmails(), generateValidFormatPasswords() };
 		return validFormatEmailAndPassword;
 	}
 
 	// Email domains
-	protected static String getRandomValidEmailDomain() {
+	protected String getRandomValidEmailDomain() {
 		String[] emailDomains = { "@guerrillamailblock.com" };
 		Random randomEmailDomain = new Random();
 		int randomSelection = randomEmailDomain.nextInt(emailDomains.length);
